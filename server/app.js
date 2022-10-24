@@ -7,9 +7,17 @@ require('express-async-errors')
 // connectDB
 const connectDB = require('./db/connect')
 
+// routers
+const authRouter = require('./routes/authRoute')
+
 // middleware
 const notFoundMiddleware = require('./middleware/notFound')
 const errorHandlerMiddleware = require('./middleware/errorHandler')
+
+app.use(express.json())
+
+// routes
+app.use('/api/v1/auth', authRouter)
 
 app.get('/', (req, res) => res.send('Hello World!'))
 
