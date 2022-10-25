@@ -3,6 +3,7 @@ const Token = require('../models/Token')
 const customError = require('../errors/customError')
 const crypto = require('crypto')
 const sendVerificationEmail = require('../utils/sendVerificationEmail')
+const sendResetPasswordEmail = require('../utils/sendResetPasswordEmail')
 const createTokenUser = require('../utils/createTokenUser')
 const { sendCookies } = require('../utils/jwt')
 
@@ -142,12 +143,55 @@ const verifyEmail = async (req, res) => {
 
 // FORGOT PASSWORD
 const forgotPassword = async (req, res) => {
-  res.send('forgot password')
+  const { email } = req.body
+
+  if (!email) {
+    throw new customError(`Please provide valid email`, 400)
+  }
+
+  const user = await User.findOne({ email })
+
+  if (user) {
+    user.passwordToken = crypto.randomBytes(60).toString('hex')
+    user.passwordTokenExpired = new Date(Date.now() + 1000 * 60 * 10) //10 minutes
+    await user.save()
+
+    await sendResetPasswordEmail({
+      name: user.name,
+      email: user.email,
+      token: user.passwordToken,
+      origin: 'http://localhost:3000',
+    })
+  }
+
+  res
+    .status(200)
+    .json({ msg: 'Please check your email for reset password link' })
 }
 
 // RESET PASSWORD
 const resetPassword = async (req, res) => {
-  res.send('reset password')
+  const { token, email, password } = req.body
+  if (!token || !email || !password) {
+    throw new customError('Please provide token, email and password', 400)
+  }
+
+  const user = await User.findOne({ email })
+
+  if (user) {
+    const currentDate = new Date()
+    if (
+      user.passwordTokenExpired > currentDate &&
+      user.passwordToken === token
+    ) {
+      user.password = password
+      user.passwordToken = null
+      user.passwordTokenExpired = null
+      await user.save()
+    }
+  }
+
+  res.status(200).json({ msg: 'Password changed' })
 }
 
 module.exports = {
