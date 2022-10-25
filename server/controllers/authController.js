@@ -6,7 +6,7 @@ const sendVerificationEmail = require('../utils/sendVerificationEmail')
 // REGISTER
 const register = async (req, res) => {
   const { email, name, password, phoneNumber, address } = req.body
-  console.log(req.body)
+  // console.log(req.body)
 
   const isEmailExisted = await User.findOne({ email })
   if (isEmailExisted) {
