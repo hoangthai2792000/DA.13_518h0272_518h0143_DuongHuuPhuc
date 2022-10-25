@@ -1,7 +1,10 @@
 const User = require('../models/User')
+const Token = require('../models/Token')
 const customError = require('../errors/customError')
 const crypto = require('crypto')
 const sendVerificationEmail = require('../utils/sendVerificationEmail')
+const createTokenUser = require('../utils/createTokenUser')
+const { sendCookies } = require('../utils/jwt')
 
 // REGISTER
 const register = async (req, res) => {
@@ -47,7 +50,59 @@ const register = async (req, res) => {
 
 // LOGIN
 const login = async (req, res) => {
-  res.send('login')
+  const { email, password } = req.body
+
+  if (!email || !password) {
+    throw new customError('Email and Password must be provided', 400)
+  }
+
+  const user = await User.findOne({ email })
+
+  if (!user) {
+    throw new customError(`Can not find any user with the email: ${email}`, 401)
+  }
+
+  const isPasswordCorrect = await user.checkPassword(password)
+
+  if (!isPasswordCorrect) {
+    throw new customError('Wrong Password, Please try again', 401)
+  }
+
+  if (!user.isVerified) {
+    throw new CustomError('Please Verify Your Email', 401)
+  }
+
+  const tokenUser = createTokenUser(user)
+
+  // create refresh token
+  let refreshToken = ''
+
+  // check token is existed
+  const existingToken = await Token.findOne({ user: user._id })
+
+  // if token exist and valid, sendCookies to create accessToken and refreshToken
+  if (existingToken) {
+    const isValid = existingToken.isValid
+    if (!isValid) {
+      throw new customError('Invalid Credentials', 401)
+    }
+    refreshToken = existingToken.refreshToken
+    sendCookies({ res, user: tokenUser, refreshToken })
+    res.status(200).json({ user: tokenUser })
+    return
+  }
+
+  // if token is not existed
+  refreshToken = crypto.randomBytes(40).toString('hex')
+  const userAgent = req.headers['user-agent']
+  const ip = req.ip
+
+  const userToken = { refreshToken, userAgent, ip, user: user._id }
+  const token = await Token.create(userToken)
+
+  sendCookies({ res, user: tokenUser, refreshToken })
+
+  res.status(200).json({ user: tokenUser })
 }
 
 // LOGOUT
