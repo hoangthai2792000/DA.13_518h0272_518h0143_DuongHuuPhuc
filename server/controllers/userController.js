@@ -36,7 +36,7 @@ const updateUser = async (req, res) => {
   const { name, email, address, phoneNumber } = req.body
   if (!name || !email || !address || !phoneNumber) {
     throw new customError(
-      'Please provide name, email, address and phone number',
+      'Vui lòng nhập đầy đủ tên, email, địa chỉ và số điện thoại',
       400
     )
   }
@@ -60,20 +60,20 @@ const updateUser = async (req, res) => {
 const updateUserPassword = async (req, res) => {
   const { oldPassword, newPassword } = req.body
   if (!oldPassword || !newPassword) {
-    throw new customError('Please provide old and new password', 400)
+    throw new customError('Vui lòng nhập mật khẩu cũ và mới', 400)
   }
 
   const user = await User.findOne({ _id: req.user.userId })
 
   const isPasswordCorrect = await user.checkPassword(oldPassword)
   if (!isPasswordCorrect) {
-    throw new customError('Wrong Password, Please try again', 401)
+    throw new customError('Sai mật khẩu', 401)
   }
 
   user.password = newPassword
   await user.save()
 
-  res.status(200).json({ msg: 'Password Changed' })
+  res.status(200).json({ msg: 'Thay đổi mật khẩu thành công' })
 }
 
 module.exports = {

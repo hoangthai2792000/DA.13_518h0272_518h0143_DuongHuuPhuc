@@ -4,17 +4,17 @@ const ProductSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: [true, 'Name must be provided'],
+      required: [true, 'Vui lòng nhập tên sản phẩm'],
       trim: true,
     },
     price: {
       type: Number,
-      required: [true, 'Price must be provided'],
+      required: [true, 'Vui lòng nhập giá sản phẩm'],
       default: 0,
     },
     category: {
       type: String,
-      required: [true, 'Category must be provided'],
+      required: [true, 'Vui lòng nhập loại sản phẩm'],
       enum: {
         values: [
           'Laptop',
@@ -33,7 +33,7 @@ const ProductSchema = new mongoose.Schema(
     },
     brand: {
       type: String,
-      required: [true, 'Brand must be provided'],
+      required: [true, 'Vui lòng nhập thương hiệu sản phẩm'],
       trim: true,
     },
     image: { type: [String], required: true, trim: true },
@@ -42,6 +42,12 @@ const ProductSchema = new mongoose.Schema(
       required: true,
       default: 10,
     },
+    sold: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
+    discount: { type: Number, default: 0 },
     averageRating: {
       type: Number,
       default: 0,

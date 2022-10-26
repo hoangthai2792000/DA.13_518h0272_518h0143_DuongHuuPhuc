@@ -6,22 +6,22 @@ const UserSchema = new mongoose.Schema({
   name: {
     type: String,
     trim: true,
-    required: [true, 'Name must be provided'],
+    required: [true, 'Vui lòng nhập tên'],
     maxLength: 50,
   },
   email: {
     type: String,
     trim: true,
     unique: true,
-    required: [true, 'Email must be provided'],
+    required: [true, 'Vui lòng nhập email'],
     validate: {
       validator: validator.isEmail,
-      message: 'Please provide valid email',
+      message: 'Vui lòng nhập email hợp lệ',
     },
   },
   password: {
     type: String,
-    required: [true, 'Password must be provided'],
+    required: [true, 'Vui lòng nhập mật khẩu'],
     minLength: 6,
   },
   role: {
@@ -31,19 +31,19 @@ const UserSchema = new mongoose.Schema({
   },
   address: {
     type: String,
-    required: [true, 'Address must be provided'],
+    required: [true, 'Vui lòng nhập địa chỉ'],
     minLength: 6,
   },
   phoneNumber: {
     type: String,
-    required: [true, 'Phone number must be provided'],
+    required: [true, 'Vui lòng nhập số điện thoại'],
     trim: true,
     unique: true,
     validate: {
       validator: function isVietnamesePhoneNumber(number) {
         return /(03|05|07|08|09|01[2|6|8|9])+([0-9]{8})\b/.test(number)
       },
-      message: 'Please provide valid phone number',
+      message: 'Vui lòng nhập số điện thoại hợp lệ',
     },
   },
   verificationToken: {

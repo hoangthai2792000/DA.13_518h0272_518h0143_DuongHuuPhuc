@@ -14,11 +14,11 @@ const register = async (req, res) => {
 
   const isEmailExisted = await User.findOne({ email })
   if (isEmailExisted) {
-    throw new customError('Your Email has already existed', 400)
+    throw new customError('Email của bạn đã tồn tại', 400)
   }
   const isPhoneNumberExisted = await User.findOne({ phoneNumber })
   if (isPhoneNumberExisted) {
-    throw new customError('Your phone number has already existed', 400)
+    throw new customError('Số điện thoại của bạn đã tồn tại', 400)
   }
 
   const isFirstAccount = (await User.countDocuments({})) === 0
@@ -44,7 +44,7 @@ const register = async (req, res) => {
   })
 
   res.status(201).json({
-    msg: 'Success! Please check your email to verify account',
+    msg: 'Vui lòng kiểm tra email của bạn để hoàn thành đăng ký tài khoản',
     // verificationToken: user.verificationToken,
   })
 }
@@ -54,23 +54,26 @@ const login = async (req, res) => {
   const { email, password } = req.body
 
   if (!email || !password) {
-    throw new customError('Email and Password must be provided', 400)
+    throw new customError('Vui lòng nhập email và password', 400)
   }
 
   const user = await User.findOne({ email })
 
   if (!user) {
-    throw new customError(`Can not find any user with the email: ${email}`, 401)
+    throw new customError(`Email: ${email} không tồn tại`, 401)
   }
 
   const isPasswordCorrect = await user.checkPassword(password)
 
   if (!isPasswordCorrect) {
-    throw new customError('Wrong Password, Please try again', 401)
+    throw new customError('Sai mật khẩu', 401)
   }
 
   if (!user.isVerified) {
-    throw new CustomError('Please Verify Your Email', 401)
+    throw new CustomError(
+      'Vui lòng kiểm tra email để hoàn thành đăng ký tài khoản',
+      401
+    )
   }
 
   const tokenUser = createTokenUser(user)
@@ -157,7 +160,7 @@ const forgotPassword = async (req, res) => {
   const { email } = req.body
 
   if (!email) {
-    throw new customError(`Please provide valid email`, 400)
+    throw new customError(`Vui lòng cung cấp email hợp lệ`, 400)
   }
 
   const user = await User.findOne({ email })
@@ -177,7 +180,7 @@ const forgotPassword = async (req, res) => {
 
   res
     .status(200)
-    .json({ msg: 'Please check your email for reset password link' })
+    .json({ msg: 'Vui lòng kiểm tra email của bạn để khôi phục lại mật khẩu' })
 }
 
 // RESET PASSWORD
@@ -202,7 +205,7 @@ const resetPassword = async (req, res) => {
     }
   }
 
-  res.status(200).json({ msg: 'Password changed' })
+  res.status(200).json({ msg: 'Thay đổi mật khẩu thành công' })
 }
 
 module.exports = {
