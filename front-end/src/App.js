@@ -1,13 +1,25 @@
-import logo from './logo.svg';
 import './App.css';
-import Header from './components/Header/Header';
-import Signup from './Pages/Signup';
+import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import Home from './pages/Home';
+import Register from './pages/Register';
+import Login from './pages/Login';
 
 function App() {
   return (
     <>
-      <Header/>
-      <Signup/>
+      <Router>
+        <Switch>
+          <Route exact path='/'>
+            <Home/>
+          </Route>
+          <Route exact path='/login'>
+            <Login/>
+          </Route>
+          <Route exact path='/register'>
+            <Register/>
+          </Route>
+        </Switch>
+      </Router>
     </>
   );
 }
