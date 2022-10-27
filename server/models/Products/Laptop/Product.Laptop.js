@@ -26,6 +26,16 @@ const LaptopSchema = new mongoose.Schema({
     trim: true,
     required: [true, 'Vui lòng nhập ổ cứng của laptop'],
   },
+  ram: {
+    type: String,
+    trim: true,
+    required: [true, 'Vui lòng nhập RAM của laptop'],
+  },
+  pin: {
+    type: String,
+    trim: true,
+    required: [true, 'Vui lòng nhập pin của laptop'],
+  },
   weight: {
     type: Number,
     default: 0,

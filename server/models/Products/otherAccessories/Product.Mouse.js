@@ -16,7 +16,7 @@ const MouseSchema = new mongoose.Schema({
   },
   led: {
     type: String,
-    required: [true, 'Vui lòng nhập led của bàn phím'],
+    required: [true, 'Vui lòng nhập led của chuột'],
     enum: {
       values: ['Không led', 'Đơn sắc', 'Rainbow', 'RGB'],
       message: '{VALUE} is not supported',
@@ -36,7 +36,7 @@ const MouseSchema = new mongoose.Schema({
   },
   color: {
     type: String,
-    required: [true, 'Vui lòng nhập màu sắc của bàn phím'],
+    required: [true, 'Vui lòng nhập màu sắc của chuột'],
     trim: true,
   },
   warrantyPeriod: {
