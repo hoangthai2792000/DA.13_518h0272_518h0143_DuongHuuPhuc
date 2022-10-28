@@ -36,6 +36,7 @@ app.use(fileUpload({ useTempFiles: true }))
 // routes
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/user', authenticateUser, userRouter)
+app.use('/api/v1/product', productRouter)
 
 // error handler
 app.use(notFoundMiddleware)
