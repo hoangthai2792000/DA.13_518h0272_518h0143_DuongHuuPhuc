@@ -4,12 +4,20 @@ const customError = require('../errors/customError')
 
 // GET ALL PRODUCTS
 const getAllProducts = async (req, res) => {
-  res.send('Get All Products')
+  const products = await Product.find({}, 'image name price')
+
+  res.status(200).json({ totalProducts: products.length, products })
 }
 
 // GET SINGLE PRODUCT
 const getSingleProduct = async (req, res) => {
-  res.send('Get Single Product')
+  const product = await Product.findOne({ _id: req.params.id })
+
+  if (!product) {
+    throw new customError(`No product with the id: ${req.params.id}`, 400)
+  }
+
+  res.status(200).json({ product })
 }
 
 // CREATE PRODUCT
