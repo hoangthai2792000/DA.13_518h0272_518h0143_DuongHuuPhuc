@@ -1,4 +1,4 @@
-const Product = require('../models/Products/Product')
+const Product = require('../models/Product')
 
 const customError = require('../errors/customError')
 
@@ -15,7 +15,6 @@ const getSingleProduct = async (req, res) => {
 // CREATE PRODUCT
 const createProduct = async (req, res) => {
   const { name, price, category, brand, warrantyPeriod, specs } = req.body
-  const data = req.body
 
   if (!name || !price || !category || !brand || !warrantyPeriod || !specs) {
     throw new customError('Vui lòng nhập đầy đủ thông tin sản phẩm', 400)
@@ -23,28 +22,15 @@ const createProduct = async (req, res) => {
 
   specs.map((s) => {
     if (!s.k || !s.v) {
-      throw new customError('Vui lòng nhập đầy đủ thông tin sản phẩm', 400)
+      throw new customError(
+        'Vui lòng nhập đầy đủ thông số kỹ thuật của sản phẩm',
+        400
+      )
     }
   })
 
-  try {
-    const product = await Product.create({
-      name,
-      price,
-      category,
-      brand,
-      warrantyPeriod,
-      specs,
-    })
-    return res.status(201).json({ product })
-  } catch (error) {
-    throw new customError(error.message, 400)
-  }
-  // const dataBody = req.body
-
-  // const laptop = await checkCategory(product.category, dataBody, product._id)
-
-  // console.log(specs)
+  const product = await Product.create(req.body)
+  return res.status(201).json({ product })
 }
 
 // UPDATE PRODUCT

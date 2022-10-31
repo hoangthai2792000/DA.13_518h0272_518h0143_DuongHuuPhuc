@@ -56,9 +56,25 @@ const ProductSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-    specs: [
-      { k: { type: String, trim: true }, v: { type: String, trim: true } },
-    ],
+    // specs: [
+    //   { k: { type: String, trim: true }, v: { type: String, trim: true } },
+    // ],
+    specs: {
+      type: Array,
+      k: { type: String, trim: true },
+      v: { type: String, trim: true },
+      default: [],
+    },
+    descTitle: {
+      type: String,
+      trim: true,
+      required: [true, 'Vui lòng nhập tiêu đề mô tả sản phẩm'],
+    },
+    descContent: {
+      type: Array,
+      text: { type: String, trim: true },
+      photo: { type: String, trim: true },
+    },
     warrantyPeriod: {
       type: Number,
       default: 0,
