@@ -6,6 +6,7 @@ const {
   deleteProduct,
   uploadProductImage,
   uploadProductDescImage,
+  deleteImage,
 } = require('../controllers/productController')
 const {
   authenticateUser,
@@ -30,6 +31,10 @@ router
     [authenticateUser, authorizePermissions('admin')],
     uploadProductDescImage
   )
+
+router
+  .route('/delete-image')
+  .delete([authenticateUser, authorizePermissions('admin')], deleteImage)
 
 router
   .route('/:id')

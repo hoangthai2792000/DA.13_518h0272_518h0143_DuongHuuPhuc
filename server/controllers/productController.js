@@ -66,10 +66,8 @@ const deleteProduct = async (req, res) => {
   res.send('Delte Product')
 }
 
-// UPLOAD IMAGE
+// UPLOAD PRODUCT IMAGE
 const uploadProductImage = async (req, res) => {
-  // console.log(req.files)
-
   const { productCode } = req.params
 
   if (!productCode) {
@@ -82,39 +80,56 @@ const uploadProductImage = async (req, res) => {
 
   const productImgs = req.files.image
   // console.log(productImgs)
-
   let result = []
 
-  for (const img of productImgs) {
-    if (!img.mimetype.startsWith('image')) {
-      throw new customError('Image Only!!!', 400)
-    }
-    if (img.size > 1024 * 1024) {
-      throw new customError('Please upload image smaller than 1MB', 400)
+  if (productImgs.length >= 2) {
+    for (const img of productImgs) {
+      if (!img.mimetype.startsWith('image')) {
+        throw new customError('Image Only!!!', 400)
+      }
+      if (img.size > 1024 * 1024) {
+        throw new customError('Please upload image smaller than 1MB', 400)
+      }
+
+      try {
+        let uploadImg = await cloudinary.uploader.upload(img.tempFilePath, {
+          use_filename: true,
+          folder: `Products/${productCode}`,
+        })
+        result.push(uploadImg.secure_url)
+        fs.unlinkSync(img.tempFilePath)
+      } catch (error) {
+        throw new customError(error.message, 400)
+      }
     }
 
-    try {
-      let uploadImg = await cloudinary.uploader.upload(img.tempFilePath, {
-        use_filename: true,
-        folder: `Products/${productCode}`,
-      })
-      result.push(uploadImg.secure_url)
-      // console.log(result)
-      fs.unlinkSync(img.tempFilePath)
-    } catch (error) {
-      throw new customError(error.message, 400)
-    }
+    return result
   }
 
-  // console.log(result)
+  if (!productImgs.mimetype.startsWith('image')) {
+    throw new customError('Image Only!!!', 400)
+  }
+  if (productImgs.size > 1024 * 1024) {
+    throw new customError('Please upload image smaller than 1MB', 400)
+  }
 
+  try {
+    let uploadImg = await cloudinary.uploader.upload(productImgs.tempFilePath, {
+      use_filename: true,
+      folder: `Products/${productCode}`,
+    })
+    result.push(uploadImg.secure_url)
+    fs.unlinkSync(productImgs.tempFilePath)
+  } catch (error) {
+    throw new customError(error.message, 400)
+  }
+
+  // return res.status(200).json({ result })
   return result
-  // return res.status(200).json({ msg: 'image' })
 }
 
+// UPLOAD PRODUCT DESCRIPTION IMAGE
 const uploadProductDescImage = async (req, res) => {
-  // console.log(req.files)
-
   const { productCode } = req.params
 
   if (!productCode) {
@@ -127,34 +142,70 @@ const uploadProductDescImage = async (req, res) => {
 
   const productImgs = req.files.image
   // console.log(productImgs)
-
   let result = []
 
-  for (const img of productImgs) {
-    if (!img.mimetype.startsWith('image')) {
-      throw new customError('Image Only!!!', 400)
-    }
-    if (img.size > 1024 * 1024) {
-      throw new customError('Please upload image smaller than 1MB', 400)
+  if (productImgs.length >= 2) {
+    for (const img of productImgs) {
+      if (!img.mimetype.startsWith('image')) {
+        throw new customError('Image Only!!!', 400)
+      }
+      if (img.size > 1024 * 1024) {
+        throw new customError('Please upload image smaller than 1MB', 400)
+      }
+
+      try {
+        let uploadImg = await cloudinary.uploader.upload(img.tempFilePath, {
+          use_filename: true,
+          folder: `Products/${productCode}/desc`,
+        })
+        result.push(uploadImg.secure_url)
+        fs.unlinkSync(img.tempFilePath)
+      } catch (error) {
+        throw new customError(error.message, 400)
+      }
     }
 
-    try {
-      let uploadImg = await cloudinary.uploader.upload(img.tempFilePath, {
-        use_filename: true,
-        folder: `Products/${productCode}/desc`,
-      })
-      result.push(uploadImg.secure_url)
-      // console.log(result)
-      fs.unlinkSync(img.tempFilePath)
-    } catch (error) {
-      throw new customError(error.message, 400)
-    }
+    return result
   }
 
-  // console.log(result)
+  if (!productImgs.mimetype.startsWith('image')) {
+    throw new customError('Image Only!!!', 400)
+  }
+  if (productImgs.size > 1024 * 1024) {
+    throw new customError('Please upload image smaller than 1MB', 400)
+  }
 
+  try {
+    let uploadImg = await cloudinary.uploader.upload(productImgs.tempFilePath, {
+      use_filename: true,
+      folder: `Products/${productCode}/desc`,
+    })
+    result.push(uploadImg.secure_url)
+    fs.unlinkSync(productImgs.tempFilePath)
+  } catch (error) {
+    throw new customError(error.message, 400)
+  }
+
+  // return res.status(200).json({ result })
   return result
-  // return res.status(200).json({ msg: 'image' })
+}
+
+// DELETE IMAGE
+const deleteImage = async (req, res) => {
+  const { imageURL } = req.body
+
+  if (!imageURL) {
+    throw new customError('Vui lòng cung cấp URL ảnh sản phẩm', 400)
+  }
+
+  const start = imageURL.indexOf('Products')
+  const tmpPublicId = imageURL.slice(start) // "Products/suv1/tmp-1-1667307770831_klv8lu.jpg"
+  const end = tmpPublicId.indexOf('.')
+  const publicId = tmpPublicId.slice(0, end) // "Products/suv1/tmp-1-1667307770831_klv8lu"
+
+  const deletedImg = await cloudinary.uploader.destroy(publicId)
+
+  res.status(200).json({ deletedImg })
 }
 
 module.exports = {
@@ -165,4 +216,5 @@ module.exports = {
   deleteProduct,
   uploadProductImage,
   uploadProductDescImage,
+  deleteImage,
 }
