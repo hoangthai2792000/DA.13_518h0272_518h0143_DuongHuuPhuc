@@ -1,6 +1,8 @@
 const Product = require('../models/Product')
 
 const customError = require('../errors/customError')
+const cloudinary = require('cloudinary').v2
+const fs = require('fs')
 
 // GET ALL PRODUCTS
 const getAllProducts = async (req, res) => {
@@ -22,9 +24,17 @@ const getSingleProduct = async (req, res) => {
 
 // CREATE PRODUCT
 const createProduct = async (req, res) => {
-  const { name, price, category, brand, warrantyPeriod, specs } = req.body
+  const { name, code, price, category, brand, warrantyPeriod, specs } = req.body
 
-  if (!name || !price || !category || !brand || !warrantyPeriod || !specs) {
+  if (
+    !name ||
+    !code ||
+    !price ||
+    !category ||
+    !brand ||
+    !warrantyPeriod ||
+    !specs
+  ) {
     throw new customError('Vui lòng nhập đầy đủ thông tin sản phẩm', 400)
   }
 
@@ -36,6 +46,11 @@ const createProduct = async (req, res) => {
       )
     }
   })
+
+  const isExist = await Product.findOne({ code })
+  if (isExist) {
+    throw new customError('Sản phẩm này đã tồn tại', 400)
+  }
 
   const product = await Product.create(req.body)
   return res.status(201).json({ product })
@@ -52,8 +67,45 @@ const deleteProduct = async (req, res) => {
 }
 
 // UPLOAD IMAGE
-const uploadImage = async (req, res) => {
-  res.send('Upload Image')
+const uploadProductImage = async (req, res) => {
+  // console.log(req.files)
+
+  const { productCode } = req.params
+
+  if (!req.files) {
+    throw new customError('No File Uploaded', 400)
+  }
+
+  const productImgs = req.files.image
+  // console.log(productImgs)
+
+  let result = []
+
+  for (const img of productImgs) {
+    if (!img.mimetype.startsWith('image')) {
+      throw new customError('Image Only!!!', 400)
+    }
+    if (img.size > 1024 * 1024) {
+      throw new customError('Please upload image smaller than 1MB', 400)
+    }
+
+    try {
+      let uploadImg = await cloudinary.uploader.upload(img.tempFilePath, {
+        use_filename: true,
+        folder: `Products/${productCode}`,
+      })
+      result.push(uploadImg.secure_url)
+      // console.log(result)
+      fs.unlinkSync(img.tempFilePath)
+    } catch (error) {
+      throw new customError(error.message, 400)
+    }
+  }
+
+  // console.log(result)
+
+  return result
+  // return res.status(200).json({ msg: 'image' })
 }
 
 module.exports = {
@@ -62,5 +114,5 @@ module.exports = {
   createProduct,
   updateProduct,
   deleteProduct,
-  uploadImage,
+  uploadProductImage,
 }
