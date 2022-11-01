@@ -11,6 +11,7 @@ const ProductSchema = new mongoose.Schema(
       type: String,
       required: [true, 'Vui lòng nhập code sản phẩm'],
       trim: true,
+      unique: true,
     },
     price: {
       type: Number,

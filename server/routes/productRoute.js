@@ -5,6 +5,7 @@ const {
   updateProduct,
   deleteProduct,
   uploadProductImage,
+  uploadProductDescImage,
 } = require('../controllers/productController')
 const {
   authenticateUser,
@@ -20,8 +21,15 @@ router
   .post([authenticateUser, authorizePermissions('admin')], createProduct)
 
 router
-  .route('/upload-image/:productCode')
+  .route('/upload-product-image/:productCode')
   .post([authenticateUser, authorizePermissions('admin')], uploadProductImage)
+
+router
+  .route('/upload-productDesc-image/:productCode')
+  .post(
+    [authenticateUser, authorizePermissions('admin')],
+    uploadProductDescImage
+  )
 
 router
   .route('/:id')
