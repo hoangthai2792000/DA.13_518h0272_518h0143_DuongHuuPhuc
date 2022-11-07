@@ -7,7 +7,7 @@ const uploadImage = require('../utils/uploadImage')
 
 // GET ALL PRODUCTS
 const getAllProducts = async (req, res) => {
-  const products = await Product.find({}, 'image name price')
+  const products = await Product.find({}, 'image name price size')
 
   res.status(200).json({ totalProducts: products.length, products })
 }
@@ -25,28 +25,11 @@ const getSingleProduct = async (req, res) => {
 
 // CREATE PRODUCT
 const createProduct = async (req, res) => {
-  const { name, code, price, category, brand, warrantyPeriod, specs } = req.body
+  const { name, code, price, brand, size } = req.body
 
-  if (
-    !name ||
-    !code ||
-    !price ||
-    !category ||
-    !brand ||
-    !warrantyPeriod ||
-    !specs
-  ) {
+  if (!name || !code || !price || !brand) {
     throw new customError('Vui lòng nhập đầy đủ thông tin sản phẩm', 400)
   }
-
-  specs.map((s) => {
-    if (!s.k || !s.v) {
-      throw new customError(
-        'Vui lòng nhập đầy đủ thông số kỹ thuật của sản phẩm',
-        400
-      )
-    }
-  })
 
   const isExist = await Product.findOne({ code })
   if (isExist) {
@@ -59,7 +42,20 @@ const createProduct = async (req, res) => {
 
 // UPDATE PRODUCT
 const updateProduct = async (req, res) => {
-  res.send('Update Product')
+  const product = await Product.findOneAndUpdate(
+    { _id: req.params.id },
+    req.body,
+    { new: true, runValidators: true }
+  )
+
+  if (!product) {
+    throw new customError(
+      `Can not find any product with the ID: ${req.prams.id}`,
+      400
+    )
+  }
+
+  res.status(200).json({ product })
 }
 
 // DELETE PRODUCT
@@ -76,23 +72,24 @@ const uploadProductImage = async (req, res) => {
   return res.status(200).json({ result })
 }
 
-// UPLOAD PRODUCT DESCRIPTION IMAGE
-const uploadProductDescImage = async (req, res) => {
-  const { productCode } = req.params
-
-  const result = await uploadImage(productCode, req.files, 'desc')
-
-  return res.status(200).json({ result })
-}
-
 // DELETE IMAGE
 const deleteImage = async (req, res) => {
   const { imageURL } = req.body
+  const { productCode } = req.params
 
   if (!imageURL) {
     throw new customError('Vui lòng cung cấp URL ảnh sản phẩm', 400)
   }
 
+  if (!productCode) {
+    throw new customError('Vui lòng cung cấp code sản phẩm', 400)
+  }
+  const product = await Product.findOne({ code: productCode })
+  if (!product) {
+    throw new customError('Sản phẩm không tồn tại', 400)
+  }
+
+  // REMOVE IMAGE ON CLOUDINARY
   const start = imageURL.indexOf('Products')
   const tmpPublicId = imageURL.slice(start) // "Products/suv1/tmp-1-1667307770831_klv8lu.jpg"
   const end = tmpPublicId.indexOf('.')
@@ -100,7 +97,13 @@ const deleteImage = async (req, res) => {
 
   const deletedImg = await cloudinary.uploader.destroy(publicId)
 
-  res.status(200).json({ deletedImg })
+  // REMOVE IMAGE URL IN DB
+  const newImgArr = product.image.filter((image) => image !== imageURL)
+  product.image = newImgArr
+
+  await product.save()
+
+  res.status(200).json({ product, deletedImg })
 }
 
 module.exports = {
@@ -110,6 +113,5 @@ module.exports = {
   updateProduct,
   deleteProduct,
   uploadProductImage,
-  uploadProductDescImage,
   deleteImage,
 }

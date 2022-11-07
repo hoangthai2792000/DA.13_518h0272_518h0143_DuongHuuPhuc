@@ -26,14 +26,7 @@ router
   .post([authenticateUser, authorizePermissions('admin')], uploadProductImage)
 
 router
-  .route('/upload-productDesc-image/:productCode')
-  .post(
-    [authenticateUser, authorizePermissions('admin')],
-    uploadProductDescImage
-  )
-
-router
-  .route('/delete-image')
+  .route('/delete-image/:productCode')
   .delete([authenticateUser, authorizePermissions('admin')], deleteImage)
 
 router

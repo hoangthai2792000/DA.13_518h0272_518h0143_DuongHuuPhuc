@@ -2,7 +2,7 @@ const customError = require('../errors/customError')
 const cloudinary = require('cloudinary').v2
 const fs = require('fs')
 
-const uploadImage = async (productCode, reqFiles, desc = '') => {
+const uploadImage = async (productCode, reqFiles) => {
   if (!productCode) {
     throw new customError('Vui lòng cung cấp code sản phẩm', 400)
   }
@@ -15,6 +15,7 @@ const uploadImage = async (productCode, reqFiles, desc = '') => {
   // console.log(productImgs)
   let result = []
 
+  // If user upload more than 1 image
   if (productImgs.length >= 2) {
     for (const img of productImgs) {
       if (!img.mimetype.startsWith('image')) {
@@ -27,7 +28,7 @@ const uploadImage = async (productCode, reqFiles, desc = '') => {
       try {
         let uploadImg = await cloudinary.uploader.upload(img.tempFilePath, {
           use_filename: true,
-          folder: `Products/${productCode}/${desc}`,
+          folder: `Products/${productCode}`,
         })
         result.push(uploadImg.secure_url)
         fs.unlinkSync(img.tempFilePath)
@@ -38,6 +39,7 @@ const uploadImage = async (productCode, reqFiles, desc = '') => {
     return result
   }
 
+  // If only 1 image
   if (!productImgs.mimetype.startsWith('image')) {
     throw new customError('Image Only!!!', 400)
   }
@@ -48,7 +50,7 @@ const uploadImage = async (productCode, reqFiles, desc = '') => {
   try {
     let uploadImg = await cloudinary.uploader.upload(productImgs.tempFilePath, {
       use_filename: true,
-      folder: `Products/${productCode}/${desc}`,
+      folder: `Products/${productCode}/`,
     })
     result.push(uploadImg.secure_url)
     fs.unlinkSync(productImgs.tempFilePath)
