@@ -61,4 +61,28 @@ const ProductSchema = new mongoose.Schema(
   { timestamps: true }
 )
 
+// ProductSchema.statics.isAvailable = function (size){
+//   let totalStock = 0
+//   size.map((s)=>{
+//     totalStock += s.sizeStock
+//   })
+//   if(totalStock<1){
+//     this.available = false
+//   }
+// }
+
+ProductSchema.pre('findOneAndUpdate', async function () {
+  let totalStock = 0
+  let size = this.getUpdate().size
+
+  if (size) {
+    size.map((s) => (totalStock += s.sizeStock))
+    if (totalStock < 1) {
+      this.set({ available: false })
+    } else {
+      this.set({ available: true })
+    }
+  } else return
+})
+
 module.exports = mongoose.model('Product', ProductSchema)
