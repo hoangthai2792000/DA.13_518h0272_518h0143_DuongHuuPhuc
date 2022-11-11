@@ -10,13 +10,19 @@ function Register() {
         password:"",
         cpassword:"",
     });
-    const [errors, setErrors] = useState({})
+    const [errors, setErrors] = useState({
+
+    });
+    const validations = (values) => {
+        const errors = {}
+    }
     const handleChange = (e) => {
         setValues({ ...values, [e.target.name]: e.target.value, });
     };
 
-    const handleFormSubmit = (e) => {
+    const handleSubmit = (e) => {
        e.preventDefault();
+       setErrors(validate(values));
     };
     return(
         <div>
@@ -48,9 +54,11 @@ function Register() {
             </div>
             <button type='submit' onClick={handleFormSubmit}>Đăng ký</button>
         </form>
-        <p>
-            Bạn đã là thành viên?<Link to='/signin'>Đăng nhập tại đây</Link>
-        </p>
+        <span>Bạn đã là thành viên
+            <a href='/signin'>
+            Đăng nhập tại đây
+            </a>
+        </span>
         </div>
     )       
 }
