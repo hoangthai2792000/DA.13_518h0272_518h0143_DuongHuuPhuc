@@ -16,9 +16,7 @@ const getAllProducts = async (req, res) => {
 
 // GET SINGLE PRODUCT
 const getSingleProduct = async (req, res) => {
-  const product = await Product.findOne({ _id: req.params.id }).populate({
-    path: 'reviews',
-  })
+  const product = await Product.findOne({ _id: req.params.id })
 
   if (!product) {
     throw new customError(`No product with the id: ${req.params.id}`, 400)
@@ -29,7 +27,7 @@ const getSingleProduct = async (req, res) => {
 
 // CREATE PRODUCT
 const createProduct = async (req, res) => {
-  const { name, code, price, brand, size } = req.body
+  const { name, code, price, brand } = req.body
 
   if (!name || !code || !price || !brand) {
     throw new customError('Vui lòng nhập đầy đủ thông tin sản phẩm', 400)
@@ -40,15 +38,15 @@ const createProduct = async (req, res) => {
     throw new customError('Sản phẩm này đã tồn tại', 400)
   }
 
-  // Insert Image To Milvus
-  const imgToMilvus = await axios.post(
-    'http://127.0.0.1:8000/api/v1/insert-image-to-milvus',
-    {
-      imgURL: req.body.image,
-      productCode: code,
-      productBrand: brand,
-    }
-  )
+  // // Insert Image To Milvus
+  // const imgToMilvus = await axios.post(
+  //   'http://127.0.0.1:8000/api/v1/insert-image-to-milvus',
+  //   {
+  //     imgURL: req.body.image,
+  //     productCode: code,
+  //     productBrand: brand,
+  //   }
+  // )
   // console.log(imgToMilvus.data)
 
   const product = await Product.create(req.body)

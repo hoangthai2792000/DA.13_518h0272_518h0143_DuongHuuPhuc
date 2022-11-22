@@ -1,8 +1,8 @@
 const mongoose = require('mongoose')
 
-const SingleOrderItemsSchema = new mongoose.Schema({
+const SingleOrderItemSchema = new mongoose.Schema({
   name: { type: String, required: true },
-  image: { type: String, required: true },
+  code: { type: String, required: true },
   price: { type: Number, required: true },
   amount: { type: Number, required: true },
   product: {
@@ -27,18 +27,18 @@ const OrderSchema = new mongoose.Schema(
       required: true,
     },
     orderItems: {
-      type: [SingleOrderItemsSchema],
+      type: [SingleOrderItemSchema],
     },
     status: {
       type: String,
       enum: [
-        'Chờ xử lý',
+        'Đang xử lý',
         'Thất bại',
         'Đang vận chuyển',
         'Đã thanh toán',
         'Đã hủy',
       ],
-      default: 'Chờ xử lý',
+      default: 'Đang xử lý',
     },
     user: {
       type: mongoose.Types.ObjectId,

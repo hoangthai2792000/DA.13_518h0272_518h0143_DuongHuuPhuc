@@ -30,7 +30,7 @@ const ReviewSchema = new mongoose.Schema(
 // One user One review
 ReviewSchema.index({ product: 1, user: 1 }, { unique: true })
 
-ReviewSchema.statics.averageRating = async function (product) {
+ReviewSchema.statics.averageRating = async function (productId) {
   const result = await this.aggregate([
     { $match: { product: productId } },
     {
