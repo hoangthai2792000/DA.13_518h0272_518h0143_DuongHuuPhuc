@@ -22,7 +22,7 @@ const ProductSchema = new mongoose.Schema(
       type: String,
       required: [true, 'Vui lòng nhập thương hiệu sản phẩm'],
       enum: {
-        values: ['JORDAN', 'NIKE', 'ADIDAS', 'VANS', 'CONVERSE'],
+        values: ['Nike', 'Adidas', 'Converse', 'Vans'],
         message: '{VALUE} is not supported',
       },
       trim: true,
@@ -61,16 +61,6 @@ const ProductSchema = new mongoose.Schema(
   { timestamps: true }
 )
 
-// ProductSchema.statics.isAvailable = function (size){
-//   let totalStock = 0
-//   size.map((s)=>{
-//     totalStock += s.sizeStock
-//   })
-//   if(totalStock<1){
-//     this.available = false
-//   }
-// }
-
 ProductSchema.pre('findOneAndUpdate', async function () {
   let totalStock = 0
   let size = this.getUpdate().size
@@ -83,6 +73,10 @@ ProductSchema.pre('findOneAndUpdate', async function () {
       this.set({ available: true })
     }
   } else return
+})
+
+ProductSchema.pre('remove', async function () {
+  await this.model('Review').deleteMany({ product: this._id })
 })
 
 module.exports = mongoose.model('Product', ProductSchema)
