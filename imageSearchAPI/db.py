@@ -26,3 +26,17 @@ async def getAllProducts():
 async def getProductWithCode(code):
     product = await collection.find_one({"code":code})
     return product
+
+async def getManyProductWithCodes(codesList):
+    products = []
+    cursor = collection.find({"code": {"$in": codesList}})
+
+    async for document in cursor:
+        products.append({'name': Product(**document).name,
+                         '_id': str(Product(**document).id),
+                         'price': Product(**document).price,
+                         'size': Product(**document).size,
+                         'image': Product(**document).image})
+
+    # print(pros)
+    return products
