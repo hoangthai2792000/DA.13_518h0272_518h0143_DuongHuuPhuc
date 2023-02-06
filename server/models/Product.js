@@ -22,7 +22,7 @@ const ProductSchema = new mongoose.Schema(
       type: String,
       required: [true, 'Vui lòng nhập thương hiệu sản phẩm'],
       enum: {
-        values: ['JORDAN', 'NIKE', 'ADIDAS', 'VANS', 'CONVERSE'],
+        values: ['Nike', 'Adidas', 'Converse', 'Vans'],
         message: '{VALUE} is not supported',
       },
       trim: true,
@@ -58,18 +58,15 @@ const ProductSchema = new mongoose.Schema(
       default: '',
     },
   },
-  { timestamps: true }
+  { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 )
 
-// ProductSchema.statics.isAvailable = function (size){
-//   let totalStock = 0
-//   size.map((s)=>{
-//     totalStock += s.sizeStock
-//   })
-//   if(totalStock<1){
-//     this.available = false
-//   }
-// }
+ProductSchema.virtual('reviews', {
+  ref: 'Review',
+  localField: '_id',
+  foreignField: 'product',
+  justOne: false,
+})
 
 ProductSchema.pre('findOneAndUpdate', async function () {
   let totalStock = 0
@@ -83,6 +80,10 @@ ProductSchema.pre('findOneAndUpdate', async function () {
       this.set({ available: true })
     }
   } else return
+})
+
+ProductSchema.pre('remove', async function () {
+  await this.model('Review').deleteMany({ product: this._id })
 })
 
 module.exports = mongoose.model('Product', ProductSchema)

@@ -70,7 +70,7 @@ const login = async (req, res) => {
   }
 
   if (!user.isVerified) {
-    throw new CustomError(
+    throw new customError(
       'Vui lòng kiểm tra email để hoàn thành đăng ký tài khoản',
       401
     )
