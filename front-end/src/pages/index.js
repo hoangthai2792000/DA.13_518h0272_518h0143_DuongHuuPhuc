@@ -2,7 +2,7 @@ import Home from './HomePage'
 import Products from './ProductPage'
 import SingleProduct from './SingleProductPage'
 import About from './AboutPage'
-import Cart from './CartPage'
+import CartPage from './CartPage'
 import Error from './ErrorPage'
 import Checkout from './CheckoutPage'
 import PrivateRoute from './PrivateRoute'
@@ -13,7 +13,7 @@ export {
     Products,
     SingleProduct,
     About,
-    Cart,
+    CartPage,
     Error,
     Checkout,
     PrivateRoute,
