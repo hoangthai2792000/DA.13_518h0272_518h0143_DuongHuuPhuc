@@ -9,7 +9,10 @@ const uploadImage = require('../utils/uploadImage')
 
 // GET ALL PRODUCTS
 const getAllProducts = async (req, res) => {
-  const products = await Product.find({}, 'image name price size')
+  const products = await Product.find(
+    {},
+    'image name price size sold brand code'
+  )
 
   res.status(200).json({ totalProducts: products.length, products })
 }
@@ -59,6 +62,8 @@ const createProduct = async (req, res) => {
   } catch (error) {
     throw new customError(error.response.data.msg, error.response.status)
   }
+  // const product = await Product.create(req.body)
+  // return res.status(201).json({product})
 }
 
 // UPDATE PRODUCT
@@ -105,8 +110,8 @@ const deleteProduct = async (req, res) => {
     )
   }
 
-  await cloudinary.api.delete_resources_by_prefix(`Products/${product.code}`)
-  await cloudinary.api.delete_folder(`Products/${product.code}`)
+  // await cloudinary.api.delete_resources_by_prefix(`Products/${product.code}`)
+  // await cloudinary.api.delete_folder(`Products/${product.code}`)
   await product.remove()
 
   res.status(200).json({ msg: 'Product Deleted' })
