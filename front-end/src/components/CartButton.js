@@ -5,18 +5,20 @@ import { FaShoppingCart, FaUserMinus, FaUserPlus } from 'react-icons/fa'
 const CartButton = () => {
   return (
     <Wrapper className='cart-btn-wrapper'>
-        <Link to='/cart' className='cart-btn'>
+        <Link to='/cart' style={{textDecoration:"none",borderBottomColor:'red'}} className='cart-btn'>
             Cart
             <span className='cart-container'>
                 <FaShoppingCart/>
-                <span className='cart-value'>
-                    12
-                </span>
             </span>
         </Link>
-        <button type='button' className='auth-btn'>
-            Login <FaUserMinus/>
-        </button>
+        <Link to='/Login' style={{textDecoration:"none",borderBottomColor:'red'}}  className='cart-btn'>
+            Login
+            <span className='cart-container'>
+            <FaUserMinus/>
+            </span>
+        </Link>
+
+     
     </Wrapper>
   )
 }

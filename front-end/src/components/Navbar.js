@@ -16,7 +16,11 @@ const Navbar = () => {
             <FaBars/>
           </button>
         </div>
-        <ul className='nav-links'></ul>
+        <ul className='nav-links'>
+        <li><Link to="/" style={{textDecoration:"none",borderBottomColor:'red'}}>Home</Link></li>
+        <li><Link to="/about" style={{textDecoration:"none"}}>About</Link></li>
+        <li><Link to="/products" style={{textDecoration:"none"}}>Products</Link></li>
+        </ul>
         <CartButton/>
       </div>
     </NavContainer>
@@ -53,6 +57,7 @@ const NavContainer = styled.nav`
   }
   .nav-links {
     display: none;
+    list-style-type: none;
   }
   .cart-btn-wrapper {
     display: none;
