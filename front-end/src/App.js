@@ -12,6 +12,8 @@ import PrivateRoute from './pages/PrivateRoute';
 import Checkout from './pages/CheckoutPage';
 import CartPage from './pages/CartPage';
 import Login from './pages/Login';
+import ForgotPassword from './pages/ForgotPassword';
+
 function App() {
   return (
       <Router>
@@ -23,6 +25,8 @@ function App() {
           <Route exact path='/cart' element={<CartPage/>}  />
           <Route exact path='/products' element={<Products/>}  />
           <Route exact path='/login' element={<Login/>}  />
+          <Route exact path='/logout' element={<Login/>}  />
+          <Route exact path='/forgot' element={<ForgotPassword/>}  />
           <Route path='*' element={<Error/>} />
         </Routes>
         

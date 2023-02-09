@@ -2,13 +2,12 @@ import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import logo from '../assets/logo.jpg'
-
+import "./Hero.css"
 const Hero = () => {
   return (
     <Wrapper className='section-center'>
       <article className='content'>
-        <h1>
-
+        <h1 className=''>
           Design your <br/>
           comfort zone
         </h1>
@@ -19,11 +18,11 @@ const Hero = () => {
       <Link to='/products' className='btn hero-btn'>
         Shop now
       </Link>
-      </article>
-      <article className='img-container'>
-        <img src={logo} alt='nice sneaker' className='main-img'/>
-        <img src={logo} alt='nice sneaker1' className='main-img'/>
-      </article>
+    </article>
+    <article className='img-container'>
+      <img src={logo} alt='nice sneaker' className='main-img'/>
+      <img src={logo} alt='nice sneaker1' className='main-img'/>
+    </article>
     </Wrapper>
   )
 }
