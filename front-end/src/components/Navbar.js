@@ -1,4 +1,4 @@
-import React,{useEffect} from "react";
+import React, { useEffect } from "react";
 import "./Navbar.css";
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.jpg";
@@ -7,7 +7,6 @@ import CartButton from "./CartButton";
 import axios from "axios";
 
 const Navbar = () => {
-  
   return (
     // <NavContainer>
     //   <div className="nav-center">
@@ -70,6 +69,14 @@ const Navbar = () => {
                 style={{ textDecoration: "none", color: "black" }}
               >
                 Products
+              </Link>
+            </li>
+            <li className="p-2 bao1">
+              <Link
+                to="/products-management"
+                style={{ textDecoration: "none", color: "black" }}
+              >
+                Product Management
               </Link>
             </li>
           </ul>

@@ -15,6 +15,7 @@ import Login from "./pages/Login";
 import Forgot from "./pages/Forgot";
 import Signup from "./pages/Signup";
 import ProductDetail from "./pages/ProductDetail";
+import ProductManagement from "./pages/admin/ProductManagement";
 function App() {
   return (
     <Router>
@@ -28,6 +29,11 @@ function App() {
         <Route exact path="/account/login" element={<Login />} />
         <Route exact path="/signup" element={<Signup />} />
         <Route exact path="/forgot" element={<Forgot />} />
+        <Route
+          exact
+          path="/products-management"
+          element={<ProductManagement />}
+        />
         <Route path="*" element={<Error />} />
       </Routes>
       <Footer />

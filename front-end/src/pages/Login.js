@@ -2,11 +2,25 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import "./Login.css";
+import axios from "axios";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [pwd, setPwd] = useState("");
-  const handleSubmit = () => {
-    console.log(email, pwd);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const url = "http://localhost:5000/api/v1/auth/login";
+    axios
+      .post(url, {
+        email: email,
+        password: pwd,
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
   return (
     <>
@@ -16,7 +30,7 @@ const Login = () => {
          align-items-center"
           onSubmit={handleSubmit}
         >
-          <h4 style={{ fontWeight: "bold" }}>Đăng Nhập</h4>
+          <h4 style={{ fontWeight: "bold" }}>Log In</h4>
           <div
             style={{
               padding: "20px",
@@ -35,7 +49,7 @@ const Login = () => {
                 type="email"
                 id="email"
                 value={email}
-                placeholder={"Nhap email"}
+                placeholder={"Email"}
                 className="form-control"
                 onChange={(e) => setEmail(e.target.value)}
               ></input>
@@ -48,14 +62,14 @@ const Login = () => {
                 type="password"
                 id="pwd"
                 value={pwd}
-                placeholder={"Nhap mat khau"}
+                placeholder={"Password"}
                 className="form-control"
                 onChange={(e) => setPwd(e.target.value)}
               ></input>
             </div>
             <div className="mt-2 d-flex justify-content-center">
               <button type="submit" className="btn-login1 p-2">
-                Đăng nhập
+                Login
               </button>
             </div>
             <div

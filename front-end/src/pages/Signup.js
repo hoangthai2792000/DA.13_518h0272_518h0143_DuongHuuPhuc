@@ -2,13 +2,31 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import "./Signup.css";
+import axios from "axios";
 function Signup() {
   const [fullname, setFullname] = useState("");
   const [email, setEmail] = useState("");
   const [pwd, setPwd] = useState("");
   const [re_pwd, setRePwd] = useState("");
-  const handleSubmit = () => {
-    console.log("hi");
+  const [phone, address] = useState("");
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const url = "http://localhost:5000/api/v1/auth/register";
+    axios
+      .post(url, {
+        name: fullname,
+        email: email,
+        password: pwd,
+        phoneNumber: phone,
+        address: address,
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
   return (
     <>
@@ -63,7 +81,7 @@ function Signup() {
          align-items-center"
           onSubmit={handleSubmit}
         >
-          <h4 style={{ fontWeight: "bold", marginTop: "-10px" }}>Đăng ký</h4>
+          <h4 style={{ fontWeight: "bold", marginTop: "-10px" }}>Sign Up</h4>
           <div
             style={{
               padding: "20px",
@@ -80,7 +98,7 @@ function Signup() {
                 type="text"
                 id="fullname"
                 value={fullname}
-                placeholder={"Nhap ten day du"}
+                placeholder={"Full name"}
                 className="form-control"
                 onChange={(e) => setFullname(e.target.value)}
               ></input>
@@ -93,7 +111,7 @@ function Signup() {
                 type="email"
                 id="email"
                 value={email}
-                placeholder={"Nhap email"}
+                placeholder={"Email address"}
                 className="form-control"
                 onChange={(e) => setEmail(e.target.value)}
               ></input>
@@ -106,27 +124,27 @@ function Signup() {
                 type="password"
                 id="pwd"
                 value={pwd}
-                placeholder={"Nhap mat khau"}
+                placeholder={"Password"}
                 className="form-control"
                 onChange={(e) => setPwd(e.target.value)}
               ></input>
             </div>
             <div className="form-group">
               <label htmlFor="re_pwd" className="form-lable">
-                Reenter password
+                Repeat password
               </label>
               <input
                 type="password"
                 id="re_pwd"
                 value={re_pwd}
-                placeholder={"Nhap mat khau"}
+                placeholder={"Repeat Password"}
                 className="form-control"
                 onChange={(e) => setRePwd(e.target.value)}
               ></input>
             </div>
             <div className="mt-2 d-flex justify-content-center">
               <button type="submit" className="btn-signup">
-                Đăng ký
+                Sign Up
               </button>
             </div>
             <p className="small mb-2 mt-2 pb-lg-2">
@@ -136,7 +154,7 @@ function Signup() {
                 to="/account/login"
               >
                 <ion-icon name="arrow-back-outline"></ion-icon>
-                Đăng nhập
+                Log In
               </Link>
             </p>
           </div>

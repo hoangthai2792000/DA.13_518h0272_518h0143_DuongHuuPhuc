@@ -18,7 +18,7 @@ function Forgot() {
          align-items-center"
             onSubmit={handleSubmit}
           >
-            <h4 style={{ fontWeight: "bold" }}>Quên Mật Khẩu</h4>
+            <h4 style={{ fontWeight: "bold" }}>Forgot Password</h4>
             <div
               style={{
                 padding: "20px",
@@ -36,14 +36,14 @@ function Forgot() {
                   type="email"
                   id="email"
                   value={email}
-                  placeholder={"Nhap email"}
+                  placeholder={"Email"}
                   className="form-control"
                   onChange={(e) => setEmail(e.target.value)}
                 ></input>
               </div>
               <div className="mt-2 d-flex justify-content-center">
                 <button type="submit" className="btn-forgot">
-                  Lấy lại mật khẩu
+                  Reset Password
                 </button>
               </div>
               <p className="small mb-2 mt-2 pb-lg-2">
