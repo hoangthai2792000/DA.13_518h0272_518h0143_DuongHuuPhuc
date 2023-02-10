@@ -1,0 +1,149 @@
+import React, { useState } from "react";
+import styled from "styled-components";
+import { Link } from "react-router-dom";
+import "./Signup.css";
+function Signup() {
+  const [fullname, setFullname] = useState("");
+  const [email, setEmail] = useState("");
+  const [pwd, setPwd] = useState("");
+  const [re_pwd, setRePwd] = useState("");
+  const handleSubmit = () => {
+    console.log("hi");
+  };
+  return (
+    <>
+      <section className="login-page">
+        {/* <form
+          className="form-container d-flex justify-content-center
+         align-items-center"
+          onSubmit={handleSubmit}
+        >
+          <h4 style={{ fontWeight: "bold" }}>Quên Mật Khẩu</h4>
+          <div
+            style={{
+              padding: "20px",
+              backgroundColor: "white",
+              borderRadius: "5px",
+              width: "30%",
+              marginTop: "20px",
+            }}
+          >
+            <div className="form-group">
+              <label htmlFor="email" className="form-lable">
+                Email
+              </label>
+              <input
+                type="email"
+                id="email"
+                value={email}
+                placeholder={"Nhap email"}
+                className="form-control"
+                onChange={(e) => setEmail(e.target.value)}
+              ></input>
+            </div>
+            <div className="mt-2 d-flex justify-content-center">
+              <button type="submit" className="btn-login1">
+                Lấy lại mật khẩu
+              </button>
+            </div>
+            <p className="small mb-2 mt-2 pb-lg-2">
+              <Link
+                style={{ textDecoration: "none" }}
+                className="text-black-50"
+                to="/account/login"
+              >
+                <ion-icon name="arrow-back-outline"></ion-icon>
+                Đăng nhập
+              </Link>
+            </p>
+          </div>
+        </form> */}
+        <form
+          className="form-container d-flex justify-content-center
+         align-items-center"
+          onSubmit={handleSubmit}
+        >
+          <h4 style={{ fontWeight: "bold", marginTop: "-10px" }}>Đăng ký</h4>
+          <div
+            style={{
+              padding: "20px",
+              backgroundColor: "white",
+              borderRadius: "5px",
+              width: "30%",
+            }}
+          >
+            <div className="form-group">
+              <label htmlFor="fullname" className="form-lable">
+                Name
+              </label>
+              <input
+                type="text"
+                id="fullname"
+                value={fullname}
+                placeholder={"Nhap ten day du"}
+                className="form-control"
+                onChange={(e) => setFullname(e.target.value)}
+              ></input>
+            </div>
+            <div className="form-group">
+              <label htmlFor="email" className="form-lable">
+                Email
+              </label>
+              <input
+                type="email"
+                id="email"
+                value={email}
+                placeholder={"Nhap email"}
+                className="form-control"
+                onChange={(e) => setEmail(e.target.value)}
+              ></input>
+            </div>
+            <div className="form-group">
+              <label htmlFor="pwd" className="form-lable">
+                Password
+              </label>
+              <input
+                type="password"
+                id="pwd"
+                value={pwd}
+                placeholder={"Nhap mat khau"}
+                className="form-control"
+                onChange={(e) => setPwd(e.target.value)}
+              ></input>
+            </div>
+            <div className="form-group">
+              <label htmlFor="re_pwd" className="form-lable">
+                Reenter password
+              </label>
+              <input
+                type="password"
+                id="re_pwd"
+                value={re_pwd}
+                placeholder={"Nhap mat khau"}
+                className="form-control"
+                onChange={(e) => setRePwd(e.target.value)}
+              ></input>
+            </div>
+            <div className="mt-2 d-flex justify-content-center">
+              <button type="submit" className="btn-signup">
+                Đăng ký
+              </button>
+            </div>
+            <p className="small mb-2 mt-2 pb-lg-2">
+              <Link
+                style={{ textDecoration: "none" }}
+                className="text-black-50"
+                to="/account/login"
+              >
+                <ion-icon name="arrow-back-outline"></ion-icon>
+                Đăng nhập
+              </Link>
+            </p>
+          </div>
+        </form>
+      </section>
+    </>
+  );
+}
+
+export default Signup;

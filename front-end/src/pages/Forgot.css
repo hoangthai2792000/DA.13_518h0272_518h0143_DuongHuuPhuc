@@ -30,14 +30,12 @@ input::-webkit-input-placeholder {
   outline: none;
   font-size: 1.4rem;
 }
-.btn-login1 {
+.btn-forgot {
   width: 100%;
   background-color: white;
-  border: 1px solid #ab7a5f;
-  border-radius: 3px;
-  font-weight: bold;
+  border: 1px solid yellow;
 }
-.btn-login1:hover {
+.btn-forgot:hover {
   width: 100%;
-  background-color: #ab7a5f;
+  background-color: yellow;
 }

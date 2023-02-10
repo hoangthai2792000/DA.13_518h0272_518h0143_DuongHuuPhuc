@@ -1,0 +1,38 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.navbar-container {
+  align-items: center;
+  display: grid;
+  grid-template-columns: 20% 60% 20%;
+  grid-template-rows: 56.6458px;
+}
+.logsign{
+  justify-content: center;
+}
+ul {
+  list-style-type: none;
+  display: inline;
+}
+ul li {
+  display: inline;
+  margin-left: 10px;
+  cursor: pointer;
+  font-weight: bold;
+}
+.bao {
+  justify-content: center;
+  text-align: center;
+}
+.bao1:hover {
+  border-bottom: 3px solid #ab7a5f;
+}
+.btn-login {
+  border: 2px solid white;
+  border-radius: 5px;
+}
+.btn-login:hover {
+  border-color: brown;
+}

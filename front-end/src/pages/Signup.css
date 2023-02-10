@@ -2,6 +2,7 @@
   width: 100%;
   min-height: calc(100vh - 50px);
 }
+
 input[type="text"],
 input[type="email"],
 input[type="password"] {
@@ -30,14 +31,12 @@ input::-webkit-input-placeholder {
   outline: none;
   font-size: 1.4rem;
 }
-.btn-login1 {
+.btn-signup {
   width: 100%;
   background-color: white;
-  border: 1px solid #ab7a5f;
-  border-radius: 3px;
-  font-weight: bold;
+  border: 1px solid yellow;
 }
-.btn-login1:hover {
+.btn-signup:hover {
   width: 100%;
-  background-color: #ab7a5f;
+  background-color: yellow;
 }

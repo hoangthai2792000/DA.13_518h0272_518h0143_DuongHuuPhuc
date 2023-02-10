@@ -1,9 +1,19 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { FaSearch } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
 
 const Product = ({ image, name, price, id }) => {
+  
+  useEffect(()=>{
+    axios.get("http://localhost:5000/api/v1/product")
+    .then((response) => {
+      console.log(response.data)
+  }).catch((error) => {
+    console.log(error)
+  })  
+  },[])
   return (
     <Wrapper>
       <div className='container'>

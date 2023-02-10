@@ -1,119 +1,98 @@
-import React, { useState } from 'react'
-import styled from 'styled-components'
-import PageHero  from '../components/PageHero'
-import { Link } from 'react-router-dom'
-import "./Login.css"
-
+import React, { useState } from "react";
+import styled from "styled-components";
+import { Link } from "react-router-dom";
+import "./Login.css";
 const Login = () => {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const handleEmailInput = (e) => setEmail(e.target.value);
-  const handlePasswordInput = (e) => setPassword(e.target.value);
-  const handleSubmit = () =>{
-    console.log(email,password)
-  }
+  const [email, setEmail] = useState("");
+  const [pwd, setPwd] = useState("");
+  const handleSubmit = () => {
+    console.log(email, pwd);
+  };
   return (
-    <main className='bg-dark'>
-      <PageHero title='Login'/>
-      <Wrapper className='page section section-center'>
-      <section className='login_container'>
-        <h2 className='title'>Đăng nhập tài khoản</h2>
-        
-        <form onSubmit={handleSubmit}>
-          <div>
-          <label htmlFor="email">
-              Email
-            </label>
-          <input type="email" id="email"
-            // ref={userRef}
-            value={email}
-            onChange={handleEmailInput}
-            autoComplete="off"
-            // required 
-            placeholder='Nhập địa chỉ email'
-          />
+    <>
+      <section className="login-page">
+        <form
+          className="form-container d-flex justify-content-center
+         align-items-center"
+          onSubmit={handleSubmit}
+        >
+          <h4 style={{ fontWeight: "bold" }}>Đăng Nhập</h4>
+          <div
+            style={{
+              padding: "20px",
+              backgroundColor: "white",
+              borderRadius: "5px",
+              width: "30%",
+              marginTop: "20px",
+              boxShadow: "5px 5px 5px 5px #EBEBEB",
+            }}
+          >
+            <div className="form-group">
+              <label htmlFor="email" className="form-lable">
+                Email
+              </label>
+              <input
+                type="email"
+                id="email"
+                value={email}
+                placeholder={"Nhap email"}
+                className="form-control"
+                onChange={(e) => setEmail(e.target.value)}
+              ></input>
+            </div>
+            <div className="form-group">
+              <label htmlFor="pwd" className="form-lable">
+                Password
+              </label>
+              <input
+                type="password"
+                id="pwd"
+                value={pwd}
+                placeholder={"Nhap mat khau"}
+                className="form-control"
+                onChange={(e) => setPwd(e.target.value)}
+              ></input>
+            </div>
+            <div className="mt-2 d-flex justify-content-center">
+              <button type="submit" className="btn-login1 p-2">
+                Đăng nhập
+              </button>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+                marginTop: "10px",
+              }}
+            >
+              <p
+                className="small mb-2 mt-2 pb-lg-2 me-2 d-flex justify-content-center
+         align-items-center"
+              >
+                <Link
+                  style={{ textDecoration: "none" }}
+                  className="text-black-50"
+                  to="/forgot"
+                >
+                  Forgot password?
+                </Link>
+              </p>
+              <p className="small mb-2 mt-2 pb-lg-2">
+                <Link
+                  style={{ textDecoration: "none" }}
+                  className="text-black-50"
+                  to="/signup"
+                >
+                  Sign up
+                </Link>
+              </p>
+            </div>
           </div>
-          <div>
-          <label htmlFor="password">
-              Mật khẩu
-            </label>
-          <input
-            type="password"
-            id="password"
-            // ref={userRef}
-            value={password}
-            onChange={handlePasswordInput}
-            autoComplete="off"
-            // required 
-            placeholder='Nhập mật khảu'
-          />
-          </div>
-          
-          <div>
-            <button className="btn btn-info btn-lg btn-block" type="submit">Đăng nhập</button>
-          </div>
-          <p>
-          <Link to='/forgot'>
-            Quên mật khẩu?
-          </Link>
-          </p>
         </form>
       </section>
-      </Wrapper>
-    </main>
-  )
-}
-const Wrapper = styled.div`
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
-    width:225px;
+    </>
+  );
+};
 
-    .cart-btn {
-        color: var(--clr-grey-1);
-        font-size: 1.5rem;
-        letter-spacing: var(--spacing);
-        color: var(--clr-grey-1);
-        display: flex;
-        align-items: center;
-    }
-    .cart-container {
-        display: flex;
-        align-items: center;
-        position: relative;
-        svg {
-            height: 1.6rem;
-            margin-left: 5px;
-        }
-    }
-    .cart-value {
-        position: absolute;
-        top: -10px;
-        right: -16px;
-        background: var(--clr-primary-5);
-        width: 16px;
-        height: 16px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 50%;
-        font-size: 0.75rem;
-        color: var(--clr-white);
-        padding: 12px;
-    }
-    .auth-btn {
-        display: flex;
-        align-items: center;
-        background: transparent;
-        border-color: transparent;
-        font-size: 1.5rem;
-        cursor: pointer;
-        color: var(--clr-grey-1);
-        letter-spacing: var(--spacing);
-        svg {
-        margin-left: 5px;
-        }
-    }
-`
-
-export default Login
+export default Login;

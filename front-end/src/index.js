@@ -1,22 +1,11 @@
 import React from 'react';
-import ReactDOM from 'react-dom'
-import App from './App'
-// import { ProductsProvider } from './context/products_context'
-// import { FilterProvider } from './context/filter_context'
-// import { CartProvider } from './context/cart_context'
-// import { UserProvider } from './context/user_context'
-import { Auth0Provider } from '@auth0/auth0-react'
+import ReactDOM from 'react-dom/client';
+import App from './App';
 
-const domain = process.env.REACT_APP_AUTH0_DOMAIN;
-const client = process.env.REACT_APP_AUTH0_CLIENT_ID;
-
-ReactDOM.render(
-  <Auth0Provider
-    domain={domain}
-    clientId={client}
-    redirectUri= {window.location.origin}
-  >
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
     <App />
-  </Auth0Provider>,
-  document.getElementById("root")
+  </React.StrictMode>
 );
+
