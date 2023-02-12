@@ -21,11 +21,19 @@ const ProductPage = () => {
   const handleSearch = (e) => {
     e.preventDefault();
 
-    console.log("hello");
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
     axios
-      .post("http://localhost:8000/api/v1//api/v1/search-by-image", {
-        image: imagePro,
-      })
+      .post(
+        "http://localhost:8000/api/v1//api/v1/search-by-image",
+        {
+          image: imagePro,
+        },
+        config
+      )
       .then((response) => {
         console.log(response);
       })
@@ -35,6 +43,14 @@ const ProductPage = () => {
   };
   return (
     <>
+      <div>
+        <form onSubmit={handleSearch}>
+          <input type="file" onChange={(e) => setImagePro(e.target.value)} />
+          <button type="subtmit" className="btn btn-primary">
+            Search
+          </button>
+        </form>
+      </div>
       <section className="productpage">
         <div className="product_banner">
           <h3 className="title_banner">Product</h3>
@@ -42,14 +58,6 @@ const ProductPage = () => {
         <div className="product_main">
           <div className="left_main">
             <form>
-              <div>
-                <form onSubmit={handleSearch}>
-                  <input type="file" onChange={(e) => setImagePro(e.target.value)} />
-                  <button type="subtmit" className="btn btn-primary">
-                    Search
-                  </button>
-                </form>
-              </div>
               <div className="form-control">
                 <input
                   type="text"

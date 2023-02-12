@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Login.css";
 import axios from "axios";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [pwd, setPwd] = useState("");
+
+  const navigate = useNavigate();
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -16,7 +19,17 @@ const Login = () => {
         password: pwd,
       })
       .then((response) => {
-        console.log(response);
+        localStorage.setItem("userId", response.data.user.userId);
+        localStorage.setItem("role", response.data.user.role);
+        axios
+          .get("http://localhost:5000/api/v1/user/showMe")
+          .then((response) => {
+            console.log(response.data);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+        navigate("/");
       })
       .catch((error) => {
         console.log(error);
@@ -30,7 +43,7 @@ const Login = () => {
          align-items-center"
           onSubmit={handleSubmit}
         >
-          <h4 style={{ fontWeight: "bold" }}>Log In</h4>
+          <h4 style={{ fontWeight: "bold" }}>Đăng Nhập</h4>
           <div
             style={{
               padding: "20px",
@@ -49,7 +62,7 @@ const Login = () => {
                 type="email"
                 id="email"
                 value={email}
-                placeholder={"Email"}
+                placeholder={"Nhap email"}
                 className="form-control"
                 onChange={(e) => setEmail(e.target.value)}
               ></input>
@@ -62,14 +75,14 @@ const Login = () => {
                 type="password"
                 id="pwd"
                 value={pwd}
-                placeholder={"Password"}
+                placeholder={"Nhap mat khau"}
                 className="form-control"
                 onChange={(e) => setPwd(e.target.value)}
               ></input>
             </div>
             <div className="mt-2 d-flex justify-content-center">
               <button type="submit" className="btn-login1 p-2">
-                Login
+                Đăng nhập
               </button>
             </div>
             <div

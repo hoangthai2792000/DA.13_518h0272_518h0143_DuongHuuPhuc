@@ -2,11 +2,13 @@
   min-height: calc(100vh - 40px);
   width: 100%;
 }
+
 .product_banner {
   height: 80px;
   width: 100%;
   background-color: #eaded7;
 }
+
 .title_banner {
   line-height: 80px;
   padding-left: 20px;
@@ -14,6 +16,7 @@
   color: #453227;
   font-weight: bold;
 }
+
 .product_main {
   display: grid;
   gap: 48px 10%;
@@ -22,25 +25,33 @@
   line-height: 24px;
   margin: 64px 5%;
 }
+
 .right_main {
   background-color: #efeeed;
-  color:#102a42;
+  color: #102a42;
   display: grid;
   gap: 64px 2%;
   grid-template-columns: 32% 32% 32%;
   grid-template-rows: 215px 215px 215px;
   line-height: 24px;
 }
-.img{
+
+.img {
   object-fit: fill;
   width: 100%;
   height: 215px;
 
 }
-.intr{
+
+.intr {
   justify-content: space-between;
-  
+
 }
+
 .left_main {
   background-color: #eaded7;
+}
+
+.left_main .form-control {
+  margin: 100px 0px
 }

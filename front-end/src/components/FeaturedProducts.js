@@ -4,23 +4,45 @@ import styled from 'styled-components'
 import Error from './Error'
 import Loading from './Loading'
 import Product from './Product'
-import './FeaturedProducts.css'
+
 const FeaturedProducts = () => {
-  
   return (
-    <section className='featured-products'>
+    <Wrapper className='section'>
       <div className='title'>
-        <h2>Featured Products</h2>
+        <h2>featured products</h2>
         <div className='underline'></div>
       </div>
-      
-      <div className='section-center featured'></div>
+      <div className='section-center featured'>
+    
+      </div>
       <Link to='/products' className='btn'>
-        All products
+        all products
       </Link>
-    </section>
+    </Wrapper>
   )
 }
 
+const Wrapper = styled.section`
+  background: var(--clr-grey-10);
+  .featured {
+    margin: 4rem auto;
+    display: grid;
+    gap: 2.5rem;
+    img {
+      height: 225px;
+    }
+  }
+  .btn {
+    display: block;
+    width: 148px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  @media (min-width: 576px) {
+    .featured {
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    }
+  }
+`
 
 export default FeaturedProducts

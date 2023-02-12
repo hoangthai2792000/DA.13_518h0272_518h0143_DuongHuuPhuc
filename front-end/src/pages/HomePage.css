@@ -4,49 +4,14 @@
 }
 
 .main-homepage {
-  
-  align-items:center;
-  color:#102a42;
+  background: red;
   display: grid;
-  gap: 128px;
-  grid-template-columns: 521px 521px;
-  grid-template-rows: 712px;
+  gap: 48px 10%;
+  grid-template-columns: 40% 60%;
+  grid-template-rows: calc(100vh - 40px);
   line-height: 24px;
-  margin: 0px 174.6px;
+  margin: 32px 5%;
 }
-
-#h1{
-  color:#102a42;
-  font-family:-apple-system;
-  font-size: 48px;
-  font-weight: 700;
-  letter-spacing: 1.6px;
-  line-height: 48px;
-  margin: 0px 0px 32px;
-  text-transform: capitalize;
-}
-.intro{
-  color: #617d98;
-  font-family: -apple-system;
-  font-size: 20px;
-  line-height: 40px;
-  margin:0px 0px 32px;
-}
-.btn-shop{
-  background-color:#ab7a5f;
-  border-radius: 4px;
-  box-shadow: #000000 0px 1px 3px 0px;
-  color: #eaded7;
-  display:inline-block;
-  font-family:-apple-system;
-  letter-spacing:1.6px;
-  line-height:24px;
-  padding:12px 24px;
-  text-transform:uppercase;
-}
-.main-image{
-  border-radius:4px;
-  color:#102a42;
-  line-height:24px;
-  width: 100%;
+.leftmain-homepage {
+  background-color: #e4f40f;
 }

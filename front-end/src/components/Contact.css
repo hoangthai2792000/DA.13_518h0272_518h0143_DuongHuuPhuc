@@ -1,53 +1,65 @@
-/* .section-center{
-    color:#102a42;
-    line-height: 24px;
-    margin: 0px 174.6px;
+.section-center-contact {
+    padding: 5rem 0;
 }
-#h3{
-    color:#102a42;
-    font-family:-apple-system;
-    font-size:32px;
-    font-weight:700;
-    letter-spacing:1.6px;
-    line-height:32px;
-    margin:0px 0px 12px;
+.c-contact {
+    text-transform: none;
+    font-size: 1.5rem;
 }
-.content {
-    align-items:center;
-    color:#102a42;
-    display:grid;
-    gap:128px;
-    grid-template-columns:521px 521px;
-    grid-template-rows:96px;
-    line-height:24px;
-    margin:32px 0px 0px;
+p {
+    line-height: 2;
+    max-width: 45em;
+    color: grey;
+    
 }
-#p {
-    color:#617d98;
-    font-family:-apple-system;
-    line-height:32px;
+.contact-form {
+    width: 90vw;
+    max-width: 500px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+}
+.form-input,
+.submit-btn {
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    border: 2px solid black;
 }
 .form-input {
-    background-color:#ffffff;
-    border-color:#222222;
-    border-radius: 4px 0px 0px 4px;
-    border-style: solid none solid solid;
-    border-width: 1.6px 0px 1.6px 1.6px;
-    color: #324d67;
-    font-family:Arial;
-    padding:8px 16px;
+    border-right: none;
+    color: grey;
+    border-top-left-radius: 0.25rem;
+    border-bottom-left-radius: 0.25rem;
 }
-.submit-btn{
-    align-items:flex-start;
-    background-color:#ab7a5f;
-    border-color:#222222;
-    border-radius:0px 4px 4px 0px;
-    border-style:solid;
-    border-width:1.6px;
-    color:#222222;
-    font-family:Arial;
-    letter-spacing:1.6px;
-    padding:8px 16px;
-    text-align:center;
-    text-transform:capitalize;
-} */
+.submit-btn {
+    border-top-right-radius: var(--radius);
+    border-bottom-right-radius: var(--radius);
+}
+.form-input::placeholder {
+    color: black;
+    text-transform: capitalize;
+}
+.submit-btn {
+    background: #ab7a5f;
+    text-transform: capitalize;
+    letter-spacing: var(--spacing);
+    cursor: pointer;
+    transition: var(--transition);
+    color: black;
+}
+.submit-btn:hover {
+color: white;
+}
+@media (min-width: 992px) {
+.content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 8rem;
+    margin-top: 2rem;
+}
+p {
+    margin-bottom: 0;
+}
+}
+@media (min-width: 1280px) {
+    padding: 15rem 0;
+}

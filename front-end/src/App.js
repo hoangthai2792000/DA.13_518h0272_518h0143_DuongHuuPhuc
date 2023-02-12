@@ -16,6 +16,8 @@ import Forgot from "./pages/Forgot";
 import Signup from "./pages/Signup";
 import ProductDetail from "./pages/ProductDetail";
 import ProductManagement from "./pages/admin/ProductManagement";
+import VerifyEmail from "./pages/VerifyEmail";
+import ReviewManagement from "./pages/admin/ReviewManagement";
 function App() {
   return (
     <Router>
@@ -31,8 +33,18 @@ function App() {
         <Route exact path="/forgot" element={<Forgot />} />
         <Route
           exact
+          path="/user/verify-email/:token/:email"
+          element={<VerifyEmail />}
+        />
+        <Route
+          exact
           path="/products-management"
           element={<ProductManagement />}
+        />
+        <Route
+          exact
+          path="/reviews-management"
+          element={<ReviewManagement />}
         />
         <Route path="*" element={<Error />} />
       </Routes>
