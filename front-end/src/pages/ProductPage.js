@@ -42,8 +42,6 @@ const ProductPage = () => {
   }
   return (
     <>
-<<<<<<< HEAD
-=======
       <div>
         <form onSubmit={handleSearch}>
           <input
@@ -57,7 +55,6 @@ const ProductPage = () => {
           </button>
         </form>
       </div>
->>>>>>> bd6a41a88efd538c0e60f1203da254a77e2df8ba
       <section className='productpage'>
         <div className='product_banner'>
           <h3 className='title_banner'>Product</h3>
@@ -65,16 +62,6 @@ const ProductPage = () => {
         <div className='product_main'>
           <div className='left_main'>
             <form>
-<<<<<<< HEAD
-            <div className='form-control'>
-              <form onSubmit={handleSearch}>
-                <input
-                  className='search-input'
-                  type='file'
-                  name='file'
-                  id='file'
-                  onChange={(e) => setImagePro(e.target.files[0])}
-=======
               <div className='form-control'>
                 <input
                   type='text'
@@ -82,32 +69,11 @@ const ProductPage = () => {
                   placeholder='Search'
                   className='search-input'
                   value
->>>>>>> bd6a41a88efd538c0e60f1203da254a77e2df8ba
                 />
-                <button type='subtmit' className='btn btn-primary'>
-                  Search
-                </button>
-              </form>
-            </div>
+              </div>
 
               <div className='form-control'>
                 <h5>Caterogy</h5>
-<<<<<<< HEAD
-                <div className='btn-caterogy'>
-                  <button className='cate' type='button' name='caterogy'>
-                    All
-                  </button>
-                  <button className='cate' type='button' name='caterogy'>
-                    Nike
-                  </button>
-                  <button className='cate' type='button' name='caterogy'>
-                    Adidas
-                  </button>
-                  <button className='cate' type='button' name='caterogy'>
-                    Converse
-                  </button>
-                  <button className='cate' type='button' name='caterogy'>
-=======
                 <div>
                   <button type='button' name='caterogy' className='null'>
                     All
@@ -122,7 +88,6 @@ const ProductPage = () => {
                     Converse
                   </button>
                   <button type='button' name='caterogy' className='null'>
->>>>>>> bd6a41a88efd538c0e60f1203da254a77e2df8ba
                     Vans
                   </button>
                 </div>
@@ -186,8 +151,4 @@ const ProductPage = () => {
   )
 }
 
-<<<<<<< HEAD
 export default ProductPage
-=======
-export default ProductPage
->>>>>>> bd6a41a88efd538c0e60f1203da254a77e2df8ba

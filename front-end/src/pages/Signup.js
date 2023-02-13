@@ -81,7 +81,7 @@ function Signup() {
          align-items-center"
           onSubmit={handleSubmit}
         >
-          <h4 style={{ fontWeight: "bold", marginTop: "-10px" }}>Sign Up</h4>
+          <h4 style={{ fontWeight: "bold", marginTop: "-10px" }}>Đăng ký</h4>
           <div
             style={{
               padding: "20px",
@@ -98,7 +98,7 @@ function Signup() {
                 type="text"
                 id="fullname"
                 value={fullname}
-                placeholder={"Full name"}
+                placeholder={"Nhap ten day du"}
                 className="form-control"
                 onChange={(e) => setFullname(e.target.value)}
               ></input>
@@ -111,7 +111,7 @@ function Signup() {
                 type="number"
                 id="phone"
                 value={phoneNumber}
-                placeholder={"Enter your phone number"}
+                placeholder={"Nhap so dien thoai"}
                 className="form-control"
                 onChange={(e) => setPhoneNumber(e.target.value)}
               ></input>
@@ -137,27 +137,27 @@ function Signup() {
                 type="password"
                 id="pwd"
                 value={pwd}
-                placeholder={"Password"}
+                placeholder={"Nhap mat khau"}
                 className="form-control"
                 onChange={(e) => setPwd(e.target.value)}
               ></input>
             </div>
             <div className="form-group">
               <label htmlFor="re_pwd" className="form-lable">
-                Repeat password
+                Reenter password
               </label>
               <input
                 type="password"
                 id="re_pwd"
                 value={re_pwd}
-                placeholder={"Repeat Password"}
+                placeholder={"Nhap mat khau"}
                 className="form-control"
                 onChange={(e) => setRePwd(e.target.value)}
               ></input>
             </div>
             <div className="mt-2 d-flex justify-content-center">
               <button type="submit" className="btn-signup">
-                Sign Up
+                Đăng ký
               </button>
             </div>
             <p className="small mb-2 mt-2 pb-lg-2">
@@ -167,7 +167,7 @@ function Signup() {
                 to="/account/login"
               >
                 <ion-icon name="arrow-back-outline"></ion-icon>
-                Log In
+                Đăng nhập
               </Link>
             </p>
           </div>
