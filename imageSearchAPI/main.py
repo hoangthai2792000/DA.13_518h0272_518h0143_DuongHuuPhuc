@@ -2,18 +2,21 @@ from fastapi import FastAPI, status, Response, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from pymilvus import connections, Collection
+from tensorflow import keras
+from keras_preprocessing import image as imge
 from PIL import Image
+import numpy as np
 
 app = FastAPI()
 
-origins = ['https://localhost:3000', 'https://localhost:5000']
+origins = ["http://localhost:3000", "localhost:3000", 'https://localhost:5000']
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
     allow_credentials=True,
-    allow_methods=['*'],
-    allow_headers=['*'],
+    allow_methods=["*"],
+    allow_headers=["*"]
 )
 
 # connect milvus DB
@@ -37,7 +40,8 @@ async def index():
     # # return {"products"}
     products = await getManyProductWithCodes(['196149230905', '196149230901'])
     # print(products)
-    return {"numOfProducts": len(products), "products": products}
+    # return {"numOfProducts": len(products), "products": products}
+    return "Image Search API"
 
 ## INSERT IMAGE TO MILVUS ##
 class DataToInsert(BaseModel):
@@ -66,13 +70,13 @@ async def insertImgToMilvus(data: DataToInsert, response: Response, status_code=
     productCode = data.productCode
     partition = data.productBrand
 
-    # [imageURL, productCode, imageVector]
+    # [imageURL, productCode, imageVector] 3 fields
     milvusData = [images, [productCode for i in range(len(vectors))], vectors]
 
     collection = Collection('productImage')
     mr = collection.insert(data=milvusData, partition_name=partition)
 
-    return {'msg': 'SUCCESS'}
+    return {'msg': 'Insert Images To Milvus Successfully!!!'}
 
 
 
@@ -92,12 +96,12 @@ async def deleteImgFromMilvus(data: DataForDelete):
         output_fields=["imageID"],
         consistency_level="Strong"
     )
-    # print(res[0]['imageID'])
-
     expr = f"imageID in [{res[0]['imageID']}]"
     deleteIMG = collection.delete(expr)
+
+
     collection.release()
-    print(deleteIMG)
+    # print(deleteIMG)
 
     return {'msg':'Delete Image From Milvus Successfully'}
 
@@ -107,13 +111,25 @@ async def deleteImgFromMilvus(data: DataForDelete):
 @app.post('/api/v1/search-by-image')
 async def searchByImage(image: UploadFile = File(...)):
 
+    ggNetModel = keras.models.load_model('./model_182-0.94.h5')
+    labels = {0: 'Adidas', 1: 'Converse', 2: 'Nike'}
+    img = Image.open(image.file)
+    img = Image.Image.resize(img, size=[256,256])
+    img = imge.img_to_array(img, dtype=np.uint8)
+    img = np.array(img) / 255.0
+    p = ggNetModel.predict(img[np.newaxis, ...])
+    predicted_class = labels[np.argmax(p[0], axis=-1)]
+
+    print(predicted_class)
+
+
     model = getModel()
     vector = toVector(model, image.file)
     # print(len(vector))
 
     collection = Collection("productImage")
-    collection.load()
-    search_params = {"metric_type": "L2", "params": {"nprobe": 10}}
+    collection.load(partition_names=['Converse'], replica_number=1)
+    search_params = {"metric_type": "L2", "params": {"nprobe": 4}}
 
     results = collection.search(
         data=[vector],
@@ -125,9 +141,9 @@ async def searchByImage(image: UploadFile = File(...)):
     )
     collection.release()
 
-    print(results[0])
+    # print(results[0])
 
-    collection.load()
+    collection.load(partition_names=['Converse'], replica_number=1)
     res = collection.query(
         expr=f"imageID in {results[0].ids}",
         output_fields=["productCode"],
@@ -146,4 +162,10 @@ async def searchByImage(image: UploadFile = File(...)):
 
     products = await getManyProductWithCodes(pCodes)
     # print(products)
-    return {"numOfProducts": len(products), "products": products}
+    return {'totalProducts': len(products), 'products': products}
+    # return results[0]
+
+@app.post('/test/imageSearch')
+async def testImageSearch(image: UploadFile = File(...)):
+    print(image.filename)
+    return 'ok'
