@@ -6,13 +6,12 @@ const Services = () => {
     <div className='service-cennter'>
         <div className='header'>
           <h3>
-              custom furniture <br/>
-              built only for you
+            Custom shoes <br/>
+            Built only for you
           </h3>
           <p>
-              Lorem is dolor sit amet consecteur adipiscing
-              elit. Atque
-              quismasvdsdvsdbvsbs
+          A shoe is an item of footwear intended to protect and comfort the human foot while doing various activities. 
+          Shoes are also used as an item of decoration.
           </p>
       </div>
     </div>

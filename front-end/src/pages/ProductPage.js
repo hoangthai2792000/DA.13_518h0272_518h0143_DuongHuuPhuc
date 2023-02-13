@@ -42,19 +42,6 @@ const ProductPage = () => {
   }
   return (
     <>
-      <div>
-        <form onSubmit={handleSearch}>
-          <input
-            type='file'
-            name='file'
-            id='file'
-            onChange={(e) => setImagePro(e.target.files[0])}
-          />
-          <button type='subtmit' className='btn btn-primary'>
-            Search
-          </button>
-        </form>
-      </div>
       <section className='productpage'>
         <div className='product_banner'>
           <h3 className='title_banner'>Product</h3>
@@ -62,14 +49,18 @@ const ProductPage = () => {
         <div className='product_main'>
           <div className='left_main'>
             <form>
-              <div className='form-control'>
-                <input
-                  type='text'
-                  name='text'
-                  placeholder='Search'
-                  className='search-input'
-                  value
-                />
+              <div>
+                <form onSubmit={handleSearch}>
+                  <input
+                    type='file'
+                    name='file'
+                    id='file'
+                    onChange={(e) => setImagePro(e.target.files[0])}
+                  />
+                  <button type='subtmit' className='btn btn-primary'>
+                    Search
+                  </button>
+                </form>
               </div>
 
               <div className='form-control'>

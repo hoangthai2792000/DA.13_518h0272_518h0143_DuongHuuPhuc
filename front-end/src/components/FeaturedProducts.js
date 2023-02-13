@@ -9,14 +9,14 @@ const FeaturedProducts = () => {
   return (
     <div className='featured-center'>
       <div className='title'>
-        <h2>featured products</h2>
+        <h2>Featured products</h2>
         <div className='underline'></div>
       </div>
       <div className='section-center featured'>
     
       </div>
       <Link to='/products' className='btn'>
-        all products
+        All products
       </Link>
     </div>
   )

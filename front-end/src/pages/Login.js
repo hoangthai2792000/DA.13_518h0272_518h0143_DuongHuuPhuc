@@ -43,7 +43,7 @@ const Login = () => {
          align-items-center"
           onSubmit={handleSubmit}
         >
-          <h4 style={{ fontWeight: "bold" }}>Đăng Nhập</h4>
+          <h4 style={{ fontWeight: "bold" }}>Log In</h4>
           <div
             style={{
               padding: "20px",
@@ -62,7 +62,7 @@ const Login = () => {
                 type="email"
                 id="email"
                 value={email}
-                placeholder={"Nhap email"}
+                placeholder={"Email"}
                 className="form-control"
                 onChange={(e) => setEmail(e.target.value)}
               ></input>
@@ -75,14 +75,14 @@ const Login = () => {
                 type="password"
                 id="pwd"
                 value={pwd}
-                placeholder={"Nhap mat khau"}
+                placeholder={"Password"}
                 className="form-control"
                 onChange={(e) => setPwd(e.target.value)}
               ></input>
             </div>
             <div className="mt-2 d-flex justify-content-center">
               <button type="submit" className="btn-login1 p-2">
-                Đăng nhập
+                Log In
               </button>
             </div>
             <div
@@ -102,7 +102,7 @@ const Login = () => {
                   className="text-black-50"
                   to="/forgot"
                 >
-                  Forgot password?
+                  Forgot Password?
                 </Link>
               </p>
               <p className="small mb-2 mt-2 pb-lg-2">
@@ -111,7 +111,7 @@ const Login = () => {
                   className="text-black-50"
                   to="/signup"
                 >
-                  Sign up
+                  Sign Up
                 </Link>
               </p>
             </div>

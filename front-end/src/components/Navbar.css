@@ -22,11 +22,11 @@ ul li {
   cursor: pointer;
   font-weight: bold;
 }
-.bao {
+.header-page {
   justify-content: center;
   text-align: center;
 }
-.bao1:hover {
+.header-id:hover {
   border-bottom: 3px solid #ab7a5f;
 }
 .btn-login {

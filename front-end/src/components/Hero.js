@@ -7,13 +7,13 @@ const Hero = () => {
   return (
     <section className="homepage">
       <div className="main-homepage">
-        <div className='leftmain-homepage'>
-          <h1>Welcome to my page</h1>
-          <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iusto, at sed omnis corporis doloremque possimus velit! Repudiandae nisi odit, aperiam odio ducimus, obcaecati libero et quia tempora excepturi quis alias?</p>
+        <div>
+          <h1>Sneaker That You'll Love</h1>
+          <p className='intro'>A shoe is an item of footwear intended to protect and comfort the human foot while doing various activities. Shoes are also used as an item of decoration.</p>
           <Link className="btn btn-shop" to='products'>Shop now</Link>
         </div>
-        <div className="rightmain-homepage">
-          <img src={MainSneaker} width='550' height='752'/>
+        <div className="bg-dark">
+          <img className='main-image' src={MainSneaker} width='550' height='710'/>
         </div>
       </div>
     </section>

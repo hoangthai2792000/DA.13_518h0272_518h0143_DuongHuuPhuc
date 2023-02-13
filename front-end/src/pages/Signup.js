@@ -81,7 +81,7 @@ function Signup() {
          align-items-center"
           onSubmit={handleSubmit}
         >
-          <h4 style={{ fontWeight: "bold", marginTop: "-10px" }}>Đăng ký</h4>
+          <h4 style={{ fontWeight: "bold", marginTop: "-10px" }}>Sign Up</h4>
           <div
             style={{
               padding: "20px",
@@ -98,7 +98,7 @@ function Signup() {
                 type="text"
                 id="fullname"
                 value={fullname}
-                placeholder={"Nhap ten day du"}
+                placeholder={"Your Full Name"}
                 className="form-control"
                 onChange={(e) => setFullname(e.target.value)}
               ></input>
@@ -111,7 +111,7 @@ function Signup() {
                 type="number"
                 id="phone"
                 value={phoneNumber}
-                placeholder={"Nhap so dien thoai"}
+                placeholder={"Phone Number"}
                 className="form-control"
                 onChange={(e) => setPhoneNumber(e.target.value)}
               ></input>
@@ -124,7 +124,7 @@ function Signup() {
                 type="email"
                 id="email"
                 value={email}
-                placeholder={"Nhap email"}
+                placeholder={"Email"}
                 className="form-control"
                 onChange={(e) => setEmail(e.target.value)}
               ></input>
@@ -137,7 +137,7 @@ function Signup() {
                 type="password"
                 id="pwd"
                 value={pwd}
-                placeholder={"Nhap mat khau"}
+                placeholder={"Password"}
                 className="form-control"
                 onChange={(e) => setPwd(e.target.value)}
               ></input>
@@ -150,14 +150,14 @@ function Signup() {
                 type="password"
                 id="re_pwd"
                 value={re_pwd}
-                placeholder={"Nhap mat khau"}
+                placeholder={"Repeat Password"}
                 className="form-control"
                 onChange={(e) => setRePwd(e.target.value)}
               ></input>
             </div>
             <div className="mt-2 d-flex justify-content-center">
               <button type="submit" className="btn-signup">
-                Đăng ký
+                Sign Up
               </button>
             </div>
             <p className="small mb-2 mt-2 pb-lg-2">
@@ -167,7 +167,7 @@ function Signup() {
                 to="/account/login"
               >
                 <ion-icon name="arrow-back-outline"></ion-icon>
-                Đăng nhập
+                Log In
               </Link>
             </p>
           </div>

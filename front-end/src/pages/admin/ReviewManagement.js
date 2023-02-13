@@ -20,7 +20,7 @@ const ReviewManagement = () => {
   console.log(reviews);
   return (
     <>
-      
+      <div>Review</div>
     </>
   );
 };

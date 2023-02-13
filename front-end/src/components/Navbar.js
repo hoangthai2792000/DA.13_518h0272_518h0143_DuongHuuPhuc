@@ -60,14 +60,14 @@ const Navbar = () => {
             <h5>TC Sneaker</h5>
           </Link>
         </div>
-        <div className="bao">
+        <div className="header-page">
           <ul className="p-2">
-            <li className="p-2 bao1">
+            <li className="p-2 header-id">
               <Link to="/" style={{ textDecoration: "none", color: "black" }}>
                 Home
               </Link>
             </li>
-            <li className="p-2 bao1">
+            <li className="p-2 header-id">
               <Link
                 to="/about"
                 style={{ textDecoration: "none", color: "black" }}
@@ -75,7 +75,7 @@ const Navbar = () => {
                 About
               </Link>
             </li>
-            <li className="p-2 bao1">
+            <li className="p-2 header-id">
               <Link
                 to="/products"
                 style={{ textDecoration: "none", color: "black" }}
@@ -85,7 +85,7 @@ const Navbar = () => {
             </li>
             {role === "admin" ? (
               <>
-                <li className="p-2 bao1">
+                <li className="p-2 header-id">
                   <Link
                     to="/products-management"
                     style={{ textDecoration: "none", color: "black" }}
@@ -93,7 +93,7 @@ const Navbar = () => {
                     Product Management
                   </Link>
                 </li>
-                <li className="p-2 bao1">
+                <li className="p-2 header-id">
                   <Link
                     to="/reviews-management"
                     style={{ textDecoration: "none", color: "black" }}
