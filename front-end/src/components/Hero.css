@@ -1,52 +1,72 @@
-.homepage {
-    min-height: calc(100vh - 40px);
-    width: 100%;
-  }
-  
-  .main-homepage {
-    
-    align-items:center;
-    color:#102a42;
+.homepage{
+  line-height: 24px;
+  color:black;
+}
+.main-homepage {
+    min-height: 60vh;
     display: grid;
-    gap: 128px;
-    grid-template-columns: 521px 521px;
-    grid-template-rows: 712px;
-    line-height: 24px;
-    margin: 0px 174.6px;
+    grid-template-columns: 50% 50%;
+    margin: 20px 100px;
+    place-items: center;
+    .image-container {
+      display: none;
+    }
   }
-  
-  #h1{
-    color:#102a42;
-    font-family:-apple-system;
+  .intro {
+    line-height: 40px;
+    max-width: 45em;
+    margin: 0px 0px 32px;
+    color: black;
+    font-size: 20px;
+    color: #617d98;
+  }
+  h1 {
+    margin: 0px 0px 32px;
+    color: #102a42;
     font-size: 48px;
     font-weight: 700;
     letter-spacing: 1.6px;
     line-height: 48px;
-    margin: 0px 0px 32px;
     text-transform: capitalize;
   }
-  .intro{
-    color: #617d98;
-    font-family: -apple-system;
-    font-size: 20px;
-    line-height: 40px;
-    margin:0px 0px 32px;
+  .image-container{
+    display: block;
+    position: relative;
+    background-color: black;
   }
   .btn-shop{
-    background-color:#ab7a5f;
     border-radius: 4px;
-    box-shadow: #000000 0px 1px 3px 0px;
-    color: #eaded7;
-    display:inline-block;
-    font-family:-apple-system;
-    letter-spacing:1.6px;
-    line-height:24px;
-    padding:12px 24px;
-    text-transform:uppercase;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    background-color: #ab7a5f;
+    padding: 12px 24px;
+    text-transform: uppercase;
+    line-height: 24px;
+    letter-spacing: 1.6px;
+    color: #f7f6fa;
   }
+
   .main-image{
-    border-radius:4px;
-    color:#102a42;
-    line-height:24px;
     width: 100%;
+    height: 550px;
+    position: relative;
+    display: block;
+    object-fit: fill;
   }
+  /* max 480 mobile
+
+min 481 max 767 tablet */
+
+/* tablet */
+/* @media screen and (max-width:767px ) and (min-width:481px )  {
+
+  .main-homepage{
+    grid-template-columns:100%;
+  }
+}
+/* mobile */
+@media screen and (max-width:480px) {
+  .main-homepage{
+    
+  }
+} 

@@ -1,117 +1,113 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import "./ProductPage.css";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
+import './ProductPage.css'
+import { Link } from 'react-router-dom'
 const ProductPage = () => {
-  const [Product, setProduct] = useState();
-  const [imagePro, setImagePro] = useState();
+  const [Product, setProduct] = useState()
+  const [imagePro, setImagePro] = useState()
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/v1/product")
+      .get('http://localhost:5000/api/v1/product')
       .then((response) => {
-        setProduct(response.data);
+        setProduct(response.data)
       })
       .catch((error) => {
-        console.log(error);
-      });
-  }, []);
-  if (!Product) return null;
-  console.log(Product);
+        console.log(error)
+      })
+  }, [])
+  if (!Product) return null
+  console.log(Product)
 
   const handleSearch = (e) => {
-    e.preventDefault();
+    e.preventDefault()
+
+    console.log(imagePro)
+
+    const data = new FormData()
+    data.append('image', imagePro, imagePro.type)
 
     const config = {
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'multipart/form-data',
       },
-    };
+    }
     axios
-      .post(
-        "http://localhost:8000/api/v1//api/v1/search-by-image",
-        {
-          image: imagePro,
-        },
-        config
-      )
+      .post('http://localhost:8000/api/v1/search-by-image', data, config)
       .then((response) => {
-        console.log(response);
+        setProduct(response.data)
       })
       .catch((error) => {
-        console.log(error);
-      });
-  };
+        console.log(error)
+      })
+  }
   return (
     <>
-      <div>
-        <form onSubmit={handleSearch}>
-          <input type="file" onChange={(e) => setImagePro(e.target.value)} />
-          <button type="subtmit" className="btn btn-primary">
-            Search
-          </button>
-        </form>
-      </div>
-      <section className="productpage">
-        <div className="product_banner">
-          <h3 className="title_banner">Product</h3>
+      <section className='productpage'>
+        <div className='product_banner'>
+          <h3 className='title_banner'>Product</h3>
         </div>
-        <div className="product_main">
-          <div className="left_main">
+        <div className='product_main'>
+          <div className='left_main'>
             <form>
-              <div className="form-control">
+            <div className='form-control'>
+              <form onSubmit={handleSearch}>
                 <input
-                  type="text"
-                  name="text"
-                  placeholder="Search"
-                  className="search-input"
-                  value
+                  className='search-input'
+                  type='file'
+                  name='file'
+                  id='file'
+                  onChange={(e) => setImagePro(e.target.files[0])}
                 />
-              </div>
+                <button type='subtmit' className='btn btn-primary'>
+                  Search
+                </button>
+              </form>
+            </div>
 
-              <div className="form-control">
+              <div className='form-control'>
                 <h5>Caterogy</h5>
-                <div>
-                  <button type="button" name="caterogy" className="null">
+                <div className='btn-caterogy'>
+                  <button className='cate' type='button' name='caterogy'>
                     All
                   </button>
-                  <button type="button" name="caterogy" className="null">
+                  <button className='cate' type='button' name='caterogy'>
                     Nike
                   </button>
-                  <button type="button" name="caterogy" className="null">
+                  <button className='cate' type='button' name='caterogy'>
                     Adidas
                   </button>
-                  <button type="button" name="caterogy" className="null">
+                  <button className='cate' type='button' name='caterogy'>
                     Converse
                   </button>
-                  <button type="button" name="caterogy" className="null">
+                  <button className='cate' type='button' name='caterogy'>
                     Vans
                   </button>
                 </div>
               </div>
 
-              <div className="form-control">
+              <div className='form-control'>
                 <h5>Price</h5>
-                <p className="price">50,000,000</p>
+                <p className='price'>50,000,000</p>
                 <input
-                  type="range"
-                  name="price"
-                  min="0"
-                  max="500000000"
-                  value="20000000"
+                  type='range'
+                  name='price'
+                  min='0'
+                  max='500000000'
+                  value='20000000'
                 />
               </div>
             </form>
-            <button type="button" className="clear-btn">
+            <button type='button' className='clear-btn'>
               Clear filters
             </button>
           </div>
-          <div className="right_main">
+          <div className='right_main'>
             {Product.products.map((pros) => (
               <Link to={`/products/${pros._id}`}>
                 <div>
-                  <img className="img" src={pros.image[0]} alt="product-img" />
+                  <img className='img' src={pros.image[0]} alt='product-img' />
 
-                  <div className="d-flex intr">
+                  <div className='d-flex intr'>
                     <p>{pros.name}</p>
                     <p>{pros.price}</p>
                   </div>
@@ -144,7 +140,7 @@ const ProductPage = () => {
         </div>
       </section>
     </>
-  );
-};
+  )
+}
 
-export default ProductPage;
+export default ProductPage
