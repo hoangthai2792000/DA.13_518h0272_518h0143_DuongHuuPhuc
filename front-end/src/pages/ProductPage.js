@@ -42,6 +42,22 @@ const ProductPage = () => {
   }
   return (
     <>
+<<<<<<< HEAD
+=======
+      <div>
+        <form onSubmit={handleSearch}>
+          <input
+            type='file'
+            name='file'
+            id='file'
+            onChange={(e) => setImagePro(e.target.files[0])}
+          />
+          <button type='subtmit' className='btn btn-primary'>
+            Search
+          </button>
+        </form>
+      </div>
+>>>>>>> bd6a41a88efd538c0e60f1203da254a77e2df8ba
       <section className='productpage'>
         <div className='product_banner'>
           <h3 className='title_banner'>Product</h3>
@@ -49,6 +65,7 @@ const ProductPage = () => {
         <div className='product_main'>
           <div className='left_main'>
             <form>
+<<<<<<< HEAD
             <div className='form-control'>
               <form onSubmit={handleSearch}>
                 <input
@@ -57,6 +74,15 @@ const ProductPage = () => {
                   name='file'
                   id='file'
                   onChange={(e) => setImagePro(e.target.files[0])}
+=======
+              <div className='form-control'>
+                <input
+                  type='text'
+                  name='text'
+                  placeholder='Search'
+                  className='search-input'
+                  value
+>>>>>>> bd6a41a88efd538c0e60f1203da254a77e2df8ba
                 />
                 <button type='subtmit' className='btn btn-primary'>
                   Search
@@ -66,6 +92,7 @@ const ProductPage = () => {
 
               <div className='form-control'>
                 <h5>Caterogy</h5>
+<<<<<<< HEAD
                 <div className='btn-caterogy'>
                   <button className='cate' type='button' name='caterogy'>
                     All
@@ -80,6 +107,22 @@ const ProductPage = () => {
                     Converse
                   </button>
                   <button className='cate' type='button' name='caterogy'>
+=======
+                <div>
+                  <button type='button' name='caterogy' className='null'>
+                    All
+                  </button>
+                  <button type='button' name='caterogy' className='null'>
+                    Nike
+                  </button>
+                  <button type='button' name='caterogy' className='null'>
+                    Adidas
+                  </button>
+                  <button type='button' name='caterogy' className='null'>
+                    Converse
+                  </button>
+                  <button type='button' name='caterogy' className='null'>
+>>>>>>> bd6a41a88efd538c0e60f1203da254a77e2df8ba
                     Vans
                   </button>
                 </div>
@@ -143,4 +186,8 @@ const ProductPage = () => {
   )
 }
 
+<<<<<<< HEAD
 export default ProductPage
+=======
+export default ProductPage
+>>>>>>> bd6a41a88efd538c0e60f1203da254a77e2df8ba
