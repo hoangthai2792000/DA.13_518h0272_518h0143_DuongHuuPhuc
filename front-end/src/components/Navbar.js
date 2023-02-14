@@ -1,58 +1,19 @@
 import React, { useEffect, useState } from "react";
 import "./Navbar.css";
-import { Link } from "react-router-dom";
-import logo from "../assets/logo.jpg";
+import { Link, useHistory } from "react-router-dom";
+// import logo from "../assets/logo.jpg";
 import { FaBars } from "react-icons/fa";
 import CartButton from "./CartButton";
 import axios from "axios";
+import { useGlobalContext } from '../context';
 
 const Navbar = () => {
   const [role, setRole] = useState("");
-  useEffect(() => {
-    axios
-      .get("http://localhost:5000/api/v1/user/showMe")
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    setRole(localStorage.getItem("role"));
-  }, []);
+  const history = useHistory();
+  const { user, logoutUser } = useGlobalContext();
+  if(!user) return null;
+  console.log(user.role);
   return (
-    // <NavContainer>
-    //   <div className="nav-center">
-    //     <div className="nav-header">
-    //       <Link to="/">
-    //         <img src={logo} alt="TC Sneaker" />
-    //       </Link>
-    //       <button type="button" className="nav-toggle">
-    //         <FaBars />
-    //       </button>
-    //     </div>
-    //     <ul className="nav-links">
-    //       <li>
-    //         <Link
-    //           to="/"
-    //           style={{ textDecoration: "none", borderBottomColor: "red" }}
-    //         >
-    //           Home
-    //         </Link>
-    //       </li>
-    //       <li>
-    //         <Link to="/about" style={{ textDecoration: "none" }}>
-    //           About
-    //         </Link>
-    //       </li>
-    //       <li>
-    //         <Link to="/products" style={{ textDecoration: "none" }}>
-    //           Products
-    //         </Link>
-    //       </li>
-    //     </ul>
-    //     <CartButton />
-    //   </div>
-    // </NavContainer>
     <>
       <section className="navbar-container">
         <div style={{ textAlign: "center" }}>
@@ -83,7 +44,7 @@ const Navbar = () => {
                 Products
               </Link>
             </li>
-            {role === "admin" ? (
+            {user.role === "admin" ? (
               <>
                 <li className="p-2 header-id">
                   <Link
@@ -107,8 +68,8 @@ const Navbar = () => {
         </div>
 
         <div className="d-flex logsign">
-          {/* {!role ? (
-            <> */}
+          {!user ? (
+            <>
           <div className="p-2">
             <Link
               to="/account/login"
@@ -129,9 +90,9 @@ const Navbar = () => {
               </button>
             </Link>
           </div>
-          {/* </>
+          </>
           ) : ( 
-          <>*/}
+          <>
           <div className="p-2">
             <Link to="/cart" style={{ textDecoration: "none", color: "black" }}>
               <button className="d-flex justify-content-center align-items-center p-2 btn-login">
@@ -140,17 +101,20 @@ const Navbar = () => {
             </Link>
           </div>
           <div className="p-2">
-            <Link
+            {/* <Link
               to="/logout"
               style={{ textDecoration: "none", color: "black" }}
-            >
-              <button className="d-flex justify-content-center align-items-center p-2 btn-login">
+            > */}
+              <button className="d-flex justify-content-center align-items-center p-2 btn-login" onClick={() => {
+                logoutUser()
+                history.push('/dashboard');
+              }}>
                 <ion-icon name="log-in-outline"></ion-icon> Logout
               </button>
-            </Link>
+            {/* </Link> */}
           </div>
-          {/* </>
-           )} */}
+          </>
+           )}
         </div>
       </section>
     </>

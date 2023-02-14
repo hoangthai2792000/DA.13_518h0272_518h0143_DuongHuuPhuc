@@ -1,125 +1,133 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import { Link, useNavigate } from "react-router-dom";
-import "./Login.css";
-import axios from "axios";
-const Login = () => {
-  const [email, setEmail] = useState("");
-  const [pwd, setPwd] = useState("");
+import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
+import { Link, useHistory, Redirect } from 'react-router-dom';
+import FormRow from '../components/FormRow';
+import { useGlobalContext } from '../context';
+import useLocalState from '../utils/localState';
 
-  const navigate = useNavigate();
+import axios from 'axios';
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+function Login() {
+  const { saveUser } = useGlobalContext();
+  const history = useHistory();
+  const [values, setValues] = useState({
+    email: '',
+    password: '',
+  });
+  const { alert, showAlert, loading, setLoading, hideAlert } = useLocalState();
 
-    const url = "http://localhost:5000/api/v1/auth/login";
-    axios
-      .post(url, {
-        email: email,
-        password: pwd,
-      })
-      .then((response) => {
-        localStorage.setItem("userId", response.data.user.userId);
-        localStorage.setItem("role", response.data.user.role);
-        axios
-          .get("http://localhost:5000/api/v1/user/showMe")
-          .then((response) => {
-            console.log(response.data);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-        navigate("/");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  const handleChange = (e) => {
+    setValues({ ...values, [e.target.name]: e.target.value });
   };
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    hideAlert();
+    setLoading(true);
+    const { email, password } = values;
+    const loginUser = { email, password };
+    try {
+      const { data } = await axios.post(`/api/v1/auth/login`, loginUser);
+      setValues({ name: '', email: '', password: '' });
+      showAlert({
+        text: `Welcome, ${data.user.name}. Redirecting to dashboard...`,
+        type: 'success',
+      });
+      setLoading(false);
+      saveUser(data.user);
+      history.push('/dashboard');
+    } catch (error) {
+      showAlert({ text: error.response.data.msg });
+      setLoading(false);
+    }
+  };
+
   return (
     <>
-      <section className="login-page">
+      <Wrapper className='page'>
+        {alert.show && (
+          <div className={`alert alert-${alert.type}`}>{alert.text}</div>
+        )}
         <form
-          className="form-container d-flex justify-content-center
-         align-items-center"
-          onSubmit={handleSubmit}
+          className={loading ? 'form form-loading' : 'form'}
+          onSubmit={onSubmit}
         >
-          <h4 style={{ fontWeight: "bold" }}>Log In</h4>
-          <div
-            style={{
-              padding: "20px",
-              backgroundColor: "white",
-              borderRadius: "5px",
-              width: "30%",
-              marginTop: "20px",
-              boxShadow: "5px 5px 5px 5px #EBEBEB",
-            }}
-          >
-            <div className="form-group">
-              <label htmlFor="email" className="form-lable">
-                Email
-              </label>
-              <input
-                type="email"
-                id="email"
-                value={email}
-                placeholder={"Email"}
-                className="form-control"
-                onChange={(e) => setEmail(e.target.value)}
-              ></input>
-            </div>
-            <div className="form-group">
-              <label htmlFor="pwd" className="form-lable">
-                Password
-              </label>
-              <input
-                type="password"
-                id="pwd"
-                value={pwd}
-                placeholder={"Password"}
-                className="form-control"
-                onChange={(e) => setPwd(e.target.value)}
-              ></input>
-            </div>
-            <div className="mt-2 d-flex justify-content-center">
-              <button type="submit" className="btn-login1 p-2">
-                Log In
-              </button>
-            </div>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-                marginTop: "10px",
-              }}
-            >
-              <p
-                className="small mb-2 mt-2 pb-lg-2 me-2 d-flex justify-content-center
-         align-items-center"
-              >
-                <Link
-                  style={{ textDecoration: "none" }}
-                  className="text-black-50"
-                  to="/forgot"
-                >
-                  Forgot Password?
-                </Link>
-              </p>
-              <p className="small mb-2 mt-2 pb-lg-2">
-                <Link
-                  style={{ textDecoration: "none" }}
-                  className="text-black-50"
-                  to="/signup"
-                >
-                  Sign Up
-                </Link>
-              </p>
-            </div>
-          </div>
-        </form>
-      </section>
+        <div className='loginform-tittle'>Account Login</div>
+        {/* single form row */}
+        <FormRow
+          type='email'
+          name='email'
+          value={values.email}
+          handleChange={handleChange}
+        />
+        {/* end of single form row */}
+        {/* single form row */}
+        <FormRow
+          type='password'
+          name='password'
+          value={values.password}
+          handleChange={handleChange}
+        />
+        {/* end of single form row */}
+        <button type='submit' className='btn btn-block' disabled={loading}>
+          {loading ? 'Loading...' : 'Login'}
+        </button>
+        <p>
+          Don't have an account?
+          <Link to='/register' className='register-link'>
+            Register
+          </Link>
+        </p>
+        <p>
+          Forgot your password?{' '}
+          <Link to='/forgot-password' className='reset-link'>
+            Reset Password
+          </Link>
+        </p>
+      </form>
+      </Wrapper>
     </>
   );
-};
+}
+
+const Wrapper = styled.section`
+  .alert {
+    margin-top: 3rem;
+  }
+  .form{
+    border-radius:10px;
+    color:#212529;
+    background-color: #ffffff;
+    border-color: red;
+  }
+  .loginform-tittle{
+    text-align: center;
+    color: #222222;
+    text-transform:uppercase;
+  }
+  h4 {
+    text-align: center;
+  }
+  p {
+    margin: 0;
+    text-align: center;
+  }
+  .btn {
+    margin-bottom: 1.5rem;
+  }
+  .register-link,
+  .reset-link {
+    display: inline-block;
+    margin-left: 0.25rem;
+    text-transform: capitalize;
+    color: var(--primary-500);
+    cursor: pointer;
+  }
+  .reset-link {
+    margin-top: 0.25rem;
+  }
+  .btn:disabled {
+    cursor: not-allowed;
+  }
+`;
 
 export default Login;
