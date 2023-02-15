@@ -12,10 +12,12 @@ import ProductManagement from "./admin/ProductManagement";
 import ReviewManagement from "./admin/ReviewManagement";
 import ProductDetail from "./ProductDetail";
 import HomePage from "./HomePage"
+import AboutPage from "./AboutPage"
 
 export {
   Home,
   ErrorPage,
+  AboutPage,
   Register,
   Login,
   Verify,

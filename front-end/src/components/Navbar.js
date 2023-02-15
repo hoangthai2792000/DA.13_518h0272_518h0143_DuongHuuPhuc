@@ -11,8 +11,7 @@ const Navbar = () => {
   const [role, setRole] = useState("");
   const history = useHistory();
   const { user, logoutUser } = useGlobalContext();
-  if(!user) return null;
-  console.log(user.role);
+  // if(!user) return null;
   return (
     <>
       <section className="navbar-container">
@@ -44,7 +43,7 @@ const Navbar = () => {
                 Products
               </Link>
             </li>
-            {user.role === "admin" ? (
+            {user && user.role === "admin" ? (
               <>
                 <li className="p-2 header-id">
                   <Link
@@ -72,7 +71,7 @@ const Navbar = () => {
             <>
           <div className="p-2">
             <Link
-              to="/account/login"
+              to="/login"
               style={{ textDecoration: "none", color: "black" }}
             >
               <button className="d-flex justify-content-center align-items-center p-2 btn-login">
@@ -82,11 +81,11 @@ const Navbar = () => {
           </div>
           <div className="p-2">
             <Link
-              to="/signup"
+              to="/register"
               style={{ textDecoration: "none", color: "black" }}
             >
               <button className="d-flex justify-content-center align-items-center p-2 btn-login">
-                <ion-icon name="log-in-outline"></ion-icon> Signup
+                <ion-icon name="log-in-outline"></ion-icon> Register
               </button>
             </Link>
           </div>

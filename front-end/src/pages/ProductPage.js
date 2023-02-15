@@ -5,18 +5,18 @@ import { Link } from 'react-router-dom'
 const ProductPage = () => {
   const [Product, setProduct] = useState()
   const [imagePro, setImagePro] = useState()
+  const [category, setCategory] = useState("all");
+
   useEffect(() => {
     axios
       .get('http://localhost:5000/api/v1/product')
       .then((response) => {
-        setProduct(response.data)
+        setProduct(response.data.products)
       })
       .catch((error) => {
         console.log(error)
       })
   }, [])
-  if (!Product) return null
-  console.log(Product)
 
   const handleSearch = (e) => {
     e.preventDefault()
@@ -40,6 +40,13 @@ const ProductPage = () => {
         console.log(error)
       })
   }
+  function sortCategory(value) {
+    if (category === "all") {
+      return value;
+    }
+    return value.brand === category;
+  }
+  if(!Product) return null
   return (
     <>
       <section className='productpage'>
@@ -66,19 +73,44 @@ const ProductPage = () => {
               <div className='form-control'>
                 <h5>Caterogy</h5>
                 <div>
-                  <button type='button' name='caterogy' className='null'>
+                  <button
+                    type="button"
+                    name="caterogy"
+                    className="null"
+                    onClick={() => setCategory("all")}
+                  >
                     All
                   </button>
-                  <button type='button' name='caterogy' className='null'>
+                  <button
+                    type="button"
+                    name="caterogy"
+                    className="null"
+                    onClick={() => setCategory("Nike")}
+                  >
                     Nike
                   </button>
-                  <button type='button' name='caterogy' className='null'>
+                  <button
+                    type="button"
+                    name="caterogy"
+                    className="null"
+                    onClick={() => setCategory("Adidas")}
+                  >
                     Adidas
                   </button>
-                  <button type='button' name='caterogy' className='null'>
+                  <button
+                    type="button"
+                    name="caterogy"
+                    className="null"
+                    onClick={() => setCategory("Converse")}
+                  >
                     Converse
                   </button>
-                  <button type='button' name='caterogy' className='null'>
+                  <button
+                    type="button"
+                    name="caterogy"
+                    className="null"
+                    onClick={() => setCategory("Vans")}
+                  >
                     Vans
                   </button>
                 </div>
@@ -101,12 +133,12 @@ const ProductPage = () => {
             </button>
           </div>
           <div className='right_main'>
-            {Product.products.map((pros) => (
+          {Product.filter(sortCategory).map((pros) => (
               <Link to={`/products/${pros._id}`}>
                 <div>
-                  <img className='img' src={pros.image[0]} alt='product-img' />
+                  <img className="img" src={pros.image[0]} alt="product-img" />
 
-                  <div className='d-flex intr'>
+                  <div className="d-flex intr">
                     <p>{pros.name}</p>
                     <p>{pros.price}</p>
                   </div>

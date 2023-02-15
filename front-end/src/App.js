@@ -6,6 +6,7 @@ import {
   Register,
   Login,
   Verify,
+  AboutPage,
   Dashboard,
   ProtectedRoute,
   ForgotPassword,
@@ -29,16 +30,19 @@ function App() {
   }
   return (
     <Router>
-      <Navbar />
+      <Navbar/>
       <Switch>
         <Route path='/' exact>
-          <Home />
+        <HomePage />
         </Route>
         <Route path='/login' exact>
           <Login />
         </Route>
         <Route path='/register' exact>
           <Register />
+        </Route>
+        <Route path='/about' exact>
+          <AboutPage />
         </Route>
         <ProtectedRoute path='/dashboard' exact>
           <HomePage />
@@ -56,7 +60,7 @@ function App() {
           <ProductPage />
         </Route>
         <Route path='/products-management' exact>
-          <ProductPage />
+          <ProductManagement />
         </Route>
         <Route path='/reviews-management' exact>
           <ReviewManagement />

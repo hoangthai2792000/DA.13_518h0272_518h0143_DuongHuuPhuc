@@ -39,16 +39,32 @@ const Hero = () => {
 const Wrapper = styled.section`
   min-height: 60vh;
   display: grid;
+  grid-template-columns: 50% 50%;
+  margin: 20px 100px;
+  line-height: 24px;
   place-items: center;
   .img-container {
     display: none;
   }
+  .content{
+    display: block;
+  }
   p {
-    line-height: 2;
-    max-width: 45em;
-    margin-bottom: 2rem;
-    color: grey;
-    font-size: 1rem;
+    color: #617d98;
+    font-family: -apple-system;
+    font-size: 20px;
+    line-height: 40px;
+    margin:0px 0px 32px;
+  }
+  h1{
+    color:#102a42;
+    font-family:-apple-system;
+    font-size: 48px;
+    font-weight: 700;
+    letter-spacing: 1.6px;
+    line-height: 48px;
+    margin: 0px 0px 32px;
+    text-transform: capitalize;
   }
   @media (min-width: 992px) {
     height: calc(100vh - 5rem);
@@ -63,18 +79,19 @@ const Wrapper = styled.section`
     .hero-btn {
       padding: 0.75rem 1.5rem;
       font-size: 1rem;
+      background-color:#ab7a5f;
+      color: black;
     }
     .img-container {
       display: block;
       position: relative;
     }
     .main-img {
+      border-radius:4px;
+      color:#102a42;
+      line-height:24px;
       width: 100%;
-      height: 550px;
-      position: relative;
-      border-radius: var(--radius);
-      display: block;
-      object-fit: cover;
+      object-fit: fill;
     }
 
     .img-container::before {

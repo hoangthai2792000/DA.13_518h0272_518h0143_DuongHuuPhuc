@@ -15,16 +15,18 @@ const Product = ({ image, name, price, id }) => {
         console.log(error);
       });
   }, []);
+  console.log(image.length)
   return (
     <Wrapper>
       <div className="container">
-        <img src={image} alt={name} />
+        <img src={image[Math.floor(Math.random() * image.length)]} alt={name} className="featureProduct-image"/>
         <Link to={`/products/${id}`} className="link">
           <FaSearch />
         </Link>
       </div>
       <footer>
         <h5>{name}</h5>
+        <p>{price}</p>
       </footer>
     </Wrapper>
   );
@@ -36,9 +38,10 @@ const Wrapper = styled.article`
     background: var(--clr-black);
     border-radius: var(--radius);
   }
-  img {
+  .featureProduct-image {
     width: 100%;
     display: block;
+    height: auto;
     object-fit: cover;
     border-radius: var(--radius);
     transition: var(--transition);
