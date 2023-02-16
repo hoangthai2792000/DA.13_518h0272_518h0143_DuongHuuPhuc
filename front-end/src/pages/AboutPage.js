@@ -6,7 +6,9 @@ import logo from '../assets/logo.jpg'
 const AboutPage = () => {
   return (
     <main>
-      <PageHero title='about'/>
+      <div className='product_banner'>
+        <h3 className='title_banner'>About Page</h3>
+      </div>
       <Wrapper className='page section section-center'>
         <img src={logo} alt='nice desk' />
         <article>

@@ -61,6 +61,7 @@ function Register() {
             className={loading ? 'form form-loading' : 'form'}
             onSubmit={onSubmit}
           >
+          <div className='signupform-tittle'>Become a TC member</div>
             {/* single form row */}
 
             <FormRow
@@ -126,6 +127,11 @@ const Wrapper = styled.section`
   }
   h4 {
     text-align: center;
+  }
+  .signupform-tittle{
+    text-align: center;
+    color: black;
+    text-transform:uppercase;
   }
   p {
     margin: 0;

@@ -38,10 +38,13 @@ const Hero = () => {
 }
 const Wrapper = styled.section`
   min-height: 60vh;
+  color:#102a42;
   display: grid;
   grid-template-columns: 50% 50%;
-  margin: 20px 100px;
-  line-height: 24px;
+  margin: 0px 174.6px;
+  line-height: 2rem;
+  gap: 128px
+  align-items:center;
   place-items: center;
   .img-container {
     display: none;
@@ -59,7 +62,7 @@ const Wrapper = styled.section`
   h1{
     color:#102a42;
     font-family:-apple-system;
-    font-size: 48px;
+    font-size: 40px;
     font-weight: 700;
     letter-spacing: 1.6px;
     line-height: 48px;

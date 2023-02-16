@@ -11,8 +11,10 @@ import ProductPage from "./ProductPage";
 import ProductManagement from "./admin/ProductManagement";
 import ReviewManagement from "./admin/ReviewManagement";
 import ProductDetail from "./ProductDetail";
-import HomePage from "./HomePage"
-import AboutPage from "./AboutPage"
+import HomePage from "./HomePage";
+import AboutPage from "./AboutPage";
+import CartPage from "./CartPage";
+import CheckoutPage from "./CheckoutPage";
 
 export {
   Home,
@@ -29,5 +31,7 @@ export {
   ProductManagement, 
   ReviewManagement,
   ProductDetail, 
-  HomePage
+  HomePage, 
+  CartPage,
+  CheckoutPage
 };
