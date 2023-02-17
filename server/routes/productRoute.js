@@ -19,7 +19,8 @@ const router = express.Router();
 router
   .route("/")
   .get(getAllProducts)
-  .post([authenticateUser, authorizePermissions("admin")], createProduct);
+  // .post([authenticateUser, authorizePermissions("admin")], createProduct);
+  .post(createProduct);
 
 router
   .route("/upload-product-image/:productCode")
@@ -32,8 +33,10 @@ router
 router
   .route("/:id")
   .get(getSingleProduct)
-  .patch([authenticateUser, authorizePermissions("admin")], updateProduct)
-  .delete([authenticateUser, authorizePermissions("admin")], deleteProduct);
+  // .patch([authenticateUser, authorizePermissions("admin")], updateProduct);
+  .patch(updateProduct)
+  // .delete([authenticateUser, authorizePermissions("admin")], deleteProduct);
+  .delete(deleteProduct);
 
 router.route("/:id/reviews").get(getSingleProductReviews);
 

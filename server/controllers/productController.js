@@ -30,31 +30,31 @@ const getSingleProduct = async (req, res) => {
 
 // CREATE PRODUCT
 const createProduct = async (req, res) => {
-  const { name, code, price, brand, image } = req.body;
-
-  if (!name || !code || !price || !brand) {
-    throw new customError("Vui lòng nhập đầy đủ thông tin sản phẩm", 400);
-  }
-
-  if (!image) {
-    throw new customError("Vui lòng cung cấp ảnh sản phẩm", 400);
-  }
-
-  const isExist = await Product.findOne({ code });
-  if (isExist) {
-    throw new customError("Sản phẩm này đã tồn tại", 400);
-  }
-
   try {
+    const { name, code, price, brand, image } = req.body;
+
+    if (!name || !code || !price || !brand) {
+      throw new customError("Vui lòng nhập đầy đủ thông tin sản phẩm", 400);
+    }
+
+    if (!image) {
+      throw new customError("Vui lòng cung cấp ảnh sản phẩm", 400);
+    }
+
+    const isExist = await Product.findOne({ code });
+    if (isExist) {
+      throw new customError("Sản phẩm này đã tồn tại", 400);
+    }
+
     // Insert Image To Milvus
-    const imgToMilvus = await axios.post(
-      "http://127.0.0.1:8000/api/v1/insert-image-to-milvus",
-      {
-        imgURL: req.body.image,
-        productCode: code,
-        productBrand: brand,
-      }
-    );
+    // const imgToMilvus = await axios.post(
+    //   "http://127.0.0.1:8000/api/v1/insert-image-to-milvus",
+    //   {
+    //     imgURL: req.body.image,
+    //     productCode: code,
+    //     productBrand: brand,
+    //   }
+    // );
     // console.log(imgToMilvus.data.msg)
 
     const product = await Product.create(req.body);
@@ -86,14 +86,14 @@ const updateProduct = async (req, res) => {
   }
 
   // Insert only new images to Milvus
-  const imgToMilvus = await axios.post(
-    "http://127.0.0.1:8000/api/v1/insert-image-to-milvus",
-    {
-      imgURL: req.body.newImages,
-      productCode: code,
-      productBrand: brand,
-    }
-  );
+  // const imgToMilvus = await axios.post(
+  //   "http://127.0.0.1:8000/api/v1/insert-image-to-milvus",
+  //   {
+  //     imgURL: req.body.newImages,
+  //     productCode: code,
+  //     productBrand: brand,
+  //   }
+  // );
   // console.log(imgToMilvus.data)
 
   res.status(200).json({ product });
