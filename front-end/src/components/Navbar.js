@@ -8,6 +8,7 @@ import CartButton from "./CartButton";
 import axios from "axios";
 import styled from "styled-components";
 import { useGlobalContext } from '../context';
+import { FaShoppingCart, FaUser, FaUserMinus, FaUserPlus } from "react-icons/fa";
 
 const Navbar = () => {
   const [role, setRole] = useState("");
@@ -77,7 +78,7 @@ const Navbar = () => {
               style={{ textDecoration: "none", color: "black" }}
             >
               <button className="d-flex justify-content-center align-items-center p-2 btn-login">
-                <ion-icon name="log-in-outline"></ion-icon> Login<AiOutlineLogin/>
+                Login <FaUser/>
               </button>
             </Link>
           </div>
@@ -87,7 +88,7 @@ const Navbar = () => {
               style={{ textDecoration: "none", color: "black" }}
             >
               <button className="d-flex justify-content-center align-items-center p-2 btn-login">
-                <ion-icon name="log-in-outline"></ion-icon> Register <HiUserPlus/>
+                Register <FaUserPlus/>
               </button>
             </Link>
           </div>
@@ -97,7 +98,7 @@ const Navbar = () => {
           <div className="p-2">
             <Link to="/cart" style={{ textDecoration: "none", color: "black" }}>
               <button className="d-flex justify-content-center align-items-center p-2 btn-login">
-                <ion-icon name="log-in-outline"></ion-icon> Cart
+                Cart <FaShoppingCart/>
               </button>
             </Link>
           </div>
@@ -110,7 +111,7 @@ const Navbar = () => {
                 logoutUser()
                 history.push('/dashboard');
               }}>
-                <ion-icon name="log-in-outline"></ion-icon> Logout
+                Logout <FaUserMinus/>
               </button>
             {/* </Link> */}
           </div>

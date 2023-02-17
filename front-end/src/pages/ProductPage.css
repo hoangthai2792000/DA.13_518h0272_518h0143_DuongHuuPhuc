@@ -21,18 +21,18 @@
   display: grid;
   gap: 48px 10%;
   grid-template-columns: 20% 70%;
-  grid-template-rows: 2004.67px;
+  
   line-height: 24px;
   margin: 64px 5%;
 }
 
 .right_main {
-  background-color: #efeeed;
+ 
   color: #102a42;
   display: grid;
   gap: 64px 2%;
   grid-template-columns: 32% 32% 32%;
-  grid-template-rows: 215px 215px 215px;
+  
   line-height: 24px;
 }
 
@@ -43,13 +43,18 @@
 
 }
 
+
 .intr {
   justify-content: space-between;
-
+  display: flex;
+}
+.null{
+  display: flex;
 }
 
-.left_main {
-  background-color: #eaded7;
+.left_main .form-control{
+  /* background-color: #eaded7; */
+  /* margin: 100px 0px; */
 }
 
 .left_main .form-control {
