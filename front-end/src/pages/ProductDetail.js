@@ -5,6 +5,8 @@ import StarRatings from "react-star-ratings";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown, faCaretUp } from "@fortawesome/free-solid-svg-icons";
 import { useGlobalContext } from "../context";
+import Star from "../components/Star";
+import "./ProductDetail.css";
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -12,6 +14,17 @@ const ProductDetail = () => {
   const [quantity, setQuantity] = useState();
   const [reviews, setReviews] = useState([]);
   const [userRw, setUserRw] = useState("");
+
+  const [gradeIndex, setGradeIndex] = useState();
+  const GRADES = ["Poor", "Fair", "Good", "Very good", "Excellent"];
+  const activeStar = {
+    fill: "yellow",
+  };
+
+  const changeGradeIndex = (index) => {
+    setGradeIndex(parseInt(index) + 1);
+  };
+  console.log(gradeIndex);
 
   const url = `http://localhost:5000/api/v1/product/${id}`;
   useEffect(() => {
@@ -47,22 +60,20 @@ const ProductDetail = () => {
   useEffect(() => {
     // const url = `http://localhost:5000/api/v1/review/${id}`;
 
-    const url = `http://localhost:5000/api/v1/review`;
+    const url = `http://localhost:5000/api/v1/review/products/${id}`;
     axios
       .get(url)
       .then((response) => {
-        console.log(response.data);
-        // setReviews(response.data);
+        console.log(response.data.reviews);
+        setReviews(response.data.reviews);
       })
       .catch((error) => {
         console.log(error);
       });
   }, []);
   if (!reviews) return null;
-  console.log(reviews);
 
   const { user } = useGlobalContext();
-  console.log(user);
 
   const handleSendRw = async (e) => {
     e.preventDefault();
@@ -71,10 +82,13 @@ const ProductDetail = () => {
         "http://localhost:5000/api/v1/review",
         {
           product: productData._id,
-        },
-        {
-          withCredentials: true,
+          user: user.userId,
+          comment: userRw,
+          rating: gradeIndex,
         }
+        // {
+        //   withCredentials: true,
+        // }
       )
       .then((response) => {
         console.log(response);
@@ -149,17 +163,55 @@ const ProductDetail = () => {
         </div>
       </div>
       <div>
-        <div>
+        <div style={{ textAlign: "center" }}>
           <h1>Please...</h1>
           <form onSubmit={handleSendRw}>
-            <input type="text" onChange={(e) => setUserRw(e.target.value)} />
+            <div className="form-floating mb-3">
+              <input
+                type="text"
+                className="form-control"
+                id="floatingReview"
+                onChange={(e) => setUserRw(e.target.value)}
+              />
+              <label for="floatingReview">Your review</label>
+            </div>
+            <div className="star-rating-container">
+              <h1 className="star-rating-result">
+                {GRADES[gradeIndex - 1]
+                  ? GRADES[gradeIndex - 1]
+                  : "You didn't review yet"}
+              </h1>
+              <div className="star-rating">
+                {GRADES.map((value, index) => (
+                  <Star
+                    index={index}
+                    key={value}
+                    changeGradeIndex={changeGradeIndex}
+                    style={gradeIndex > parseInt(index) ? activeStar : {}}
+                  />
+                ))}
+              </div>
+            </div>
             <button type="submit">Send</button>
           </form>
         </div>
-        <h1>Reviews</h1>
-        <div>
-          <p>User:</p>
-          <p></p>
+        <div style={{ margin: "100px 400px" }}>
+          <h1>Reviews</h1>
+          <div>
+            {reviews.map((val) => (
+              <>
+                <p>From: {val.user.name}</p>
+                <p>Comment: {val.comment}</p>
+                <StarRatings
+                  rating={val.rating}
+                  starRatedColor="black"
+                  numberOfStars={5}
+                  name="rating"
+                />
+                {/* // <p>{val.createAt}</p> */}
+              </>
+            ))}
+          </div>
         </div>
       </div>
     </>
