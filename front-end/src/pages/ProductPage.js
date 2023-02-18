@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import './ProductPage.css'
 import { Link } from 'react-router-dom'
+import styled from 'styled-components';
+import PageHero from '../components/PageHero';
 const ProductPage = () => {
   const [Product, setProduct] = useState()
   const [imagePro, setImagePro] = useState()
@@ -48,11 +50,12 @@ const ProductPage = () => {
   }
   if(!Product) return null
   return (
-    <>
-      <section className='productpage'>
-        <div className='product_banner'>
-          <h3 className='title_banner'>Product</h3>
-        </div>
+    <main>
+    <div className='product_banner'>
+      <h3 className='title_banner'>Product</h3>
+    </div>
+    <Wrapper className='page'>
+      <section className='section-center products'>
         <div className='product_main'>
           <div className='left_main'>
             <form>
@@ -145,33 +148,18 @@ const ProductPage = () => {
                 </div>
               </Link>
             ))}
-            {/* <table class="table">
-              <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Name</th>
-                  <th scope="col">Code</th>
-                  <th scope="col">Price</th>
-                  <th scope="col">Brand</th>
-                </tr>
-              </thead>
-              <tbody> {Product.products.map((pros)=>(
-                <tr>
-                  <th scope="row">1</th>
-                  <td><img src={pros.image[0]} alt="coin" /></td>
-                  <td>{pros.name}</td>
-                  <td>{pros.code}</td>
-                  <td>{pros.price}</td>
-                  <td>{pros.brand}</td>
-                </tr>
-              ))}
-              </tbody>
-            </table> */}
           </div>
         </div>
       </section>
-    </>
+    </Wrapper>
+    </main>
   )
-}
+};
+const Wrapper = styled.section`
+  color: #102a42;
+  line-height: 2rem;
+  gap: 4rem 2rem;
+  grid-template-columns: 50% 50%;
+`
 
 export default ProductPage

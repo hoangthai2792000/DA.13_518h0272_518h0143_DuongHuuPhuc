@@ -7,6 +7,17 @@ const ProductManagement = () => {
 
   const [proName, setProName] = useState();
   const [proPrice, setProPrice] = useState();
+  const [proBrand, setProBrand] = useState();
+  const [proCode, setProCode] = useState();
+  const [proImage, setProImage] = useState();
+
+  const brand = [
+    { key: 1, value: "Nike" },
+    { key: 2, value: "Adidas" },
+    { key: 3, value: "Converse" },
+    { key: 4, value: "Vans" },
+  ];
+
   useEffect(() => {
     axios
       .get("http://localhost:5000/api/v1/product")
@@ -18,31 +29,57 @@ const ProductManagement = () => {
       });
   }, []);
 
-  const handleEditProduct = () => {
+  const handleEditProduct = (e) => {
+    e.preventDefault();
     const url = `http://localhost:5000/api/v1/product/${selectedProduct._id}`;
     axios
       .patch(url, {
         name: proName,
+        code: proCode,
         price: proPrice,
+        brand: proBrand,
+        newImages: proImage,
       })
       .then((response) => {
         console.log(response);
+        window.location.reload(false);
       })
       .catch((error) => {
         console.log(error);
       });
   };
-  const handleDeleteProduct = () => {
+  const handleDeleteProduct = (e) => {
+    e.preventDefault();
     const url = `http://localhost:5000/api/v1/product/${selectedProduct._id}`;
     axios
       .delete(url)
       .then((response) => {
         console.log(response);
+        window.location.reload(false);
       })
       .catch((error) => {
         console.log(error);
       });
   };
+
+  const handleAddProduct = (e) => {
+    e.preventDefault();
+
+    axios
+      .post("http://localhost:5000/api/v1/product/", {
+        name: proName,
+        code: proCode,
+        price: proPrice,
+        brand: proBrand,
+        image: proImage,
+      })
+      .then((response) => {
+        console.log(response);
+        window.location.reload(false);
+      })
+      .catch((error) => console.log(error));
+  };
+
   if (!products) return null;
   console.log(products);
   console.log(selectedProduct);
@@ -56,7 +93,7 @@ const ProductManagement = () => {
         >
           Add new product
         </button>
-        {/* <!-- Edit Modal --> */}
+        {/* <!-- Modal --> */}
         <div
           className="modal fade"
           id="addModal"
@@ -67,8 +104,8 @@ const ProductManagement = () => {
           <div className="modal-dialog">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title" id="addModalLabel">
-                  You want to add new product
+                <h5 className="modal-title" id="exampleModalLabel">
+                  Add new product
                 </h5>
                 <button
                   type="button"
@@ -77,38 +114,77 @@ const ProductManagement = () => {
                   aria-label="Close"
                 ></button>
               </div>
-              <div className="modal-body">
-                <div>
-                  <label htmlFor="name">Name:</label>
-                  <input
-                    id="name"
-                    name="name"
-                    placeholder="Enter product's name"
-                    onChange={(e) => setProName(e.target.value)}
-                  />
+              <form onSubmit={handleAddProduct}>
+                <div className="modal-body">
+                  <div className="form-floating mb-3">
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="floatingInput"
+                      onChange={(e) => setProName(e.target.value)}
+                    />
+                    <label for="floatingInput">Name</label>
+                  </div>
+                  <div className="form-floating mb-3">
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="floatingName"
+                      onChange={(e) => setProCode(e.target.value)}
+                    />
+                    <label for="floatingName">Code</label>
+                  </div>
+                  <div className="form-floating mb-3">
+                    <input
+                      type="number"
+                      className="form-control"
+                      id="floatingPrice"
+                      onChange={(e) => setProPrice(e.target.value)}
+                    />
+                    <label for="floatingPrice">Price</label>
+                  </div>
+                  <div className="form-floating mb-3">
+                    <select
+                      id="floatingBrand"
+                      name="floatingBrand"
+                      className="form-control"
+                      onChange={(e) => {
+                        const selectedBrand = e.target.value;
+                        setProBrand(selectedBrand);
+                      }}
+                    >
+                      <option selected>
+                        <p className="text-muted">Select brand</p>
+                      </option>
+                      {brand.map((unit) => (
+                        <option value={unit.value}>{unit.value}</option>
+                      ))}
+                    </select>
+                    <label for="floatingBrand">Brand</label>
+                  </div>
+                  <div className="form-floating mb-3">
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="floatingImage"
+                      onChange={(e) => setProImage(e.target.value)}
+                    />
+                    <label for="floatingImage">Image</label>
+                  </div>
                 </div>
-                <div>
-                  <label htmlFor="price">Price:</label>
-                  <input
-                    id="price"
-                    name="price"
-                    placeholder="Enter product's price"
-                    onChange={(e) => setProPrice(e.target.value)}
-                  />
+                <div className="modal-footer">
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                  <button type="submit" className="btn btn-primary">
+                    Save
+                  </button>
                 </div>
-              </div>
-              <div className="modal-footer">
-                <button
-                  type="button"
-                  className="btn btn-secondary"
-                  data-bs-dismiss="modal"
-                >
-                  Close
-                </button>
-                <button type="button" className="btn btn-primary">
-                  Save changes
-                </button>
-              </div>
+              </form>
             </div>
           </div>
         </div>
@@ -127,7 +203,7 @@ const ProductManagement = () => {
             <tr>
               <th scope="row">{index + 1}</th>
               <td>
-                <img src={val.image[0]} alt="product-img" />
+                <img src={val.image[0]} alt="product-img" width="10%" />
               </td>
               <td>{val.name}</td>
               <td>
@@ -161,9 +237,8 @@ const ProductManagement = () => {
             <div className="modal-dialog">
               <div className="modal-content">
                 <div className="modal-header">
-                  <h5 className="modal-title" id="editModalLabel">
-                    You want to edit{" "}
-                    {selectedProduct.name ? selectedProduct.name : "?"}
+                  <h5 className="modal-title" id="exampleModalLabel">
+                    Update product {selectedProduct.name}
                   </h5>
                   <button
                     type="button"
@@ -172,42 +247,77 @@ const ProductManagement = () => {
                     aria-label="Close"
                   ></button>
                 </div>
-                <div className="modal-body">
-                  <div>
-                    <p>{selectedProduct.name ? selectedProduct.name : "?"}</p>
-                    <input
-                      placeholder={
-                        selectedProduct.name ? selectedProduct.name : "?"
-                      }
-                      onChange={(e) => setProName(e.target.value)}
-                    />
+                <form onSubmit={handleEditProduct}>
+                  <div className="modal-body">
+                    <div className="form-floating mb-3">
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="floatingInput"
+                        onChange={(e) => setProName(e.target.value)}
+                      />
+                      <label for="floatingInput">Name</label>
+                    </div>
+                    <div className="form-floating mb-3">
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="floatingName"
+                        onChange={(e) => setProCode(e.target.value)}
+                      />
+                      <label for="floatingName">Code</label>
+                    </div>
+                    <div className="form-floating mb-3">
+                      <input
+                        type="number"
+                        className="form-control"
+                        id="floatingPrice"
+                        onChange={(e) => setProPrice(e.target.value)}
+                      />
+                      <label for="floatingPrice">Price</label>
+                    </div>
+                    <div className="form-floating mb-3">
+                      <select
+                        id="floatingBrand"
+                        name="floatingBrand"
+                        className="form-control"
+                        onChange={(e) => {
+                          const selectedBrand = e.target.value;
+                          setProBrand(selectedBrand);
+                        }}
+                      >
+                        <option selected>
+                          <p className="text-muted">Select brand</p>
+                        </option>
+                        {brand.map((unit) => (
+                          <option value={unit.value}>{unit.value}</option>
+                        ))}
+                      </select>
+                      <label for="floatingBrand">Brand</label>
+                    </div>
+                    <div className="form-floating mb-3">
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="floatingImage"
+                        onChange={(e) => setProImage(e.target.value)}
+                      />
+                      <label for="floatingImage">Image</label>
+                    </div>
                   </div>
-                  <div>
-                    <p>{selectedProduct.price ? selectedProduct.price : "?"}</p>
-                    <input
-                      placeholder={
-                        selectedProduct.price ? selectedProduct.price : "?"
-                      }
-                      onChange={(e) => setProPrice(e.target.value)}
-                    />
+                  <div className="modal-footer">
+                    <button
+                      type="button"
+                      className="btn btn-secondary"
+                      data-bs-dismiss="modal"
+                    >
+                      Close
+                    </button>
+                    <button type="submit" className="btn btn-primary">
+                      Save
+                    </button>
                   </div>
-                </div>
-                <div className="modal-footer">
-                  <button
-                    type="button"
-                    className="btn btn-secondary"
-                    data-bs-dismiss="modal"
-                  >
-                    Close
-                  </button>
-                  <button
-                    type="button"
-                    className="btn btn-primary"
-                    onClick={handleEditProduct}
-                  >
-                    Save changes
-                  </button>
-                </div>
+                </form>
               </div>
             </div>
           </div>

@@ -101,7 +101,7 @@ const Wrapper = styled.section`
   }
   .loginform-tittle{
     text-align: center;
-    color: #222222;
+    color: black;
     text-transform:uppercase;
   }
   h4 {

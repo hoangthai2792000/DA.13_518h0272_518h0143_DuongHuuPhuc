@@ -4,6 +4,7 @@ import axios from "axios";
 import StarRatings from "react-star-ratings";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown, faCaretUp } from "@fortawesome/free-solid-svg-icons";
+import { useGlobalContext } from "../context";
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -37,12 +38,21 @@ const ProductDetail = () => {
   };
   console.log(quantity);
 
+  const handleAddtoCart = (e) => {
+    e.preventDefault();
+    console.log(productData);
+    console.log(quantity);
+  };
+
   useEffect(() => {
-    const url = `http://localhost:5000/api/v1/review/${id}`;
+    // const url = `http://localhost:5000/api/v1/review/${id}`;
+
+    const url = `http://localhost:5000/api/v1/review`;
     axios
       .get(url)
       .then((response) => {
-        setReviews(response.data);
+        console.log(response.data);
+        // setReviews(response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -50,11 +60,31 @@ const ProductDetail = () => {
   }, []);
   if (!reviews) return null;
   console.log(reviews);
-  const handleSendRw = (e) => {
+
+  const { user } = useGlobalContext();
+  console.log(user);
+
+  const handleSendRw = async (e) => {
     e.preventDefault();
-    axios.post("http://localhost:5000/api/v1/review");
+    await axios
+      .post(
+        "http://localhost:5000/api/v1/review",
+        {
+          product: productData._id,
+        },
+        {
+          withCredentials: true,
+        }
+      )
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
   if (!productData) return null;
+  console.log(productData._id);
 
   return (
     <>
@@ -85,7 +115,7 @@ const ProductDetail = () => {
           </p>
         </div>
         <div class="card-footer">
-          <from>
+          <form onSubmit={handleAddtoCart}>
             <span>
               <FontAwesomeIcon icon={faCaretUp} onClick={handleIncQuantity} />
             </span>
@@ -111,9 +141,11 @@ const ProductDetail = () => {
               )}
             </span>
             <div>
-              <button className="btn btn-primary">Add to cart</button>
+              <button className="btn btn-primary" type="submit">
+                Add to cart
+              </button>
             </div>
-          </from>
+          </form>
         </div>
       </div>
       <div>

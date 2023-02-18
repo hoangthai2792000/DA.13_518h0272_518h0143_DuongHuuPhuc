@@ -7,8 +7,10 @@ const checkPermission = require("../utils/checkPermisson");
 // CREATE REVIEW
 const createReview = async (req, res) => {
   console.log(req.user);
+  console.log(req.body);
 
   const { product: productId } = req.body;
+  console.log(productId);
 
   const isProductExisted = await Product.findOne({ _id: productId });
 

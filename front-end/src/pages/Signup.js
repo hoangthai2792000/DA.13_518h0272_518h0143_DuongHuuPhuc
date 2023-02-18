@@ -30,7 +30,7 @@ function Signup() {
   };
   return (
     <>
-      <section className="login-page">
+      <section className="signup-page">
         {/* <form
           className="form-container d-flex justify-content-center
          align-items-center"

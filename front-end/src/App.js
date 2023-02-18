@@ -14,7 +14,7 @@ import {
   ProductPage,
   ProductManagement, 
   ReviewManagement,
-  ProductDetail, HomePage
+  ProductDetail, HomePage, CartPage, CheckoutPage
 } from './pages';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer'
@@ -71,6 +71,12 @@ function App() {
         <Route path='/products/:id' exact>
           <ProductDetail />
         </Route>
+        <Route exact path='/cart'>
+            <CartPage />
+        </Route>
+        <ProtectedRoute path='/checkout' exact>
+          <CheckoutPage />
+        </ProtectedRoute>
         <Route path='*'>
           <ErrorPage />
         </Route>

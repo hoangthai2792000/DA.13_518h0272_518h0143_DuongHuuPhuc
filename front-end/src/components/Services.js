@@ -15,31 +15,33 @@ const Services = () => {
             A shoe is an item of footwear intended to protect and comfort the human foot while doing various activities. 
             Shoes are also used as an item of decoration.
             </p>
-        </article>
-        <div className='services-center'>
-          {services.map((service) => {
-            const { id, icon, title, text } = service
-            return (
-              <article key={id} className='service'>
-                <span className='icon'>{icon} </span>
-                <h4>{title}</h4>
-                <p>{text}</p>
-              </article>
-            )
-          })}
-        </div>
+          </article>
+          <div className='services-center'>
+            {services.map((service) => {
+              const { id, icon, title, text } = service
+              return (
+                <article key={id} className='service'>
+                  <span className='icon'>{icon} </span>
+                  <h4>{title}</h4>
+                  <p>{text}</p>
+                </article>
+              )
+            })}
+          </div>
       </div>
     </Wrapper>
 
   )
 };
 const Wrapper = styled.section`
+  
   h3,
   h4 {
     color: var(--clr-primary-1);
   }
   padding: 5rem 0;
   background-color: #eaded7;
+  
   .header h3 {
     margin-bottom: 2rem;
   }
@@ -54,12 +56,14 @@ const Wrapper = styled.section`
     gap: 2.5rem;
   }
   .service {
-    background: var(--clr-primary-7);
+    background-color: #c5a491;
+    ${'' /* background: var(--clr-primary-7); */}
     text-align: center;
     padding: 2.5rem 2rem;
+    line-height: 1.5rem;
     border-radius: var(--radius);
     p {
-      color: var(--clr-primary-2);
+      color: #5f4435;
     }
   }
   span {
