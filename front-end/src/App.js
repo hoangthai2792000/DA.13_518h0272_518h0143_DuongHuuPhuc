@@ -14,7 +14,7 @@ import {
   ProductPage,
   ProductManagement, 
   ReviewManagement,
-  ProductDetail, HomePage, CartPage, CheckoutPage
+  ProductDetail, HomePage, CartPage, CheckoutPage, VerifyEmail
 } from './pages';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer'
@@ -58,6 +58,9 @@ function App() {
         </Route>
         <Route path='/products' exact>
           <ProductPage />
+        </Route>
+        <Route path='/user/verify-email/:token/:email' exact>
+          <VerifyEmail />
         </Route>
         <Route path='/products-management' exact>
           <ProductManagement />
