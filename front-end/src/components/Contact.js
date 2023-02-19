@@ -32,7 +32,6 @@ const Contact = () => {
 }
 const Wrapper = styled.section`
   padding: 5rem 0;
-  margin: 0px 174.6px;
   h3 {
     text-transform: none;
   }
@@ -47,12 +46,11 @@ const Wrapper = styled.section`
     display: grid;
     grid-template-columns: 1fr auto;
   }
-
   .form-input,
   .submit-btn {
     font-size: 1rem;
     padding: 0.5rem 1rem;
-    border: 2px solid black;
+    border: 2px solid var(--clr-black);
   }
   .form-input {
     border-right: none;
@@ -80,7 +78,6 @@ const Wrapper = styled.section`
     color: var(--clr-white);
   }
   @media (min-width: 992px) {
-    
     .content {
       display: grid;
       grid-template-columns: 1fr 1fr;

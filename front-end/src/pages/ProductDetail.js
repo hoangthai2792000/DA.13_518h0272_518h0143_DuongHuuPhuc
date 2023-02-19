@@ -118,7 +118,6 @@ const ProductDetail = () => {
                 <div className="slide"> 
                   <img src={m} alt="product-img" /> 
                 </div>
-                
             ))}   
             </Carousel>   
           </div>
@@ -206,12 +205,12 @@ const ProductDetail = () => {
                 <button type="submit">Send</button>
               </form>
             </div>
-            <div style={{ margin: "100px 400px" }}>
+          </div>
+          <div className="review-post">
               <h1>Reviews</h1>
               <div>
                 {reviews.map((val) => (
                   <>
-                    
                     <p>
                       From: 
                       {val.user && val.user.name ? val.user.name: "unknow"}
@@ -223,12 +222,11 @@ const ProductDetail = () => {
                       numberOfStars={5}
                       name="rating"
                     />
-                    {/* // <p>{val.createAt}</p> */}
+                    <hr/>
                   </>
                 ))}
               </div>
             </div>
-          </div>
       </section>
       
     </Wrapper>
@@ -251,6 +249,14 @@ const Wrapper = styled.main`
     grid-template-columns: 125px 1fr;
     span {
       font-weight: 700;
+    }
+  }
+  .review-post{
+    margin: 50px;
+    text-align: justify;
+    padding: 8px;
+    h1{
+      text-align: center;
     }
   }
   @media (min-width: 992px) {
