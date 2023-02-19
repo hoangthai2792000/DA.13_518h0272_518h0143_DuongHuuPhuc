@@ -9,7 +9,8 @@ import Star from "../components/Star";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Link } from "react-router-dom";
-import "./ProductDetail.css";
+import styled from "styled-components";
+import PageHero from "../components/PageHero";
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -104,7 +105,8 @@ const ProductDetail = () => {
   console.log(productData._id);
 
   return (
-    <>
+    <Wrapper>
+      <PageHero title={productData.name} product />
       <section className="section section-center page">
         <Link to='/products' className='btn'>
           back to products
@@ -209,6 +211,7 @@ const ProductDetail = () => {
               <div>
                 {reviews.map((val) => (
                   <>
+                    
                     <p>
                       From: 
                       {val.user && val.user.name ? val.user.name: "unknow"}
@@ -228,8 +231,36 @@ const ProductDetail = () => {
           </div>
       </section>
       
-    </>
+    </Wrapper>
   );
 };
+const Wrapper = styled.main`
+  .product-center {
+    display: grid;
+    gap: 4rem;
+    margin-top: 2rem;
+  }
+  .price {
+    color: var(--clr-primary-5);
+  }
 
+  .info {
+    text-transform: capitalize;
+    width: 300px;
+    display: grid;
+    grid-template-columns: 125px 1fr;
+    span {
+      font-weight: 700;
+    }
+  }
+  @media (min-width: 992px) {
+    .product-center {
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+    }
+    .price {
+      font-size: 1.25rem;
+    }
+  }
+`
 export default ProductDetail;

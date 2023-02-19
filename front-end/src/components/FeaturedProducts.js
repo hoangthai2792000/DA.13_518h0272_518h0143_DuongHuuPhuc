@@ -25,8 +25,8 @@ const FeaturedProducts = () => {
     if (!productData) return null;
       console.log(productData)
   return (
-    <Wrapper>
-      <div className='featured-title'>
+    <Wrapper className='section'>
+      <div className='title'>
         <h2>Featured Products</h2>
         <div className='underline'></div>
       </div>
@@ -42,30 +42,13 @@ const FeaturedProducts = () => {
   )
 };
 const Wrapper= styled.section`
-  background-color: #f1f5f8;
-  color: #102a42;
-  padding: 80px 0px;
+  background: var(--clr-grey-10);
   .featured {
     margin: 4rem auto;
     display: grid;
     gap: 2.5rem;
     img {
       height: 225px;
-      line-height:24px;
-      border-radius: 4px;
-    }
-  }
-  .featured-title{
-    color: #102a42;
-    text-align: center;
-    h2{
-      font-size: 40px;
-      text-transform: capitalize;
-      margin: 0px 0px 12px;
-    } 
-    .underline{
-      background-color: #ab7a5f;
-      margin: 0px 700px;
     }
   }
   .btn {
@@ -73,9 +56,6 @@ const Wrapper= styled.section`
     width: 148px;
     margin: 0 auto;
     text-align: center;
-    background-color: #ab7a5f;
-    color: black;
-
   }
   @media (min-width: 576px) {
     .featured {

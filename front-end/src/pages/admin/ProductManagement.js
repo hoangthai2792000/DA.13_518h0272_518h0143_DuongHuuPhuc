@@ -1,5 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import styled from "styled-components";
+import PageHero from "../../components/PageHero";
 
 const ProductManagement = () => {
   const [products, setProducts] = useState();
@@ -84,8 +86,9 @@ const ProductManagement = () => {
   console.log(products);
   console.log(selectedProduct);
   return (
-    <>
-      <div>
+    <Wrapper>
+      <PageHero title='products-management'/>
+      <section className="section section-center page">
         <button
           className="btn btn-primary"
           data-bs-toggle="modal"
@@ -93,104 +96,105 @@ const ProductManagement = () => {
         >
           Add new product
         </button>
-        {/* <!-- Modal --> */}
-        <div
-          className="modal fade"
-          id="addModal"
-          tabindex="-1"
-          aria-labelledby="addModalLabel"
-          aria-hidden="true"
-        >
-          <div className="modal-dialog">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title" id="exampleModalLabel">
-                  Add new product
-                </h5>
-                <button
-                  type="button"
-                  className="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
-              </div>
-              <form onSubmit={handleAddProduct}>
-                <div className="modal-body">
-                  <div className="form-floating mb-3">
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="floatingInput"
-                      onChange={(e) => setProName(e.target.value)}
-                    />
-                    <label for="floatingInput">Name</label>
-                  </div>
-                  <div className="form-floating mb-3">
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="floatingName"
-                      onChange={(e) => setProCode(e.target.value)}
-                    />
-                    <label for="floatingName">Code</label>
-                  </div>
-                  <div className="form-floating mb-3">
-                    <input
-                      type="number"
-                      className="form-control"
-                      id="floatingPrice"
-                      onChange={(e) => setProPrice(e.target.value)}
-                    />
-                    <label for="floatingPrice">Price</label>
-                  </div>
-                  <div className="form-floating mb-3">
-                    <select
-                      id="floatingBrand"
-                      name="floatingBrand"
-                      className="form-control"
-                      onChange={(e) => {
-                        const selectedBrand = e.target.value;
-                        setProBrand(selectedBrand);
-                      }}
-                    >
-                      <option selected>
-                        <p className="text-muted">Select brand</p>
-                      </option>
-                      {brand.map((unit) => (
-                        <option value={unit.value}>{unit.value}</option>
-                      ))}
-                    </select>
-                    <label for="floatingBrand">Brand</label>
-                  </div>
-                  <div className="form-floating mb-3">
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="floatingImage"
-                      onChange={(e) => setProImage(e.target.value)}
-                    />
-                    <label for="floatingImage">Image</label>
-                  </div>
-                </div>
-                <div className="modal-footer">
+        <div>
+          {/* <!-- Modal --> */}
+          <div
+            className="modal fade"
+            id="addModal"
+            tabindex="-1"
+            aria-labelledby="addModalLabel"
+            aria-hidden="true"
+          >
+            <div className="modal-dialog">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title" id="exampleModalLabel">
+                    Add new product
+                  </h5>
                   <button
                     type="button"
-                    className="btn btn-secondary"
+                    className="btn-close"
                     data-bs-dismiss="modal"
-                  >
-                    Close
-                  </button>
-                  <button type="submit" className="btn btn-primary">
-                    Save
-                  </button>
+                    aria-label="Close"
+                  ></button>
                 </div>
-              </form>
+                <form onSubmit={handleAddProduct}>
+                  <div className="modal-body">
+                    <div className="form-floating mb-3">
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="floatingInput"
+                        onChange={(e) => setProName(e.target.value)}
+                      />
+                      <label for="floatingInput">Name</label>
+                    </div>
+                    <div className="form-floating mb-3">
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="floatingName"
+                        onChange={(e) => setProCode(e.target.value)}
+                      />
+                      <label for="floatingName">Code</label>
+                    </div>
+                    <div className="form-floating mb-3">
+                      <input
+                        type="number"
+                        className="form-control"
+                        id="floatingPrice"
+                        onChange={(e) => setProPrice(e.target.value)}
+                      />
+                      <label for="floatingPrice">Price</label>
+                    </div>
+                    <div className="form-floating mb-3">
+                      <select
+                        id="floatingBrand"
+                        name="floatingBrand"
+                        className="form-control"
+                        onChange={(e) => {
+                          const selectedBrand = e.target.value;
+                          setProBrand(selectedBrand);
+                        }}
+                      >
+                        <option selected>
+                          <p className="text-muted">Select brand</p>
+                        </option>
+                        {brand.map((unit) => (
+                          <option value={unit.value}>{unit.value}</option>
+                        ))}
+                      </select>
+                      <label for="floatingBrand">Brand</label>
+                    </div>
+                    <div className="form-floating mb-3">
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="floatingImage"
+                        onChange={(e) => setProImage(e.target.value)}
+                      />
+                      <label for="floatingImage">Image</label>
+                    </div>
+                  </div>
+                  <div className="modal-footer">
+                    <button
+                      type="button"
+                      className="btn btn-secondary"
+                      data-bs-dismiss="modal"
+                    >
+                      Close
+                    </button>
+                    <button type="submit" className="btn btn-primary">
+                      Save
+                    </button>
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
         </div>
-      </div>
       <table className="table table-hover">
-        <thead>
+        <thead style={{textAlign:"center"}}>
           <tr>
             <th scope="col">#</th>
             <th scope="col">Image</th>
@@ -198,15 +202,15 @@ const ProductManagement = () => {
             <th scope="col">Actions</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody style={{textAlign:"center"}}>
           {products.map((val, index) => (
             <tr>
-              <th scope="row">{index + 1}</th>
+              <th scope="row">{index + 1} </th>
               <td>
-                <img src={val.image[0]} alt="product-img" width="10%" />
+                <img src={val.image[0]} alt="product-img" width="20%" />
               </td>
-              <td>{val.name}</td>
-              <td>
+              <td style={{verticalAlign:"middle"}}>{val.name}</td>
+              <td style={{display:"grid", gridTemplateColumns: "50% 50%", verticalAlign:"middle"}}>
                 <button
                   className="btn btn-warning me-3"
                   data-bs-toggle="modal"
@@ -373,8 +377,12 @@ const ProductManagement = () => {
           </div>
         </tbody>
       </table>
-    </>
+      </section>
+    </Wrapper>
   );
 };
+const Wrapper = styled.div`
+
+`
 
 export default ProductManagement;

@@ -19,7 +19,7 @@ const Product = ({ image, name, price, id }) => {
   return (
     <Wrapper>
       <div className="container">
-        <img src={image[Math.floor(Math.random() * image.length)]} alt={name} className="featureProduct-image"/>
+        <img src={image[Math.floor(Math.random() * image.length)]} alt={name}/>
         <Link to={`/products/${id}`} className="link">
           <FaSearch />
         </Link>
@@ -33,15 +33,14 @@ const Product = ({ image, name, price, id }) => {
 };
 
 const Wrapper = styled.article`
-  .container {
+    .container {
     position: relative;
     background: var(--clr-black);
     border-radius: var(--radius);
   }
-  .featureProduct-image {
+  img {
     width: 100%;
     display: block;
-    height: auto;
     object-fit: cover;
     border-radius: var(--radius);
     transition: var(--transition);
@@ -87,5 +86,5 @@ const Wrapper = styled.article`
     color: var(--clr-primary-5);
     letter-spacing: var(--spacing);
   }
-`;
+`
 export default Product;
