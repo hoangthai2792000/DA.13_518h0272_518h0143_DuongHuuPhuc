@@ -5,7 +5,10 @@ import StarRatings from "react-star-ratings";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown, faCaretUp } from "@fortawesome/free-solid-svg-icons";
 import { useGlobalContext } from "../context";
-import Star from "../components/Star";
+import Star from "../components/Star"; 
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { Link } from "react-router-dom";
 import "./ProductDetail.css";
 
 const ProductDetail = () => {
@@ -102,118 +105,129 @@ const ProductDetail = () => {
 
   return (
     <>
-      <div>
-        {productData.image.map((m) => (
-          <img src={m} alt="product-img" />
-        ))}
-      </div>
-      <div class="card">
-        <div class="card-header">{productData.name}</div>
-        <div class="card-body">
-          <p>Brand: {productData.brand}</p>
-          <p>price: {productData.price}</p>
-          <p>
-            <span className="me-2">{productData.averageRating}</span>
-            <span id="stars">
-              <StarRatings
-                rating={productData.averageRating}
-                starRatedColor="blue"
-                numberOfStars={5}
-                name="rating"
-              />
-            </span>
-          </p>
-          <p>
-            <span className="me-2">{productData.numberOfReviews}</span>
-            <span>Reviews</span>
-          </p>
-        </div>
-        <div class="card-footer">
-          <form onSubmit={handleAddtoCart}>
-            <span>
-              <FontAwesomeIcon icon={faCaretUp} onClick={handleIncQuantity} />
-            </span>
-            <span>
-              <input
-                type="number"
-                onChange={(e) => setQuantity(e.target.value)}
-                value={quantity}
-              />
-            </span>
-            <span>
-              {quantity > 0 ? (
-                <button>
-                  <FontAwesomeIcon
-                    icon={faCaretDown}
-                    onClick={handleDecQuantity}
-                  />
-                </button>
-              ) : (
-                <button disabled>
-                  <FontAwesomeIcon icon={faCaretDown} />
-                </button>
-              )}
-            </span>
-            <div>
-              <button className="btn btn-primary" type="submit">
-                Add to cart
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-      <div>
-        <div style={{ textAlign: "center" }}>
-          <h1>Please...</h1>
-          <form onSubmit={handleSendRw}>
-            <div className="form-floating mb-3">
-              <input
-                type="text"
-                className="form-control"
-                id="floatingReview"
-                onChange={(e) => setUserRw(e.target.value)}
-              />
-              <label for="floatingReview">Your review</label>
-            </div>
-            <div className="star-rating-container">
-              <h1 className="star-rating-result">
-                {GRADES[gradeIndex - 1]
-                  ? GRADES[gradeIndex - 1]
-                  : "You didn't review yet"}
-              </h1>
-              <div className="star-rating">
-                {GRADES.map((value, index) => (
-                  <Star
-                    index={index}
-                    key={value}
-                    changeGradeIndex={changeGradeIndex}
-                    style={gradeIndex > parseInt(index) ? activeStar : {}}
-                  />
-                ))}
-              </div>
-            </div>
-            <button type="submit">Send</button>
-          </form>
-        </div>
-        <div style={{ margin: "100px 400px" }}>
-          <h1>Reviews</h1>
-          <div>
-            {reviews.map((val) => (
-              <>
-                <p>From: {val.user.name}</p>
-                <p>Comment: {val.comment}</p>
+      <section className="section section-center page">
+        <Link to='/products' className='btn'>
+          back to products
+        </Link>
+        <div class="product-center">
+          <div className="box">
+            <Carousel useKeyboardArrows={true}>
+              {productData.image.map((m) => (
+                <div className="slide"> 
+                  <img src={m} alt="product-img" /> 
+                </div>
+                
+            ))}   
+            </Carousel>   
+          </div>
+          <section className="content">
+            <h2>{productData.name}</h2>
+            <p>
+              <span className="me-2">{productData.averageRating}</span>
+              <span id="stars">
                 <StarRatings
-                  rating={val.rating}
-                  starRatedColor="black"
+                  rating={productData.averageRating}
+                  starRatedColor="blue"
                   numberOfStars={5}
                   name="rating"
                 />
-                {/* // <p>{val.createAt}</p> */}
-              </>
-            ))}
-          </div>
+              </span>
+            </p>
+            <p className="info"><span>Brand: </span>{productData.brand}</p>
+            <h5 className="info"><span>Price: </span>{productData.price}</h5>
+            <p className="info">
+              <span className="me-2">Total Reviews: </span> {productData.numberOfReviews}
+            </p>
+            <form onSubmit={handleAddtoCart}>
+              <span>
+                <FontAwesomeIcon icon={faCaretUp} onClick={handleIncQuantity} />
+              </span>
+              <span>
+                <input
+                  type="number"
+                  onChange={(e) => setQuantity(e.target.value)}
+                  value={quantity}
+                />
+              </span>
+              <span>
+                {quantity > 0 ? (
+                  <button>
+                    <FontAwesomeIcon
+                      icon={faCaretDown}
+                      onClick={handleDecQuantity}
+                    />
+                  </button>
+                ) : (
+                  <button disabled>
+                    <FontAwesomeIcon icon={faCaretDown} />
+                  </button>
+                )}
+              </span>
+              <div>
+                <button className="btn btn-primary" type="submit">
+                  Add to cart
+                </button>
+              </div>
+            </form>
+          </section>
         </div>
-      </div>
+        <div className="card-footer">
+            <div style={{ textAlign: "center" }}>
+              <h1>Please...</h1>
+              <form onSubmit={handleSendRw}>
+                <div className="form-floating mb-3">
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="floatingReview"
+                    onChange={(e) => setUserRw(e.target.value)}
+                  />
+                  <label for="floatingReview">Your review</label>
+                </div>
+                <div className="star-rating-container">
+                  <h1 className="star-rating-result">
+                    {GRADES[gradeIndex - 1]
+                      ? GRADES[gradeIndex - 1]
+                      : "You didn't review yet"}
+                  </h1>
+                  <div className="star-rating">
+                    {GRADES.map((value, index) => (
+                      <Star
+                        index={index}
+                        key={value}
+                        changeGradeIndex={changeGradeIndex}
+                        style={gradeIndex > parseInt(index) ? activeStar : {}}
+                      />
+                    ))}
+                  </div>
+                </div>
+                <button type="submit">Send</button>
+              </form>
+            </div>
+            <div style={{ margin: "100px 400px" }}>
+              <h1>Reviews</h1>
+              <div>
+                {reviews.map((val) => (
+                  <>
+                    <p>
+                      From: 
+                      {val.user && val.user.name ? val.user.name: "unknow"}
+                    </p>
+                    <p>Comment: {val.comment}</p>
+                    <StarRatings
+                      rating={val.rating}
+                      starRatedColor="black"
+                      numberOfStars={5}
+                      name="rating"
+                    />
+                    {/* // <p>{val.createAt}</p> */}
+                  </>
+                ))}
+              </div>
+            </div>
+          </div>
+      </section>
+      
     </>
   );
 };

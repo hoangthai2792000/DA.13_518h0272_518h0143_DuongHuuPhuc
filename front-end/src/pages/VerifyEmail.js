@@ -22,16 +22,16 @@ const VerifyEmail = () => {
       });
   });
   return (
-    <>
+    <div className="page">
       {isSuccess ? (
         <>
-          <h1>Verify Email success</h1>
-          <button onClick={() => history.push("/login")}>Login</button>
+          <h1 style={{textAlign: "center", margin:"150px"}}>Verify Email success</h1>
+          <button style={{textAlign: "center", margin:"200px"}} onClick={() => history.push("/login")}>Login</button>
         </>
       ) : (
-        <h1>Verify Email fail</h1>
+        <h1 style={{textAlign: "center", margin:"150px"}}>Verify Email fail</h1>
       )}
-    </>
+    </div>
   );
 };
 
