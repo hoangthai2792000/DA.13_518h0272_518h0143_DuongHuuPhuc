@@ -33,13 +33,16 @@ function App() {
       <Navbar/>
       <Switch>
         <Route path='/' exact>
-        <HomePage />
+          <HomePage />
         </Route>
         <Route path='/login' exact>
           <Login />
         </Route>
         <Route path='/register' exact>
           <Register />
+        </Route>
+        <Route path='/user' exact>
+          <Dashboard/>
         </Route>
         <Route path='/about' exact>
           <AboutPage />
