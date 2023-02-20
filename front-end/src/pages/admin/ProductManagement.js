@@ -3,6 +3,7 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import PageHero from '../../components/PageHero'
+import useLocalState from '../../utils/localState'
 
 const ProductManagement = () => {
   const [products, setProducts] = useState()
@@ -23,6 +24,8 @@ const ProductManagement = () => {
     { key: 4, value: 'Vans' },
   ]
 
+  const { alert, showAlert, loading, setLoading, hideAlert } = useLocalState()
+
   useEffect(() => {
     axios
       .get('http://localhost:5000/api/v1/product')
@@ -36,12 +39,18 @@ const ProductManagement = () => {
 
   const handleUploadImage = (e) => {
     e.preventDefault()
+    hideAlert()
+    setLoading(true)
 
-    console.log(proImage)
+    // console.log(proImage)
 
-    // if (!proCode) {
-    //   throw new Error('Please provide product code first')
-    // }
+    if (!proCode) {
+      showAlert({ text: 'Please provide product code first' })
+    }
+
+    if (!proImage || proImage.length < 1) {
+      showAlert({ text: 'Please choose images to upload' })
+    }
 
     let data = new FormData()
 
@@ -64,9 +73,15 @@ const ProductManagement = () => {
       .then((response) => {
         // console.log(response.data)
         setImageUrls(response.data.result)
+        showAlert({
+          text: 'Upload Image Successfully',
+          type: 'success',
+        })
+        setLoading(false)
       })
       .catch((error) => {
-        console.log(error.message)
+        showAlert({ text: error.response.data.msg })
+        setLoading(false)
       })
   }
 
@@ -106,20 +121,33 @@ const ProductManagement = () => {
 
   const handleAddProduct = (e) => {
     e.preventDefault()
+    hideAlert()
+    setLoading(true)
+
+    if (!imageUrls || imageUrls.length < 1) {
+      showAlert({ text: 'Please upload product images' })
+    }
 
     axios
-      .post('http://localhost:5000/api/v1/product/', {
+      .post('http://localhost:5000/api/v1/product', {
         name: proName,
         code: proCode,
         price: proPrice,
         brand: proBrand,
-        image: proImage,
+        image: imageUrls,
       })
       .then((response) => {
-        console.log(response)
+        showAlert({
+          text: 'Add New Product Successfully',
+          type: 'success',
+        })
+        setLoading(false)
         window.location.reload(false)
       })
-      .catch((error) => console.log(error))
+      .catch((error) => {
+        showAlert({ text: error.response.data.msg })
+        setLoading(false)
+      })
   }
 
   if (!products) return null
@@ -158,7 +186,10 @@ const ProductManagement = () => {
                     aria-label='Close'
                   ></button>
                 </div>
-                <form onSubmit={handleAddProduct}>
+                <form
+                  onSubmit={handleAddProduct}
+                  className={loading ? 'form form-loading' : 'form'}
+                >
                   <div className='modal-body'>
                     <div className='form-floating mb-3'>
                       <input
@@ -229,6 +260,12 @@ const ProductManagement = () => {
                         </div>
                         {/* end search input */}
                       </form>
+
+                      {alert.show && (
+                        <div className={`alert alert-${alert.type}`}>
+                          {alert.text}
+                        </div>
+                      )}
                     </div>
                   </div>
 
@@ -445,6 +482,10 @@ const ProductManagement = () => {
     </Wrapper>
   )
 }
-const Wrapper = styled.div``
+const Wrapper = styled.div`
+  .alert {
+    margin-top: 3rem;
+  }
+`
 
 export default ProductManagement

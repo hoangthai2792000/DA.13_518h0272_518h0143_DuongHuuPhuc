@@ -30,40 +30,39 @@ const getSingleProduct = async (req, res) => {
 
 // CREATE PRODUCT
 const createProduct = async (req, res) => {
-  try {
-    const { name, code, price, brand, image } = req.body
+  const { name, code, price, brand, image } = req.body
+  // console.log(req.body)
 
-    if (!name || !code || !price || !brand) {
-      throw new customError('Vui lòng nhập đầy đủ thông tin sản phẩm', 400)
-    }
-
-    if (!image) {
-      throw new customError('Vui lòng cung cấp ảnh sản phẩm', 400)
-    }
-
-    const isExist = await Product.findOne({ code })
-    if (isExist) {
-      throw new customError('Sản phẩm này đã tồn tại', 400)
-    }
-
-    // Insert Image To Milvus
-    // const imgToMilvus = await axios.post(
-    //   "http://127.0.0.1:8000/api/v1/insert-image-to-milvus",
-    //   {
-    //     imgURL: req.body.image,
-    //     productCode: code,
-    //     productBrand: brand,
-    //   }
-    // );
-    // console.log(imgToMilvus.data.msg)
-
-    const product = await Product.create(req.body)
-    return res.status(201).json({ product })
-  } catch (error) {
-    throw new customError(error.response.data.msg, error.response.status)
+  if (!name || !code || !price || !brand) {
+    throw new customError('Please provide all product information', 400)
   }
-  // const product = await Product.create(req.body)
-  // return res.status(201).json({product})
+
+  if (!image || image.length < 1) {
+    throw new customError('Please provide product images', 400)
+  }
+
+  const isExist = await Product.findOne({ code })
+  if (isExist) {
+    throw new customError('This product is already existed', 400)
+  }
+
+  // Insert Image To Milvus
+  try {
+    const imgToMilvus = await axios.post(
+      'http://127.0.0.1:8000/api/v1/insert-image-to-milvus',
+      {
+        imgURL: req.body.image,
+        productCode: code,
+        productBrand: brand,
+      }
+    )
+    // console.log(imgToMilvus.data.msg)
+  } catch (error) {
+    throw new customError('Somthing went wrong, please try again later', 500)
+  }
+
+  const product = await Product.create(req.body)
+  return res.status(201).json({ product })
 }
 
 // UPDATE PRODUCT
