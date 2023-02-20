@@ -5,6 +5,12 @@ import StarRatings from "react-star-ratings";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown, faCaretUp } from "@fortawesome/free-solid-svg-icons";
 import { useGlobalContext } from "../context";
+import Star from "../components/Star"; 
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+import PageHero from "../components/PageHero";
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -12,6 +18,17 @@ const ProductDetail = () => {
   const [quantity, setQuantity] = useState();
   const [reviews, setReviews] = useState([]);
   const [userRw, setUserRw] = useState("");
+
+  const [gradeIndex, setGradeIndex] = useState();
+  const GRADES = ["Poor", "Fair", "Good", "Very good", "Excellent"];
+  const activeStar = {
+    fill: "yellow",
+  };
+
+  const changeGradeIndex = (index) => {
+    setGradeIndex(parseInt(index) + 1);
+  };
+  console.log(gradeIndex);
 
   const url = `http://localhost:5000/api/v1/product/${id}`;
   useEffect(() => {
@@ -47,22 +64,20 @@ const ProductDetail = () => {
   useEffect(() => {
     // const url = `http://localhost:5000/api/v1/review/${id}`;
 
-    const url = `http://localhost:5000/api/v1/review`;
+    const url = `http://localhost:5000/api/v1/review/products/${id}`;
     axios
       .get(url)
       .then((response) => {
-        console.log(response.data);
-        // setReviews(response.data);
+        console.log(response.data.reviews);
+        setReviews(response.data.reviews);
       })
       .catch((error) => {
         console.log(error);
       });
   }, []);
   if (!reviews) return null;
-  console.log(reviews);
 
   const { user } = useGlobalContext();
-  console.log(user);
 
   const handleSendRw = async (e) => {
     e.preventDefault();
@@ -71,10 +86,13 @@ const ProductDetail = () => {
         "http://localhost:5000/api/v1/review",
         {
           product: productData._id,
-        },
-        {
-          withCredentials: true,
+          user: user.userId,
+          comment: userRw,
+          rating: gradeIndex,
         }
+        // {
+        //   withCredentials: true,
+        // }
       )
       .then((response) => {
         console.log(response);
@@ -87,83 +105,168 @@ const ProductDetail = () => {
   console.log(productData._id);
 
   return (
-    <>
-      <div>
-        {productData.image.map((m) => (
-          <img src={m} alt="product-img" />
-        ))}
-      </div>
-      <div class="card">
-        <div class="card-header">{productData.name}</div>
-        <div class="card-body">
-          <p>Brand: {productData.brand}</p>
-          <p>price: {productData.price}</p>
-          <p>
-            <span className="me-2">{productData.averageRating}</span>
-            <span id="stars">
-              <StarRatings
-                rating={productData.averageRating}
-                starRatedColor="blue"
-                numberOfStars={5}
-                name="rating"
-              />
-            </span>
-          </p>
-          <p>
-            <span className="me-2">{productData.numberOfReviews}</span>
-            <span>Reviews</span>
-          </p>
+    <Wrapper>
+      <PageHero title={productData.name} product />
+      <section className="section section-center page">
+        <Link to='/products' className='btn'>
+          back to products
+        </Link>
+        <div class="product-center">
+          <div className="box">
+            <Carousel useKeyboardArrows={true}>
+              {productData.image.map((m) => (
+                <div className="slide"> 
+                  <img src={m} alt="product-img" /> 
+                </div>
+            ))}   
+            </Carousel>   
+          </div>
+          <section className="content">
+            <h2>{productData.name}</h2>
+            <p>
+              <span className="me-2">{productData.averageRating}</span>
+              <span id="stars">
+                <StarRatings
+                  rating={productData.averageRating}
+                  starRatedColor="blue"
+                  numberOfStars={5}
+                  name="rating"
+                />
+              </span>
+            </p>
+            <p className="info"><span>Brand: </span>{productData.brand}</p>
+            <h5 className="info"><span>Price: </span>{productData.price}</h5>
+            <p className="info">
+              <span className="me-2">Total Reviews: </span> {productData.numberOfReviews}
+            </p>
+            <form onSubmit={handleAddtoCart}>
+              <span>
+                <FontAwesomeIcon icon={faCaretUp} onClick={handleIncQuantity} />
+              </span>
+              <span>
+                <input
+                  type="number"
+                  onChange={(e) => setQuantity(e.target.value)}
+                  value={quantity}
+                />
+              </span>
+              <span>
+                {quantity > 0 ? (
+                  <button>
+                    <FontAwesomeIcon
+                      icon={faCaretDown}
+                      onClick={handleDecQuantity}
+                    />
+                  </button>
+                ) : (
+                  <button disabled>
+                    <FontAwesomeIcon icon={faCaretDown} />
+                  </button>
+                )}
+              </span>
+              <div>
+                <button className="btn btn-primary" type="submit">
+                  Add to cart
+                </button>
+              </div>
+            </form>
+          </section>
         </div>
-        <div class="card-footer">
-          <form onSubmit={handleAddtoCart}>
-            <span>
-              <FontAwesomeIcon icon={faCaretUp} onClick={handleIncQuantity} />
-            </span>
-            <span>
-              <input
-                type="number"
-                onChange={(e) => setQuantity(e.target.value)}
-                value={quantity}
-              />
-            </span>
-            <span>
-              {quantity > 0 ? (
-                <button>
-                  <FontAwesomeIcon
-                    icon={faCaretDown}
-                    onClick={handleDecQuantity}
+        <div className="card-footer">
+            <div style={{ textAlign: "center" }}>
+              <h1>Please...</h1>
+              <form onSubmit={handleSendRw}>
+                <div className="form-floating mb-3">
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="floatingReview"
+                    onChange={(e) => setUserRw(e.target.value)}
                   />
-                </button>
-              ) : (
-                <button disabled>
-                  <FontAwesomeIcon icon={faCaretDown} />
-                </button>
-              )}
-            </span>
-            <div>
-              <button className="btn btn-primary" type="submit">
-                Add to cart
-              </button>
+                  <label for="floatingReview">Your review</label>
+                </div>
+                <div className="star-rating-container">
+                  <h1 className="star-rating-result">
+                    {GRADES[gradeIndex - 1]
+                      ? GRADES[gradeIndex - 1]
+                      : "You didn't review yet"}
+                  </h1>
+                  <div className="star-rating">
+                    {GRADES.map((value, index) => (
+                      <Star
+                        index={index}
+                        key={value}
+                        changeGradeIndex={changeGradeIndex}
+                        style={gradeIndex > parseInt(index) ? activeStar : {}}
+                      />
+                    ))}
+                  </div>
+                </div>
+                <button type="submit">Send</button>
+              </form>
             </div>
-          </form>
-        </div>
-      </div>
-      <div>
-        <div>
-          <h1>Please...</h1>
-          <form onSubmit={handleSendRw}>
-            <input type="text" onChange={(e) => setUserRw(e.target.value)} />
-            <button type="submit">Send</button>
-          </form>
-        </div>
-        <h1>Reviews</h1>
-        <div>
-          <p>User:</p>
-          <p></p>
-        </div>
-      </div>
-    </>
+          </div>
+          <div className="review-post">
+              <h1>Reviews</h1>
+              <div>
+                {reviews.map((val) => (
+                  <>
+                    <p>
+                      From: 
+                      {val.user && val.user.name ? val.user.name: "unknow"}
+                    </p>
+                    <p>Comment: {val.comment}</p>
+                    <StarRatings
+                      rating={val.rating}
+                      starRatedColor="black"
+                      numberOfStars={5}
+                      name="rating"
+                    />
+                    <hr/>
+                  </>
+                ))}
+              </div>
+            </div>
+      </section>
+      
+    </Wrapper>
   );
 };
+const Wrapper = styled.main`
+  .product-center {
+    display: grid;
+    gap: 4rem;
+    margin-top: 2rem;
+  }
+  .price {
+    color: var(--clr-primary-5);
+  }
 
+  .info {
+    text-transform: capitalize;
+    width: 300px;
+    display: grid;
+    grid-template-columns: 125px 1fr;
+    span {
+      font-weight: 700;
+    }
+  }
+  .review-post{
+    margin: 50px;
+    text-align: justify;
+    padding: 8px;
+    h1{
+      text-align: center;
+    }
+  }
+  @media (min-width: 992px) {
+    .product-center {
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+    }
+    .price {
+      font-size: 1.25rem;
+    }
+  }
+`
 export default ProductDetail;

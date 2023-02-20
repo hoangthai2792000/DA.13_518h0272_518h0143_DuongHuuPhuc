@@ -32,11 +32,8 @@ const Contact = () => {
 }
 const Wrapper = styled.section`
   padding: 5rem 0;
-  margin: 0px 174.6px;
   h3 {
     text-transform: none;
-    margin: 0px 0px 12px;
-    font-weight:700;
   }
   p {
     line-height: 2;
@@ -49,35 +46,36 @@ const Wrapper = styled.section`
     display: grid;
     grid-template-columns: 1fr auto;
   }
-
   .form-input,
   .submit-btn {
     font-size: 1rem;
     padding: 0.5rem 1rem;
-    border: 2px solid black;
-    border-color:#222222;
+    border: 2px solid var(--clr-black);
   }
   .form-input {
     border-right: none;
-    color: grey;
-    background-color:#ffffff;
-    border-radius: 4px 0px 0px 4px;
+    color: var(--clr-grey-3);
+    border-top-left-radius: var(--radius);
+    border-bottom-left-radius: var(--radius);
   }
   .submit-btn {
-    border-radius: 0px 4px 4px 0px;
-    background-color: #ab7a5f;
+    border-top-right-radius: var(--radius);
+    border-bottom-right-radius: var(--radius);
+  }
+  .form-input::placeholder {
+    color: var(--clr-black);
+    text-transform: capitalize;
+  }
+  .submit-btn {
+    background: var(--clr-primary-5);
     text-transform: capitalize;
     letter-spacing: var(--spacing);
     cursor: pointer;
     transition: var(--transition);
-    color: black;
-  }
-  .form-input::placeholder {
-    color: black;
-    text-transform: capitalize;
+    color: var(--clr-black);
   }
   .submit-btn:hover {
-    color: white;
+    color: var(--clr-white);
   }
   @media (min-width: 992px) {
     .content {

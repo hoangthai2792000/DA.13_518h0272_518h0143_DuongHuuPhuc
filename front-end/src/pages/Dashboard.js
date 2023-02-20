@@ -9,7 +9,7 @@ function Dashboard() {
   const { name, userId, role } = user;
   return (
     <>
-      <Wrapper className='page'>
+      <Wrapper className='section section-center page'>
         <h2>Hello there, {user.name}</h2>
         <p>
           Your ID : <span>{userId}</span>
@@ -22,13 +22,13 @@ function Dashboard() {
   );
 }
 
-const Wrapper = styled.div`
-  p span {
-    background: var(--primary-500);
-    padding: 0.15rem 0.25rem;
-    color: var(--white);
-    border-radius: var(--borderRadius);
-    letter-spacing: var(--letterSpacing);
+const Wrapper = styled.section`
+  margin: 88px;
+  @media (min-width: 992px) {
+    p{
+      margin-bottom: 0;
+    }
+    
   }
 `;
 
