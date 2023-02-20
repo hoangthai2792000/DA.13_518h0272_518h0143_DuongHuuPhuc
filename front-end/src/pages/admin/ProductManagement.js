@@ -1,4 +1,5 @@
 import axios from 'axios'
+
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import PageHero from '../../components/PageHero'
@@ -11,9 +12,9 @@ const ProductManagement = () => {
   const [proPrice, setProPrice] = useState()
   const [proBrand, setProBrand] = useState()
   const [proCode, setProCode] = useState()
-  const [proImage, setProImage] = useState()
+  const [proImage, setProImage] = useState([])
 
-  let image = []
+  const [imageUrls, setImageUrls] = useState([])
 
   const brand = [
     { key: 1, value: 'Nike' },
@@ -37,6 +38,36 @@ const ProductManagement = () => {
     e.preventDefault()
 
     console.log(proImage)
+
+    // if (!proCode) {
+    //   throw new Error('Please provide product code first')
+    // }
+
+    let data = new FormData()
+
+    Array.from(proImage).forEach((img) => {
+      data.append('image', img)
+    })
+
+    const instance = axios.create({
+      withCredentials: true,
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+
+    instance
+      .post(
+        `http://localhost:5000/api/v1/product/upload-product-image/${proCode}`,
+        data
+      )
+      .then((response) => {
+        // console.log(response.data)
+        setImageUrls(response.data.result)
+      })
+      .catch((error) => {
+        console.log(error.message)
+      })
   }
 
   const handleEditProduct = (e) => {
@@ -182,8 +213,8 @@ const ProductManagement = () => {
                           {/* search input */}
                           <input
                             type='file'
-                            name='file'
-                            id='file'
+                            name='image'
+                            id='image'
                             multiple
                             onChange={(e) => setProImage(e.target.files)}
                           />
