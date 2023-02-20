@@ -13,6 +13,8 @@ const ProductManagement = () => {
   const [proCode, setProCode] = useState()
   const [proImage, setProImage] = useState()
 
+  let image = []
+
   const brand = [
     { key: 1, value: 'Nike' },
     { key: 2, value: 'Adidas' },
@@ -37,14 +39,6 @@ const ProductManagement = () => {
     console.log(proImage)
   }
 
-  const handleOnchange = (e) => {
-    e.preventDefault()
-
-    // console.log(e.target.files)
-    setProImage(e.target.files)
-    console.log(proImage)
-  }
-
   const handleEditProduct = (e) => {
     e.preventDefault()
     const url = `http://localhost:5000/api/v1/product/${selectedProduct._id}`
@@ -64,6 +58,7 @@ const ProductManagement = () => {
         console.log(error)
       })
   }
+
   const handleDeleteProduct = (e) => {
     e.preventDefault()
     const url = `http://localhost:5000/api/v1/product/${selectedProduct._id}`
@@ -182,7 +177,7 @@ const ProductManagement = () => {
                     </div>
 
                     <div className='form-floating mb-3'>
-                      <form onSubmit={handleUploadImage}>
+                      <form>
                         <div className='form-control'>
                           {/* search input */}
                           <input
@@ -190,10 +185,14 @@ const ProductManagement = () => {
                             name='file'
                             id='file'
                             multiple
-                            onChange={handleOnchange}
+                            onChange={(e) => setProImage(e.target.files)}
                           />
 
-                          <button type='submit' className='btn btn-primary'>
+                          <button
+                            type='submit'
+                            className='btn btn-primary'
+                            onClick={handleUploadImage}
+                          >
                             Upload
                           </button>
                         </div>
