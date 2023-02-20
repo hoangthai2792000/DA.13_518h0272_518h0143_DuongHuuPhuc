@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
-import styled from 'styled-components';
-import PageHero from '../components/PageHero';
+import styled from 'styled-components'
+import PageHero from '../components/PageHero'
 import { FaSearch } from 'react-icons/fa'
+
 const ProductPage = () => {
   const [Product, setProduct] = useState()
   const [imagePro, setImagePro] = useState()
-  const [category, setCategory] = useState("all");
+  const [category, setCategory] = useState('all')
 
   useEffect(() => {
     axios
       .get('http://localhost:5000/api/v1/product')
       .then((response) => {
+        // console.log(response.data.products)
         setProduct(response.data.products)
       })
       .catch((error) => {
@@ -23,7 +25,7 @@ const ProductPage = () => {
   const handleSearch = (e) => {
     e.preventDefault()
 
-    console.log(imagePro)
+    // console.log(imagePro)
 
     const data = new FormData()
     data.append('image', imagePro, imagePro.type)
@@ -36,19 +38,23 @@ const ProductPage = () => {
     axios
       .post('http://localhost:8000/api/v1/search-by-image', data, config)
       .then((response) => {
-        setProduct(response.data)
+        // console.log('image search', response.data)
+
+        setProduct(response.data.products)
       })
       .catch((error) => {
         console.log(error)
       })
   }
+
   function sortCategory(value) {
-    if (category === "all") {
-      return value;
+    if (category === 'all') {
+      return value
     }
-    return value.brand === category;
+    return value.brand === category
   }
-  if(!Product) return null
+
+  if (!Product) return null
   return (
     <main>
       <PageHero title='products' />
@@ -59,56 +65,58 @@ const ProductPage = () => {
               <div className='form-control'>
                 {/* search input */}
                 <input
-                type='file'
-                name='file'
-                id='file'
-                onChange={(e) => setImagePro(e.target.files[0])}
+                  type='file'
+                  name='file'
+                  id='file'
+                  onChange={(e) => setImagePro(e.target.files[0])}
                 />
-                <button type='subtmit' className='btn btn-primary'>
+                <button type='submit' className='btn btn-primary'>
                   Search
                 </button>
               </div>
               {/* end search input */}
+            </form>
+            <form>
               <div className='form-control'>
                 <h5>Caterogy</h5>
                 <div>
                   <button
-                    type="button"
-                    name="caterogy"
-                    className="null"
-                    onClick={() => setCategory("all")}
+                    type='button'
+                    name='caterogy'
+                    className='null'
+                    onClick={() => setCategory('all')}
                   >
                     All
                   </button>
                   <button
-                    type="button"
-                    name="caterogy"
-                    className="null"
-                    onClick={() => setCategory("Nike")}
+                    type='button'
+                    name='caterogy'
+                    className='null'
+                    onClick={() => setCategory('Nike')}
                   >
                     Nike
                   </button>
                   <button
-                    type="button"
-                    name="caterogy"
-                    className="null"
-                    onClick={() => setCategory("Adidas")}
+                    type='button'
+                    name='caterogy'
+                    className='null'
+                    onClick={() => setCategory('Adidas')}
                   >
                     Adidas
                   </button>
                   <button
-                    type="button"
-                    name="caterogy"
-                    className="null"
-                    onClick={() => setCategory("Converse")}
+                    type='button'
+                    name='caterogy'
+                    className='null'
+                    onClick={() => setCategory('Converse')}
                   >
                     Converse
                   </button>
                   <button
-                    type="button"
-                    name="caterogy"
-                    className="null"
-                    onClick={() => setCategory("Vans")}
+                    type='button'
+                    name='caterogy'
+                    className='null'
+                    onClick={() => setCategory('Vans')}
                   >
                     Vans
                   </button>
@@ -128,7 +136,6 @@ const ProductPage = () => {
                 />
               </div>
               {/* end of price */}
-
             </form>
             <button type='button' className='clear-btn'>
               Clear filters
@@ -136,9 +143,9 @@ const ProductPage = () => {
           </div>
           <div className='products-container'>
             {Product.filter(sortCategory).map((pros) => (
-              <Link to={`/products/${pros._id}`}> 
+              <Link to={`/products/${pros._id}`}>
                 <div>
-                  <img className="img" src={pros.image[0]} alt="product-img" />
+                  <img className='img' src={pros.image[0]} alt='product-img' />
                   <footer>
                     <h5>{pros.name}</h5>
                     <p>{pros.price}</p>
@@ -151,7 +158,7 @@ const ProductPage = () => {
       </Wrapper>
     </main>
   )
-};
+}
 const Wrapper = styled.section`
   .products {
     display: grid;
