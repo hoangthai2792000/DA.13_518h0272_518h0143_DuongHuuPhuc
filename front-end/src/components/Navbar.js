@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 // import "./Navbar.css";
-import { Link, useHistory } from "react-router-dom";
+import {NavLink, Link, useHistory } from "react-router-dom";
 // import logo from "../assets/logo.jpg";
 import { AiOutlineLogin } from "react-icons/ai";
 import { HiUserPlus } from "react-icons/hi2";
@@ -8,13 +8,14 @@ import CartButton from "./CartButton";
 import axios from "axios";
 import styled from "styled-components";
 import { useGlobalContext } from '../context';
-import { FaShoppingCart, FaUser, FaUserMinus, FaUserPlus } from "react-icons/fa";
+import { FaBars, FaCogs, FaList, FaShoppingCart, FaTable, FaTimes, FaUser, FaUserMinus, FaUserPlus } from "react-icons/fa";
 
 const Navbar = () => {
   const [role, setRole] = useState("");
   const history = useHistory();
   const { user, logoutUser } = useGlobalContext();
   // if(!user) return null;
+
   return (
     <NavContainer>
       <div className="nav-center">
@@ -22,6 +23,10 @@ const Navbar = () => {
           <Link to="/" style={{ textDecoration: "none", color: "black" }}>
             <h5>TC Sneaker</h5>
           </Link>
+          <button type='button' className='nav-toggle'>
+            <FaBars />
+          </button>
+
         </div>
         <ul className="nav-links">
           <li>
@@ -126,7 +131,7 @@ const NavContainer = styled.nav`
       font-size: 24px;
     }
   }
-  /* .nav-toggle {
+  .nav-toggle {
     background: transparent;
     border: transparent;
     color: var(--clr-primary-5);
@@ -134,8 +139,11 @@ const NavContainer = styled.nav`
     svg {
       font-size: 2rem;
     }
-  } */
+  }
   .nav-links {
+    display: none;
+  }
+  .cart-btn-wrapper {
     display: none;
   }
   .cart-btn {
@@ -159,16 +167,10 @@ const NavContainer = styled.nav`
       margin-left: 5px;
     }
   }
-  .cart-btn-wrapper {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
-    width: 225px;
-  }
   @media (min-width: 992px) {
-    /* .nav-toggle {
+    .nav-toggle {
       display: none;
-    } */
+    }
     .nav-center {
       display: grid;
       grid-template-columns: auto 1fr auto;
@@ -193,6 +195,8 @@ const NavContainer = styled.nav`
     }
     .cart-btn-wrapper {
       display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
     }
   }
 `

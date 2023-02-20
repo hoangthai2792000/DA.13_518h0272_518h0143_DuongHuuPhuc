@@ -139,6 +139,7 @@ const ProductDetail = () => {
             <p className="info">
               <span className="me-2">Total Reviews: </span> {productData.numberOfReviews}
             </p>
+            <hr/>
             <form onSubmit={handleAddtoCart}>
               <span>
                 <FontAwesomeIcon icon={faCaretUp} onClick={handleIncQuantity} />
