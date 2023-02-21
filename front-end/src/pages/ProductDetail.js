@@ -132,7 +132,6 @@ const ProductDetail = () => {
                 </div>
               ))}
             </Carousel>
-            <div>{productData.description}</div>
           </div>
 
           <section className="content">
@@ -155,6 +154,7 @@ const ProductDetail = () => {
               <span>Price: </span>
               {productData.price}
             </h5>
+            <p className="desc">{productData.description}</p>
             <p className="info">
               <span className="me-2">Total Reviews: </span>
               {productData.numberOfReviews}
@@ -415,7 +415,10 @@ const Wrapper = styled.main`
   .price {
     color: var(--clr-primary-5);
   }
-
+  .desc {
+    line-height: 2;
+    max-width: 45em;
+  }
   .info {
     text-transform: capitalize;
     width: 300px;

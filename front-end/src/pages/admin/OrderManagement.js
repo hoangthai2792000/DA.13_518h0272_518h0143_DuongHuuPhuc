@@ -2,6 +2,7 @@ import React from "react";
 import { useGlobalContext } from "../../context/context";
 import styled from "styled-components";
 import PageHero from "../../components/PageHero";
+import { Table } from "react-bootstrap";
 const OrderManagement = () => {
   const { orders } = useGlobalContext();
   console.log(orders);
@@ -10,28 +11,51 @@ const OrderManagement = () => {
     <PageHero title='order-management'/>
       {orders.map((order) => (
         <section className="section section-center page">
-          <table className="table table-hover">
-            <thead style={{ textAlign: 'center' }}>
+        <Table striped bordered hover>
+        <thead style={{ textAlign: 'center' }}>
+          <tr>
+            <th>Order</th>
+            <th>User</th>
+            <th>Products</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody style={{ textAlign: 'center' }}>
+          {orders.map((order, index) => (
+            <>
               <tr>
-                <th scope="row">Order</th>
-                <th scope='col'>Name</th>
-                <th scope='col'>Quantity</th>
-                <th scope='col'>Total Price</th>
-                <th scope='col'>Status</th>
+                <td>{index + 1}</td>
+                <td>{order.user}</td>
+                <td>
+                  <Table striped bordered hover>
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Amount</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {order.orderItems.map((val, index) => (
+                        <>
+                          <tr>
+                            <td>{index + 1}</td>
+                            <td>{val.name}</td>
+                            <td>{val.price}</td>
+                            <td>{val.amount}</td>
+                          </tr>
+                        </>
+                      ))}
+                    </tbody>
+                  </Table>
+                </td>
+                <td style={{verticalAlign:"middle"}}>{order.total} VND</td>
               </tr>
-            </thead>
-            <tbody style={{ textAlign: 'center' }}>
-              {order.orderItems.map((val, index) => (
-                <tr>
-                  <th scope='row'>{index + 1} </th>
-                  <td>{val.name}</td>
-                  <td>{val.amount}</td>
-                  <td>{val.price}</td>
-                  <td>{order.status}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+            </>
+          ))}
+        </tbody>
+      </Table>
         </section>
       ))}
     </Wrapper>
