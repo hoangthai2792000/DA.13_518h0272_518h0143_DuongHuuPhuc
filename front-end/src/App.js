@@ -1,5 +1,5 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import React from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import {
   Home,
   ErrorPage,
@@ -12,82 +12,93 @@ import {
   ForgotPassword,
   ResetPassword,
   ProductPage,
-  ProductManagement, 
+  ProductManagement,
   ReviewManagement,
-  ProductDetail, HomePage, CartPage, CheckoutPage, VerifyEmail
-} from './pages';
-import Navbar from './components/Navbar';
-import Footer from './components/Footer'
-import { useGlobalContext } from './context';
+  ProductDetail,
+  HomePage,
+  CartPage,
+  CheckoutPage,
+  VerifyEmail,
+} from "./pages";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import { useGlobalContext } from "./context/context";
+import ShoppingCart from "./components/cart/ShoppingCart";
+import OrderManagement from "./pages/admin/OrderManagement";
+import UserManagement from "./pages/admin/UserManagement";
+
 function App() {
   const { isLoading } = useGlobalContext();
   if (isLoading) {
     return (
-      <section className='page page-center'>
-        <div className='loading'></div>
+      <section className="page page-center">
+        <div className="loading"></div>
       </section>
     );
   }
   return (
     <Router>
-      <Navbar/>
+      <Navbar />
       <Switch>
-        <Route path='/' exact>
+        <Route path="/" exact>
           <HomePage />
         </Route>
-        <Route path='/login' exact>
+        <Route path="/login" exact>
           <Login />
         </Route>
-        <Route path='/register' exact>
+        <Route path="/register" exact>
           <Register />
         </Route>
-        <Route path='/user' exact>
-          <Dashboard/>
+        <Route path="/user" exact>
+          <Dashboard />
         </Route>
-        <Route path='/about' exact>
+        <Route path="/about" exact>
           <AboutPage />
         </Route>
-        <ProtectedRoute path='/dashboard' exact>
+        <ProtectedRoute path="/dashboard" exact>
           <HomePage />
         </ProtectedRoute>
-        <Route path='/forgot-password' exact>
+        <Route path="/forgot-password" exact>
           <ForgotPassword />
         </Route>
-        <Route path='/user/verify-email' exact>
+        <Route path="/user/verify-email" exact>
           <Verify />
         </Route>
-        <Route path='/user/reset-password' exact>
+        <Route path="/user/reset-password" exact>
           <ResetPassword />
         </Route>
-        <Route path='/products' exact>
+        <Route path="/products" exact>
           <ProductPage />
         </Route>
-        <Route path='/user/verify-email/:token/:email' exact>
+        <Route path="/user/verify-email/:token/:email" exact>
           <VerifyEmail />
         </Route>
-        <Route path='/products-management' exact>
+        <ProtectedRoute path="/products-management" exact>
           <ProductManagement />
-        </Route>
-        <Route path='/reviews-management' exact>
+        </ProtectedRoute>
+        <ProtectedRoute path="/reviews-management" exact>
           <ReviewManagement />
+        </ProtectedRoute>
+        <ProtectedRoute path="/orders-management" exact>
+          <OrderManagement />
+        </ProtectedRoute>
+        <Route path='/users-management' exact>
+          <UserManagement />
         </Route>
-        {/* <Route path='/users-management' exact>
-          <ProductPage />
-        </Route> */}
-        <Route path='/products/:id' exact>
+        <Route path="/product/:id" exact>
           <ProductDetail />
         </Route>
-        <Route exact path='/cart'>
-            <CartPage />
-        </Route>
-        <ProtectedRoute path='/checkout' exact>
+        <ProtectedRoute exact path="/cart">
+          <ShoppingCart />
+        </ProtectedRoute>
+        <ProtectedRoute path="/checkout" exact>
           <CheckoutPage />
         </ProtectedRoute>
-        <Route path='*'>
+        <Route path="*">
           <ErrorPage />
         </Route>
       </Switch>
-      <Footer/>
+      <Footer />
     </Router>
   );
 }

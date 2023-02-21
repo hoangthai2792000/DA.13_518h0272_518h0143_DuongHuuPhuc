@@ -1,28 +1,43 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React from 'react'
+import PageHero from '../../components/PageHero'
+import styled from 'styled-components'
+import { useGlobalContext } from "../../context/context";
 
 const ReviewManagement = () => {
-  const [reviews, setReviews] = useState([]);
-  const [userRw, setUserRw] = useState("");
-
-  const url = "http://localhost:5000/api/v1/review";
-  useEffect(() => {
-    axios
-      .get(url)
-      .then((response) => {
-        setReviews(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
-  if (!reviews) return null;
+  const {reviews } = useGlobalContext();
   console.log(reviews);
   return (
-    <>
-      <div>Review</div>
-    </>
-  );
-};
+    <Wrapper>
+    <PageHero title='reviews-management'/>
+      <section className="section section-center page">
+        <table className="table table-hover">
+          <thead style={{ textAlign: 'center' }}>
+            <tr>
+              <th scope="row">Review</th>
+              <th scope='col'>Name</th>
+              <th scope='col'>Product</th>
+              <th scope='col'>Comment</th>
+              <th scope='col'>Rating</th>
 
-export default ReviewManagement;
+            </tr>
+          </thead>
+          <tbody style={{ textAlign: 'center' }}>
+            {reviews.map((val, index) => (
+              <tr>
+                <th scope='row'>{index + 1} </th>
+                <td>{val.user ? val.user.name: "" }</td>
+                <td>{val.product.name}</td>
+                <td>{val.comment}</td>
+                <td>{val.rating}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </section>
+    </Wrapper>
+  )
+}
+const Wrapper = styled.div`
+`
+
+export default ReviewManagement

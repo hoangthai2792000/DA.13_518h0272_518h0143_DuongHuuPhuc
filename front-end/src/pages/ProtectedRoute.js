@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 // import { useUserContext } from '../context/user_context'
-import { useGlobalContext } from '../context';
+import { useGlobalContext } from '../context/context';
 
 const PrivateRoute = ({ children, ...rest }) => {
   const { user } = useGlobalContext();

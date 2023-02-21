@@ -7,20 +7,20 @@ export const services = [
     icon: <GiCompass />,
     title: 'mission',
     text:
-      'A shoe is an item of footwear intended to protect and comfort the human foot while doing various activities. Shoes are also used as an item of decoration.',
+      'Bringing to Vietnamese consumers quality products with international brands. “Helping you to win confidently” is what TC Sneaker aims to: Satisfaction and Quality brought to customers. ',
   },
   {
     id: 2,
     icon: <GiDiamondHard />,
     title: 'vision',
     text:
-      'A shoe is an item of footwear intended to protect and comfort the human foot while doing various activities. Shoes are also used as an item of decoration.',
+      'TC Sneaker chooses its strategic vision in the present time is to improve the quality to match famous brands in Vietnam, thereby creating breakthroughs and bringing the brand to the national level.',
   },
   {
     id: 3,
     icon: <GiStabbedNote />,
     title: 'history',
     text:
-      'A shoe is an item of footwear intended to protect and comfort the human foot while doing various activities. Shoes are also used as an item of decoration.',
+      'TC Sneaker was established in 2022 with 3 stores located in HCMC. TC Sneaker operated initially as small retail shoe stores. Then, when the company expanded its business, operated on a larger scale and became the leading footwear retail brand in Vietnam.',
   },
 ]

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import main from '../assets/main.svg';
 import { Redirect } from 'react-router-dom';
-import { useGlobalContext } from '../context';
+import { useGlobalContext } from '../context/context';
 function Dashboard() {
   const { user } = useGlobalContext();
   const { name, userId, role } = user;

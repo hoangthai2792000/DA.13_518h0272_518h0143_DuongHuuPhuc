@@ -12,8 +12,7 @@ const Services = () => {
               Built only for you
             </h3>
             <p>
-            A shoe is an item of footwear intended to protect and comfort the human foot while doing various activities. 
-            Shoes are also used as an item of decoration.
+            TC Sneaker operates primarily with retail shoe stores. Then, when the company expanded its business, operated on a larger scale and became the leading shoe retail brand in Vietnam.
             </p>
           </article>
           <div className='services-center'>
