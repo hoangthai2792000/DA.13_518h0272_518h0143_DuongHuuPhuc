@@ -33,7 +33,7 @@ router
 router
   .route("/:id")
   .get(getSingleProduct)
-  // .patch([authenticateUser, authorizePermissions("admin")], updateProduct)
+  // .patch([authenticateUser, authorizePermissions("admin")], updateProduct);
   .patch(updateProduct)
   // .delete([authenticateUser, authorizePermissions("admin")], deleteProduct);
   .delete(deleteProduct);
