@@ -5,7 +5,8 @@ import { useGlobalContext } from "../../context/context";
 
 const ReviewManagement = () => {
   const {reviews } = useGlobalContext();
-  console.log(reviews);
+  // console.log(reviews);
+  
   return (
     <Wrapper>
     <PageHero title='reviews-management'/>

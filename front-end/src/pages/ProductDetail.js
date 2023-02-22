@@ -203,7 +203,7 @@ const ProductDetail = () => {
           </section>
         </div>
         <div className="card-footer">
-          <div style={{ textAlign: "center" }}>
+          {user ? (<div style={{ textAlign: "center" }}>
             <h1>Please...</h1>
             <form onSubmit={handleSendRw}>
               <div className="form-floating mb-3">
@@ -234,7 +234,8 @@ const ProductDetail = () => {
               </div>
               <button type="submit">Send</button>
             </form>
-          </div>
+          </div>)
+          : null}
         </div>
         <div className="review-post">
           <h1>Reviews</h1>
