@@ -82,7 +82,7 @@ const updateProduct = async (req, res) => {
 
   if (!product) {
     throw new customError(
-      `Can not find any product with the ID: ${req.prams.id}`,
+      `Can not find any product with the ID: ${req.params.id}`,
       400
     );
   }
