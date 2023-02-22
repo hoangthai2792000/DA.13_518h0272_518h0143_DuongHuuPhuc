@@ -357,6 +357,7 @@ const ProductManagement = () => {
                           type='text'
                           className='form-control'
                           id='floatingInput'
+                          value={selectedProduct.name}
                           onChange={(e) => setProName(e.target.value)}
                         />
                         <label for='floatingInput'>Name</label>
@@ -366,6 +367,7 @@ const ProductManagement = () => {
                           type='text'
                           className='form-control'
                           id='floatingName'
+                          value={selectedProduct.code}
                           onChange={(e) => setProCode(e.target.value)}
                         />
                         <label for='floatingName'>Code</label>
@@ -375,6 +377,7 @@ const ProductManagement = () => {
                           type='number'
                           className='form-control'
                           id='floatingPrice'
+                          value={selectedProduct.price}
                           onChange={(e) => setProPrice(e.target.value)}
                         />
                         <label for='floatingPrice'>Price</label>
@@ -384,6 +387,7 @@ const ProductManagement = () => {
                           id='floatingBrand'
                           name='floatingBrand'
                           className='form-control'
+                          value={selectedProduct.brand}
                           onChange={(e) => {
                             const selectedBrand = e.target.value
                             setProBrand(selectedBrand)
@@ -399,13 +403,20 @@ const ProductManagement = () => {
                         <label for='floatingBrand'>Brand</label>
                       </div>
                       <div className='form-floating mb-3'>
-                        <input
-                          type='text'
-                          className='form-control'
-                          id='floatingImage'
-                          onChange={(e) => setProImage(e.target.value)}
-                        />
-                        <label for='floatingImage'>Image</label>
+                        <label>Image</label>
+                        <br />
+                        <div className='images' id='floatingImage'>
+                          {selectedProduct.image
+                            ? selectedProduct.image.map((url) => (
+                                <div className='imagewrap'>
+                                  <img src={url}></img>
+                                  <button className='btn'>
+                                    <i class='fa fa-close'></i>
+                                  </button>
+                                </div>
+                              ))
+                            : '?'}
+                        </div>
                       </div>
                     </div>
                     <div className='modal-footer'>
@@ -485,6 +496,24 @@ const ProductManagement = () => {
 const Wrapper = styled.div`
   .alert {
     margin-top: 3rem;
+  }
+  .imagewrap {
+    display: inline-block;
+    position: relative;
+    width: 33.33%;
+    float: left;
+  }
+  .imagewrap img {
+    width: 100%;
+    height: auto;
+  }
+  .imagewrap button {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+  .modal-footer {
+    clear: both;
   }
 `
 
