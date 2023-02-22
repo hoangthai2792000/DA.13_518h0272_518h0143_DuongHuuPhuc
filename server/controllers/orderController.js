@@ -43,6 +43,7 @@ const getCurrentUserOrders = async (req, res) => {
 
 // CREATE ORDER
 const createOrder = async (req, res) => {
+  console.log(req.user)
   const { items: cartItems, shippingFee } = req.body
 
   if (!cartItems || cartItems.length < 1) {
@@ -89,8 +90,8 @@ const createOrder = async (req, res) => {
     subtotal,
     total,
     orderItems,
-    user: req.user.userId,
-    // user: req.body.user,
+    // user: req.user.userId,
+    user: req.body.user,
     clientSecret: paymentIntent.clientSecret,
   })
 
