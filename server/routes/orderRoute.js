@@ -9,12 +9,15 @@ const {
 const express = require('express')
 const router = express.Router()
 
-const { authorizePermissions } = require('../middleware/authentication')
+const {
+  authenticateUser,
+  authorizePermissions,
+} = require('../middleware/authentication')
 
 router
   .route('/')
-  // .get(authorizePermissions('admin'), getAllOrders)
-  .get(getAllOrders)
+  .get([authenticateUser, authorizePermissions('admin')], getAllOrders)
+  // .get(getAllOrders)
   .post(createOrder)
 
 router.route('/myAllOrders').get(getCurrentUserOrders)

@@ -19,8 +19,8 @@ const router = express.Router()
 router
   .route('/')
   .get(getAllProducts)
-  // .post([authenticateUser, authorizePermissions("admin")], createProduct);
-  .post(createProduct)
+  .post([authenticateUser, authorizePermissions('admin')], createProduct)
+// .post(createProduct)
 
 router
   .route('/upload-product-image/:productCode')

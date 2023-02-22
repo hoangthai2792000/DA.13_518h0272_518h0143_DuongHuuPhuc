@@ -128,7 +128,11 @@ const ProductManagement = () => {
       showAlert({ text: 'Please upload product images' })
     }
 
-    axios
+    const instance = axios.create({
+      withCredentials: true,
+    })
+
+    instance
       .post('http://localhost:5000/api/v1/product', {
         name: proName,
         code: proCode,
