@@ -31,7 +31,7 @@ const Navbar = () => {
     <NavContainer>
       <div className="nav-center">
         <div className="nav-header">
-          <Link to="/" style={{ textDecoration: "none", color: "black" }}>
+          <Link to="/" style={{ textDecoration: "none", color: "black"}}>
             <h5>TC Sneaker</h5>
           </Link>
           <button type="button" className="nav-toggle">
@@ -40,14 +40,14 @@ const Navbar = () => {
         </div>
         <ul className="nav-links">
           <li>
-            <Link to="/" style={{ textDecoration: "none", color: "black" }}>
+            <Link to="/" style={{ textDecoration: "none", color: "black", verticalAlign:"-7px" }}>
               Home
             </Link>
           </li>
           <li>
             <Link
               to="/about"
-              style={{ textDecoration: "none", color: "black" }}
+              style={{ textDecoration: "none", color: "black", verticalAlign:"-7px"}}
             >
               About
             </Link>
@@ -55,7 +55,7 @@ const Navbar = () => {
           <li>
             <Link
               to="/products"
-              style={{ textDecoration: "none", color: "black" }}
+              style={{ textDecoration: "none", color: "black", verticalAlign:"-7px"}}
             >
               Products
             </Link>
@@ -70,6 +70,7 @@ const Navbar = () => {
                   role="button"
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
+                  
                 >
                   Management
                 </a>
@@ -136,8 +137,8 @@ const Navbar = () => {
               <Button
                 onClick={openCart}
                 style={{
-                  width: "3rem",
-                  height: "3rem",
+                  width: "2.7rem",
+                  height: "2rem",
                   position: "relative",
                 }}
                 variant="outline-primary"

@@ -255,7 +255,7 @@ const ProductDetail = () => {
                   name="rating"
                 />
 
-                {val.user && user.userId === val.user._id ? (
+                {val.user && user && user.userId === val.user._id ? (
                   <div className="mt-3">
                     <Button
                       className="me-3"

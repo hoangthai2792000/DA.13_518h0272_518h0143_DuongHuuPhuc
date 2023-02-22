@@ -49,7 +49,7 @@ function App() {
         <Route path="/register" exact>
           <Register />
         </Route>
-        <Route path="/user" exact>
+        <Route path="/user-information" exact>
           <Dashboard />
         </Route>
         <Route path="/about" exact>

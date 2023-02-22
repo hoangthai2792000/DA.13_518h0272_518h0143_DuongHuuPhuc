@@ -9,7 +9,6 @@ const OrderManagement = () => {
   return (
     <Wrapper>
     <PageHero title='order-management'/>
-      {orders.map((order) => (
         <section className="section section-center page">
         <Table striped bordered hover>
         <thead style={{ textAlign: 'center' }}>
@@ -30,7 +29,7 @@ const OrderManagement = () => {
                   <Table striped bordered hover>
                     <thead>
                       <tr>
-                        <th>#</th>
+                        <th>Number</th>
                         <th>Name</th>
                         <th>Price</th>
                         <th>Amount</th>
@@ -57,7 +56,6 @@ const OrderManagement = () => {
         </tbody>
       </Table>
         </section>
-      ))}
     </Wrapper>
   );
 };
