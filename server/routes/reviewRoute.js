@@ -5,25 +5,25 @@ const {
   updateReview,
   deleteReview,
   getSingleProductReviews,
-} = require("../controllers/reviewController");
+} = require('../controllers/reviewController')
 
-const express = require("express");
-const router = express.Router();
+const express = require('express')
+const router = express.Router()
 
-const { authenticateUser } = require("../middleware/authentication");
-const { route } = require("express/lib/router");
+const { authenticateUser } = require('../middleware/authentication')
+const { route } = require('express/lib/router')
 
-// router.route('/').get(getAllReviews).post(authenticateUser, createReview)
-router.route("/").get(getAllReviews).post(createReview);
+router.route('/').get(getAllReviews).post(authenticateUser, createReview)
+// router.route("/").get(getAllReviews).post(createReview);
 
 router
-  .route("/:id")
+  .route('/:id')
   .get(getSingleReview)
-  .patch(updateReview)
-  .delete(deleteReview);
-  // .patch(authenticateUser, updateReview)
-  // .delete(authenticateUser, deleteReview);
+  // .patch(updateReview)
+  // .delete(deleteReview);
+  .patch(authenticateUser, updateReview)
+  .delete(authenticateUser, deleteReview)
 
-router.route("/product/:id").get(getSingleProductReviews);
+router.route('/product/:id').get(getSingleProductReviews)
 
-module.exports = router;
+module.exports = router
