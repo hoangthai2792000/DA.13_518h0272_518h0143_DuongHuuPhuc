@@ -1,21 +1,32 @@
 import React, { useEffect, useState } from "react";
 // import "./Navbar.css";
-import {NavLink, Link, useHistory } from "react-router-dom";
+import { NavLink, Link, useHistory } from "react-router-dom";
+import { Button, Container, Nav, Navbar as NavbarBs } from "react-bootstrap";
 // import logo from "../assets/logo.jpg";
 import { AiOutlineLogin } from "react-icons/ai";
 import { HiUserPlus } from "react-icons/hi2";
 import CartButton from "./CartButton";
 import axios from "axios";
 import styled from "styled-components";
-import { useGlobalContext } from '../context';
-import { FaBars, FaCogs, FaList, FaShoppingCart, FaTable, FaTimes, FaUser, FaUserMinus, FaUserPlus } from "react-icons/fa";
+import { useGlobalContext } from "../context/context";
+import {
+  FaBars,
+  FaCogs,
+  FaList,
+  FaShoppingCart,
+  FaTable,
+  FaTimes,
+  FaUser,
+  FaUserMinus,
+  FaUserPlus,
+} from "react-icons/fa";
 
 const Navbar = () => {
   const [role, setRole] = useState("");
   const history = useHistory();
-  const { user, logoutUser } = useGlobalContext();
+  const { user, logoutUser, openCart, cartQuantity } = useGlobalContext();
   // if(!user) return null;
-
+  const cartStorage = localStorage.getItem("cart");
   return (
     <NavContainer>
       <div className="nav-center">
@@ -23,10 +34,9 @@ const Navbar = () => {
           <Link to="/" style={{ textDecoration: "none", color: "black" }}>
             <h5>TC Sneaker</h5>
           </Link>
-          <button type='button' className='nav-toggle'>
+          <button type="button" className="nav-toggle">
             <FaBars />
           </button>
-
         </div>
         <ul className="nav-links">
           <li>
@@ -52,21 +62,51 @@ const Navbar = () => {
           </li>
           {user && user.role === "admin" ? (
             <>
-              <li>
-                <Link
-                  to="/products-management"
-                  style={{ textDecoration: "none", color: "black" }}
+              <li className="nav-item dropdown">
+                <a
+                  className="nav-link dropdown-toggle"
+                  href="#"
+                  id="navbarDropdown"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
                 >
-                  Product Management
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/reviews-management"
-                  style={{ textDecoration: "none", color: "black" }}
-                >
-                  Reviews Management
-                </Link>
+                  Management
+                </a>
+                <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li>
+                    <Link
+                      to="/users-management"
+                      style={{ textDecoration: "none", color: "black" }}
+                    >
+                      Users
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/products-management"
+                      style={{ textDecoration: "none", color: "black" }}
+                    >
+                      Products
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/reviews-management"
+                      style={{ textDecoration: "none", color: "black" }}
+                    >
+                      Reviews
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/orders-management"
+                      style={{ textDecoration: "none", color: "black" }}
+                    >
+                      Orders
+                    </Link>
+                  </li>
+                </ul>
               </li>
             </>
           ) : null}
@@ -74,42 +114,73 @@ const Navbar = () => {
         <div className="cart-btn-wrapper">
           {!user ? (
             <>
-            <Link
-              to="/login"
-              style={{ textDecoration: "none", color: "black" }}
-            >
-              <button className="auth-btn">
-                Login <FaUser/>
+              <Link
+                to="/login"
+                style={{ textDecoration: "none", color: "black" }}
+              >
+                <button className="auth-btn">
+                  Login <FaUser />
+                </button>
+              </Link>
+              <Link
+                to="/register"
+                style={{ textDecoration: "none", color: "black" }}
+              >
+                <button className="auth-btn">
+                  Register <FaUserPlus />
+                </button>
+              </Link>
+            </>
+          ) : (
+            <>
+              <Button
+                onClick={openCart}
+                style={{
+                  width: "3rem",
+                  height: "3rem",
+                  position: "relative",
+                }}
+                variant="outline-primary"
+                className="rounded-circle"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 576 512"
+                  fill="currentColor"
+                >
+                  <path d="M96 0C107.5 0 117.4 8.19 119.6 19.51L121.1 32H541.8C562.1 32 578.3 52.25 572.6 72.66L518.6 264.7C514.7 278.5 502.1 288 487.8 288H170.7L179.9 336H488C501.3 336 512 346.7 512 360C512 373.3 501.3 384 488 384H159.1C148.5 384 138.6 375.8 136.4 364.5L76.14 48H24C10.75 48 0 37.25 0 24C0 10.75 10.75 0 24 0H96zM128 464C128 437.5 149.5 416 176 416C202.5 416 224 437.5 224 464C224 490.5 202.5 512 176 512C149.5 512 128 490.5 128 464zM512 464C512 490.5 490.5 512 464 512C437.5 512 416 490.5 416 464C416 437.5 437.5 416 464 416C490.5 416 512 437.5 512 464z" />
+                </svg>
+
+                <div
+                  className="rounded-circle bg-danger d-flex justify-content-center align-items-center"
+                  style={{
+                    color: "white",
+                    width: "1.5rem",
+                    height: "1.5rem",
+                    position: "absolute",
+                    bottom: 0,
+                    right: 0,
+                    transform: "translate(25%, 25%)",
+                  }}
+                >
+                  {cartQuantity}
+                </div>
+              </Button>
+
+              <button
+                className="auth-btn"
+                onClick={() => {
+                  logoutUser();
+                  history.push("/dashboard");
+                }}
+              >
+                Logout
+                <FaUserMinus />
               </button>
-            </Link>
-            <Link
-              to="/register"
-              style={{ textDecoration: "none", color: "black" }}
-            >
-              <button className="auth-btn">
-                Register <FaUserPlus/>
-              </button>
-            </Link>
-          </>
-          ) : ( 
-          <>
-            <Link to="/cart" className="cart-btn">
-              Cart 
-              <span className="cart-container"> 
-                <FaShoppingCart/>
-              </span>
-            </Link>
-              <button className="auth-btn" onClick={() => {
-                logoutUser()
-                history.push('/dashboard');
-              }}>
-                Logout<FaUserMinus/>
-              </button>
-          </>
-           )}
+            </>
+          )}
         </div>
       </div>
-
     </NavContainer>
   );
 };
@@ -127,7 +198,7 @@ const NavContainer = styled.nav`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    h5{
+    h5 {
       font-size: 24px;
     }
   }
@@ -199,5 +270,5 @@ const NavContainer = styled.nav`
       align-items: center;
     }
   }
-`
+`;
 export default Navbar;

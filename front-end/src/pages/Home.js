@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Logo from '../assets/logo.jpg';
 import { Redirect } from 'react-router-dom';
-import { useGlobalContext } from '../context';
+import { useGlobalContext } from '../context/context';
 function Home() {
   const { user } = useGlobalContext();
   return (

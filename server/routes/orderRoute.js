@@ -13,7 +13,8 @@ const { authorizePermissions } = require('../middleware/authentication')
 
 router
   .route('/')
-  .get(authorizePermissions('admin'), getAllOrders)
+  // .get(authorizePermissions('admin'), getAllOrders)
+  .get(getAllOrders)
   .post(createOrder)
 
 router.route('/myAllOrders').get(getCurrentUserOrders)

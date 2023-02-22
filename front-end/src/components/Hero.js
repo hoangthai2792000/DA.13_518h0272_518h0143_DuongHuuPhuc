@@ -13,7 +13,7 @@ const Hero = () => {
           Sneakers That You'll Love
         </h1>
         <p>
-        A shoe is an item of footwear intended to protect and comfort the human foot while doing various activities. Shoes are also used as an item of decoration.
+        Not only bring quality, reasonable price but also bring satisfaction to customers.
         </p>
         <Link to='/products' className='btn hero-btn'>
           shop now
