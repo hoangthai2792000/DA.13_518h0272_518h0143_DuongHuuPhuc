@@ -1,7 +1,7 @@
-import { Button, Card } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
-import { useGlobalContext } from "../../context/context";
+import { Button, Card } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
+import styled from 'styled-components'
+import { useGlobalContext } from '../../context/context'
 
 export function StoreItem({ _id, name, price, image }) {
   const {
@@ -10,8 +10,8 @@ export function StoreItem({ _id, name, price, image }) {
     decreaseCartQuantity,
     removeFromCart,
     user,
-  } = useGlobalContext();
-  const quantity = getItemQuantity(_id);
+  } = useGlobalContext()
+  const quantity = getItemQuantity(_id)
 
   return (
     <Link to={`/product/${_id}`}>
@@ -23,5 +23,5 @@ export function StoreItem({ _id, name, price, image }) {
         </footer>
       </div>
     </Link>
-  );
+  )
 }
