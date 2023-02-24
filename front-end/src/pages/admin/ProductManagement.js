@@ -16,6 +16,7 @@ const ProductManagement = () => {
   const [proImage, setProImage] = useState([])
 
   const [imageUrls, setImageUrls] = useState([])
+  const [tmpImgs, setTmpImgs] = useState([])
 
   const brand = [
     { key: 1, value: 'Nike' },
@@ -46,10 +47,12 @@ const ProductManagement = () => {
 
     if (!proCode) {
       showAlert({ text: 'Please provide product code first' })
+      setTimeout(() => hideAlert(), 3000)
     }
 
     if (!proImage || proImage.length < 1) {
       showAlert({ text: 'Please choose images to upload' })
+      setTimeout(() => hideAlert(), 3000)
     }
 
     let data = new FormData()
@@ -77,45 +80,72 @@ const ProductManagement = () => {
           text: 'Upload Image Successfully',
           type: 'success',
         })
+        setTimeout(() => hideAlert(), 3000)
         setLoading(false)
       })
       .catch((error) => {
         showAlert({ text: error.response.data.msg })
+        setTimeout(() => hideAlert(), 3000)
         setLoading(false)
       })
   }
 
   const handleEditProduct = (e) => {
     e.preventDefault()
+    hideAlert()
+    setLoading(true)
     const url = `http://localhost:5000/api/v1/product/${selectedProduct._id}`
-    axios
+    const instance = axios.create({
+      withCredentials: true,
+    })
+    instance
       .patch(url, {
         name: proName,
         code: proCode,
         price: proPrice,
         brand: proBrand,
-        newImages: proImage,
       })
       .then((response) => {
-        console.log(response)
+        showAlert({
+          text: 'Update Product Successfully',
+          type: 'success',
+        })
+        setTimeout(() => hideAlert(), 3000)
+        setLoading(false)
         window.location.reload(false)
       })
       .catch((error) => {
-        console.log(error)
+        showAlert({ text: error.response.data.msg })
+        setTimeout(() => hideAlert(), 3000)
+        setLoading(false)
       })
   }
 
   const handleDeleteProduct = (e) => {
     e.preventDefault()
-    const url = `http://localhost:5000/api/v1/product/${selectedProduct._id}`
-    axios
+    // console.log(selectedProduct.id)
+
+    const url = `http://localhost:5000/api/v1/product/${selectedProduct.id}`
+
+    const instance = axios.create({
+      withCredentials: true,
+    })
+
+    instance
       .delete(url)
       .then((response) => {
-        console.log(response)
+        // console.log(response.data)
+        showAlert({
+          text: 'Upload Image Successfully',
+          type: 'success',
+        })
+        setTimeout(() => hideAlert(), 3000)
         window.location.reload(false)
       })
       .catch((error) => {
-        console.log(error)
+        showAlert({ text: error.response.data.msg })
+        setTimeout(() => hideAlert(), 3000)
+        // console.log(error)
       })
   }
 
@@ -126,6 +156,7 @@ const ProductManagement = () => {
 
     if (!imageUrls || imageUrls.length < 1) {
       showAlert({ text: 'Please upload product images' })
+      setTimeout(() => hideAlert(), 3000)
     }
 
     const instance = axios.create({
@@ -145,18 +176,49 @@ const ProductManagement = () => {
           text: 'Add New Product Successfully',
           type: 'success',
         })
+        setTimeout(() => hideAlert(), 3000)
         setLoading(false)
         window.location.reload(false)
       })
       .catch((error) => {
         showAlert({ text: error.response.data.msg })
+        setTimeout(() => hideAlert(), 3000)
         setLoading(false)
       })
   }
 
+  const handleDeleteImage = (e, imgurl, productCode) => {
+    e.preventDefault()
+    hideAlert()
+    setLoading(true)
+
+    const instance = axios.create({
+      withCredentials: true,
+    })
+
+    let url = `http://localhost:5000/api/v1/product/delete-image/${productCode}`
+    let data = { imageURL: imgurl }
+
+    instance
+      .delete(url, { data: data })
+      .then((resp) => {
+        // console.log(resp.data.product)
+        setSelectedProduct(resp.data.product)
+        setTimeout(() => hideAlert(), 3000)
+        setLoading(false)
+      })
+      .catch((error) => {
+        showAlert({ text: error.response.data.msg })
+        setTimeout(() => hideAlert(), 3000)
+        setLoading(false)
+      })
+
+    console.log(url, productCode)
+  }
+
   if (!products) return null
-  console.log(products)
-  console.log(selectedProduct)
+  // console.log(products)
+  // console.log(selectedProduct)
   return (
     <Wrapper>
       <PageHero title='products-management' />
@@ -245,7 +307,6 @@ const ProductManagement = () => {
                     <div className='form-floating mb-3'>
                       <form>
                         <div className='form-control'>
-                          {/* search input */}
                           <input
                             type='file'
                             name='image'
@@ -262,7 +323,6 @@ const ProductManagement = () => {
                             Upload
                           </button>
                         </div>
-                        {/* end search input */}
                       </form>
 
                       {alert.show && (
@@ -318,7 +378,10 @@ const ProductManagement = () => {
                     className='btn btn-warning me-3'
                     data-bs-toggle='modal'
                     data-bs-target='#editModal'
-                    onClick={() => setSelectedProduct(val)}
+                    onClick={() => {
+                      setSelectedProduct(val)
+                      setTmpImgs(selectedProduct.image)
+                    }}
                   >
                     Edit
                   </button>
@@ -333,6 +396,7 @@ const ProductManagement = () => {
                 </td>
               </tr>
             ))}
+
             {/* <!-- Edit Modal --> */}
             <div
               className='modal fade'
@@ -354,14 +418,17 @@ const ProductManagement = () => {
                       aria-label='Close'
                     ></button>
                   </div>
-                  <form onSubmit={handleEditProduct}>
+                  <form
+                    onSubmit={handleEditProduct}
+                    className={loading ? 'form form-loading' : 'form'}
+                  >
                     <div className='modal-body'>
                       <div className='form-floating mb-3'>
                         <input
                           type='text'
                           className='form-control'
                           id='floatingInput'
-                          value={selectedProduct.name}
+                          defaultValue={selectedProduct.name}
                           onChange={(e) => setProName(e.target.value)}
                         />
                         <label for='floatingInput'>Name</label>
@@ -371,6 +438,7 @@ const ProductManagement = () => {
                           type='text'
                           className='form-control'
                           id='floatingName'
+                          disabled
                           value={selectedProduct.code}
                           onChange={(e) => setProCode(e.target.value)}
                         />
@@ -381,7 +449,7 @@ const ProductManagement = () => {
                           type='number'
                           className='form-control'
                           id='floatingPrice'
-                          value={selectedProduct.price}
+                          defaultValue={selectedProduct.price}
                           onChange={(e) => setProPrice(e.target.value)}
                         />
                         <label for='floatingPrice'>Price</label>
@@ -392,6 +460,7 @@ const ProductManagement = () => {
                           name='floatingBrand'
                           className='form-control'
                           value={selectedProduct.brand}
+                          disabled
                           onChange={(e) => {
                             const selectedBrand = e.target.value
                             setProBrand(selectedBrand)
@@ -406,6 +475,7 @@ const ProductManagement = () => {
                         </select>
                         <label for='floatingBrand'>Brand</label>
                       </div>
+
                       <div className='form-floating mb-3'>
                         <label>Image</label>
                         <br />
@@ -414,7 +484,16 @@ const ProductManagement = () => {
                             ? selectedProduct.image.map((url) => (
                                 <div className='imagewrap'>
                                   <img src={url}></img>
-                                  <button className='btn'>
+                                  <button
+                                    className='btn'
+                                    onClick={(e) =>
+                                      handleDeleteImage(
+                                        e,
+                                        url,
+                                        selectedProduct.code
+                                      )
+                                    }
+                                  >
                                     <i class='fa fa-close'></i>
                                   </button>
                                 </div>
@@ -423,6 +502,11 @@ const ProductManagement = () => {
                         </div>
                       </div>
                     </div>
+                    {alert.show && (
+                      <div className={`alert alert-${alert.type}`}>
+                        {alert.text}
+                      </div>
+                    )}
                     <div className='modal-footer'>
                       <button
                         type='button'
@@ -455,6 +539,7 @@ const ProductManagement = () => {
                       You want to delete
                       {selectedProduct.name ? selectedProduct.name : '?'}
                     </h5>
+
                     <button
                       type='button'
                       className='btn-close'
@@ -471,6 +556,11 @@ const ProductManagement = () => {
                         {selectedProduct.price ? selectedProduct.price : '?'}
                       </p>
                     </div>
+                    {alert.show && (
+                      <div className={`alert alert-${alert.type}`}>
+                        {alert.text}
+                      </div>
+                    )}
                   </div>
                   <div className='modal-footer'>
                     <button
@@ -516,7 +606,7 @@ const Wrapper = styled.div`
     top: 0;
     right: 0;
   }
-  .modal-footer {
+  .modal-footer alert {
     clear: both;
   }
 `

@@ -104,16 +104,52 @@ const deleteProduct = async (req, res) => {
 
   if (!product) {
     throw new customError(
-      `Can not find any product with the ID: ${req.prams.id}`,
+      `Can not find any product with the ID: ${req.params.id}`,
       400
     )
   }
 
-  // await cloudinary.api.delete_resources_by_prefix(`Products/${product.code}`)
-  // await cloudinary.api.delete_folder(`Products/${product.code}`)
-  await product.remove()
+  console.log('ok')
+  // res.status(200).json({ msg: product })
 
-  res.status(200).json({ msg: 'Product Deleted' })
+  // await cloudinary.api.delete_resources_by_prefix(`Products/${product.code}`)
+  // cloudinary.api
+  //   .delete_resources_by_prefix(`Products/${product.code}`)
+  //   .then(() => {
+  //     axios
+  //       .delete('http://127.0.0.1:8000/api/v1/delete-many-images-from-milvus', {
+  //         data: { productBrand: product.brand, productCode: product.code },
+  //       })
+  //       .then(() => {
+  //         product.remove().then(() => {
+  //           return res.status(200).json({ msg: 'Delete Product Successfully' })
+  //         })
+  //       })
+  //   })
+
+  cloudinary.api
+    .delete_resources_by_prefix(`Products/${product.code}`)
+    .then(() => {
+      cloudinary.api.delete_folder(`Products/${product.code}`).then(() => {
+        axios
+          .delete(
+            'http://127.0.0.1:8000/api/v1/delete-many-images-from-milvus',
+            {
+              data: { productBrand: product.brand, productCode: product.code },
+            }
+          )
+          .then(() => {
+            product.remove().then(() => {
+              return res
+                .status(200)
+                .json({ msg: 'Delete Product Successfully' })
+            })
+          })
+      })
+    })
+    .catch((error) => {
+      throw new customError('Something went wrong, please try again later', 500)
+    })
 }
 
 // UPLOAD PRODUCT IMAGE
@@ -127,6 +163,7 @@ const uploadProductImage = async (req, res) => {
 
 // DELETE IMAGE
 const deleteImage = async (req, res) => {
+  // console.log(req.body)
   const { imageURL } = req.body
   const { productCode } = req.params
 
@@ -161,13 +198,12 @@ const deleteImage = async (req, res) => {
   const deleteImgFromMilvus = await axios.delete(
     'http://127.0.0.1:8000/api/v1/delete-image-from-milvus',
     {
-      productBrand,
-      imgURL,
+      data: { productBrand, imgURL },
     }
   )
   // console.log(imgToMilvus.data)
 
-  res.status(200).json({ product, deletedImg })
+  res.status(200).json({ product })
 }
 
 module.exports = {
