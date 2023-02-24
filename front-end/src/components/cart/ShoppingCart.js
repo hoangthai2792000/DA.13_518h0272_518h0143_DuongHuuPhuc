@@ -55,9 +55,8 @@ const ShoppingCart = ({ isOpen }) => {
               </Button>
             </>
           ) : (
-            <div>
-              <h2>Your cart is empty</h2>
-              
+            <div style={{textAlign:"center"}}>
+              <h2 style={{marginBottom:"1rem", textTransform:"none"}}>Your cart is empty</h2>
             </div>
           )}
         </Stack>
@@ -65,5 +64,4 @@ const ShoppingCart = ({ isOpen }) => {
     </Offcanvas>
   );
 };
-
 export default ShoppingCart;

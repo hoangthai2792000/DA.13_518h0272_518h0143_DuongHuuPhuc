@@ -16,6 +16,7 @@ import AboutPage from "./AboutPage";
 import CartPage from "./CartPage";
 import CheckoutPage from "./CheckoutPage";
 import VerifyEmail from "./VerifyEmail"
+import MyOrder from './MyOrder';
 
 export {
   Home,
@@ -36,4 +37,5 @@ export {
   CartPage,
   CheckoutPage,
   VerifyEmail,
+  MyOrder,
 };

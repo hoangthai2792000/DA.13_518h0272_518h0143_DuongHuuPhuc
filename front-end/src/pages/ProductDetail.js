@@ -333,7 +333,7 @@ const ProductDetail = () => {
                                   ? GRADES[gradeIndex - 1]
                                   : "You didn't review yet"}
                               </h1>
-                              <div className='star-rating'>
+                              <div className='star-rating' style={{marginTop: "64px"}} >
                                 {GRADES.map((value, index) => (
                                   <Star
                                     index={index}
@@ -348,7 +348,7 @@ const ProductDetail = () => {
                                 ))}
                               </div>
                             </div>
-                            <label for='floatingName'>Rating</label>
+                            <label for='floatingName' style={{marginTop: "48px"}}>Rating:</label>
                           </div>
                         </div>
                         <div className='modal-footer'>
