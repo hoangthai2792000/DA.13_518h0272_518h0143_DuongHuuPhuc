@@ -72,7 +72,10 @@ const AppProvider = ({ children }) => {
   //User
   const fetchUsers = async () => {
     try {
-      const { data } = await axios.get(`/api/v1/user`)
+      const instance = axios.create({
+      withCredentials: true,
+    })
+      const { data } = await instance.get(`/api/v1/user`)
       setUsers(data.users)
     } catch (error) {
       setUsers([])
@@ -83,7 +86,10 @@ const AppProvider = ({ children }) => {
   //Review
   const fetchReviews = async () => {
     try {
-      const { data } = await axios.get(`/api/v1/review`)
+      const instance = axios.create({
+        withCredentials: true,
+    })
+      const { data } = await instance.get(`/api/v1/review`)
       setReviews(data.reviews)
     } catch (error) {
       setReviews([])

@@ -26,6 +26,7 @@ import { useGlobalContext } from "./context/context";
 import ShoppingCart from "./components/cart/ShoppingCart";
 import OrderManagement from "./pages/admin/OrderManagement";
 import UserManagement from "./pages/admin/UserManagement";
+import MyOrder from "./pages/MyOrder";
 
 function App() {
   const { isLoading } = useGlobalContext();
@@ -87,6 +88,9 @@ function App() {
         </Route>
         <Route path="/product/:id" exact>
           <ProductDetail />
+        </Route>
+        <Route path="/my-order" exact>
+          <MyOrder />
         </Route>
         <ProtectedRoute exact path="/cart">
           <ShoppingCart />

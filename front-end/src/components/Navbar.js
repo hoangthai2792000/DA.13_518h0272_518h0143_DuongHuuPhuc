@@ -60,6 +60,16 @@ const Navbar = () => {
               Products
             </Link>
           </li>
+          {user ? (
+          <li>
+            <Link
+              to="/user-information"
+              style={{ textDecoration: "none", color: "black", verticalAlign:"-7px"}}
+            >
+              Info
+            </Link>
+          </li>
+          ) : null}
           {user && user.role === "admin" ? (
             <>
               <li className="nav-item dropdown">

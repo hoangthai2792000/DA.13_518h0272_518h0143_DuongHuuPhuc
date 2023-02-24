@@ -44,7 +44,7 @@ function Login() {
 
   return (
     <>
-      <Wrapper className="page">
+      <Wrapper className="section section-center page">
         {alert.show && (
           <div className={`alert alert-${alert.type}`}>{alert.text}</div>
         )}

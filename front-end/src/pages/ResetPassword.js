@@ -49,7 +49,7 @@ const ResetPasswordForm = () => {
     }
   };
   return (
-    <Wrapper className='page'>
+    <Wrapper className='page-100'>
       {alert.show && (
         <div className={`alert alert-${alert.type}`}>{alert.text}</div>
       )}
